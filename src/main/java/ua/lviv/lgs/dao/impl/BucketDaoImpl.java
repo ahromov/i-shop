@@ -4,7 +4,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import ua.lviv.lgs.dao.BucketDao;
 import ua.lviv.lgs.domain.Bucket;
@@ -13,7 +14,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class BucketDaoImpl implements BucketDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = Logger.getLogger(BucketDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(BucketDaoImpl.class);
 
     @Override
     public Bucket create(Bucket bucket) {

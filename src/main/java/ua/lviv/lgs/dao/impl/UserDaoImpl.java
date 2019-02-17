@@ -8,7 +8,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.UserDao;
 import ua.lviv.lgs.domain.User;
@@ -17,7 +18,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class UserDaoImpl implements UserDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
     @Override
     public User create(User user) {
@@ -25,6 +26,7 @@ public class UserDaoImpl implements UserDao {
 	    em.getTransaction().begin();
 	    em.persist(user);
 	    em.getTransaction().commit();
+	    LOGGER.info("New user " + user.getEmail() + " created.");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    LOGGER.error(e);

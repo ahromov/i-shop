@@ -4,7 +4,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.ProductDao;
 import ua.lviv.lgs.domain.Product;
@@ -13,7 +14,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class ProductDaoImpl implements ProductDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = Logger.getLogger(ProductDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(ProductDaoImpl.class);
 
     @Override
     public Product create(Product product) {
