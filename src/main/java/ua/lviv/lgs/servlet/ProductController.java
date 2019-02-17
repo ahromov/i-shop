@@ -29,7 +29,7 @@ public class ProductController extends HttpServlet {
 		productService.create(product);
 
 		response.setContentType("text/html");
-//		response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("Success");
 	}
 
@@ -40,26 +40,26 @@ public class ProductController extends HttpServlet {
 		return Double.parseDouble(price);
 	}
 
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		String productId = request.getParameter("id");
-//		Product product = productService.read(Integer.parseInt(productId));
-//
-//		request.setAttribute("product", product);
-//		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
-//	}
-//
-//	// to update resource (product)
-//	@Override
-//	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		super.doPut(req, resp);
-//	}
-//
-//	// to delete resource (product)
-//	@Override
-//	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		super.doDelete(req, resp);
-//	}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String productId = request.getParameter("id");
+		Product product = productService.read(Integer.parseInt(productId));
+
+		request.setAttribute("product", product);
+		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
+	}
+
+	// to update resource (product)
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doPut(req, resp);
+	}
+
+	// to delete resource (product)
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doDelete(req, resp);
+	}
 
 }
