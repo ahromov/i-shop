@@ -5,8 +5,9 @@ $(document).ready(function() {
 	});
 });
 
-$("button.product-logout").click(function() {
 
+
+$("button.product-logout").click(function() {
 	$.get("logout", function(data) {
 		if (data !== '') {
 			var customUrl = '';
@@ -18,7 +19,6 @@ $("button.product-logout").click(function() {
 			window.location = customUrl;
 		}
 	});
-
 });
 
 $(document).ready(function() {

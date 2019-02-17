@@ -5,24 +5,29 @@ function loginRegisterSwitch() {
 	}, "slow");
 }
 
+
+
 function showAlertAfterRegistration() {
 	$('div.alert.alert-success').show();
 }
+
+
 
 $('.message a').click(function() {
 	loginRegisterSwitch();
 });
 
+
+
 $("button.register")
 		.click(
 				function() {
-					var firstName = $("form.register-form input.firstName")
-							.val();
-					var lastName = $("form.register-form input.lastName").val();
+
 					var email = $("form.register-form input.email").val();
+					var firstName = $("form.register-form input.firstName").val();
+					var lastName = $("form.register-form input.lastName").val();
 					var password = $("form.register-form input.password").val();
-					var cpassword = $("form.register-form input.cpassword")
-							.val();
+					var cpassword = $("form.register-form input.cpassword").val();
 
 					if (firstName == '' || lastName == '' || email == ''
 							|| password == '' || cpassword == '') {
@@ -49,9 +54,13 @@ $("button.register")
 									}
 								});
 					}
+					
 				});
 
+
+
 $("button.login").click(function() {
+
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
 
@@ -67,13 +76,16 @@ $("button.login").click(function() {
 			if (data !== '') {
 				var customUrl = '';
 				var urlContent = window.location.href.split('/');
+	
 				for (var i = 0; i < urlContent.length - 1; i++) {
 					customUrl += urlContent[i] + '/'
 				}
+				
 				customUrl += data.destinationUrl;
 				window.location = customUrl;
 			}
 			$("form")[1].reset();
 		});
 	}
+	
 });
