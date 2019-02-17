@@ -25,28 +25,25 @@
 
 	<div class="container-fluid">
 		<div class="row">
-
 			<form class="createProduct">
 				<div class="form-group">
-					<input type="text" class="form-control productName" 
-						placeholder="enter product name">
-				</div>
-
-				<div class="form-group">
-					<input type="text" class="form-control productDescription" 
+					<input type="text" class="form-control productDescription"
 						placeholder="enter product description">
 				</div>
 
 				<div class="form-group">
-					<input type="number" class="form-control productPrice" 
+					<input type="text" class="form-control productName"
+						placeholder="enter product name">
+				</div>
+
+				<div class="form-group">
+					<input type="number" class="form-control productPrice"
 						placeholder="enter product price">
 				</div>
 
 				<button class="btn btn-primary createProduct">Submit</button>
 			</form>
-
 		</div>
-
 	</div>
 
 	<jsp:include page="footer.jsp"></jsp:include>

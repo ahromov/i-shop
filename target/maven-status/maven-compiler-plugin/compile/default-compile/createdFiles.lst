@@ -3,7 +3,6 @@ ua\lviv\lgs\domain\UserRole.class
 ua\lviv\lgs\shared\AbstractCRUD.class
 ua\lviv\lgs\dao\impl\UserDaoImpl.class
 ua\lviv\lgs\shared\FilterService.class
-ua\lviv\lgs\filter\ProductFilter.class
 ua\lviv\lgs\service\ProductService.class
 ua\lviv\lgs\servlet\ProductsController.class
 ua\lviv\lgs\servlet\Logout.class

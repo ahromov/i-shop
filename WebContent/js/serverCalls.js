@@ -10,20 +10,11 @@ $("button.createProduct").click(function() {
 		price: price
 	};
 
-	 $.ajax({
-		type: 'POST',
-		url: '/product',
-		data: product,
-		success: function(result) {
-			alert('Product is created');
+	$.post("product", product, function(data) {
+		if (data == 'Success') {
+			alert('Product is created!');
 		}
 	});
-
-//	$.post("product", product, function(data) {
-//		if (data == 'Success') {
-//			alert('Product is created!');
-//		}
-//	});
 
 });
 

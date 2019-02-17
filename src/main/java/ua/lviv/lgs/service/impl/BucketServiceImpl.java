@@ -29,7 +29,7 @@ public class BucketServiceImpl implements BucketService {
 	}
 
 	@Override
-	public Bucket read(Integer id) {
+	public Bucket read(String id) {
 		return bucketDao.read(id);
 	}
 
@@ -39,7 +39,7 @@ public class BucketServiceImpl implements BucketService {
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		bucketDao.delete(id);
 	}
 

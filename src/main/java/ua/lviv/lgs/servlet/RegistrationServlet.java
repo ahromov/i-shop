@@ -14,24 +14,23 @@ import ua.lviv.lgs.service.impl.UserServiceImpl;
 
 public class RegistrationServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -9186251900623717347L;
-	private UserService userService = UserServiceImpl.getUserService();
+    private static final long serialVersionUID = -9186251900623717347L;
+    private UserService userService = UserServiceImpl.getUserService();
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	String email = request.getParameter("email");
+	String firstName = request.getParameter("firstName");
+	String lastName = request.getParameter("lastName");
+	String password = request.getParameter("password");
 
-		String email = request.getParameter("email");
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String password = request.getParameter("password");
-
-		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
-			userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
-		}
-
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("Success");
+	if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
+	    userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 	}
+
+	response.setContentType("text/html");
+	response.setCharacterEncoding("UTF-8");
+	response.getWriter().write("Success");
+    }
 
 }

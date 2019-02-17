@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product read(Integer id) {
+	public Product read(String id) {
 		return productDao.read(id);
 	}
 
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		productDao.delete(id);
 	}
 

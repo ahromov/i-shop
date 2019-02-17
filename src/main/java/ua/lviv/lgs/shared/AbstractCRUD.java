@@ -4,14 +4,14 @@ import java.util.List;
 
 public interface AbstractCRUD<T> {
 
-	T create(T t);
+    T create(T t);
 
-	T read(Integer id);
+    T read(String id);
 
-	T update(T t);
+    T update(T t);
 
-	void delete(Integer id);
-	
-	List<T> readAll();
-	
+    void delete(String bucketId);
+
+    List<T> readAll();
+
 }

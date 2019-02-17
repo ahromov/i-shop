@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User read(Integer id) {
+	public User read(String id) {
 		return userDao.read(id);
 	}
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		userDao.delete(id);
 	}
 

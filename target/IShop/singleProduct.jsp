@@ -21,10 +21,10 @@
 	<div class="container-fluid single-product">
 		<div class="col">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body">					
 					<h5 class="card-title">${product.name}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">${product.price}</h6>
-					<p class="card-text">${product.description}</p>
+					<h6 class="card-subtitle mb-2 text-muted">${product.description}</h6>
+					<p class="card-text">${product.price}</p>
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#buyProductModal">buy product</button>
 				</div>
