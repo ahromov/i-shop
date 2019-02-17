@@ -13,4 +13,5 @@ public interface AbstractCRUD<T> {
 	void delete(Integer id);
 	
 	List<T> readAll();
+	
 }

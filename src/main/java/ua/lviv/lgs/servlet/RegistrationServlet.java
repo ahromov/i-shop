@@ -13,7 +13,8 @@ import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 
 public class RegistrationServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -9186251900623717347L;
 	private UserService userService = UserServiceImpl.getUserService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,10 +26,10 @@ public class RegistrationServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
-			userService.create(new User(firstName, lastName, email, UserRole.USER.toString(), password));
+			userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 		}
 
-		response.setContentType("text/plain");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("Success");
 	}

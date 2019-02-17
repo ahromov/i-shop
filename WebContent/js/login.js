@@ -16,10 +16,10 @@ $('.message a').click(function() {
 $("button.register")
 		.click(
 				function() {
+					var email = $("form.register-form input.email").val();
 					var firstName = $("form.register-form input.firstName")
 							.val();
 					var lastName = $("form.register-form input.lastName").val();
-					var email = $("form.register-form input.email").val();
 					var password = $("form.register-form input.password").val();
 					var cpassword = $("form.register-form input.cpassword")
 							.val();
@@ -33,9 +33,9 @@ $("button.register")
 						alert("Your passwords don't match. Try again?");
 					} else {
 						var userRegistration = {
+							email : email,
 							firstName : firstName,
 							lastName : lastName,
-							email : email,
 							password : password
 						};
 
@@ -52,6 +52,7 @@ $("button.register")
 				});
 
 $("button.login").click(function() {
+
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
 
@@ -73,7 +74,9 @@ $("button.login").click(function() {
 				customUrl += data.destinationUrl;
 				window.location = customUrl;
 			}
+
 			$("form")[1].reset();
 		});
 	}
+
 });

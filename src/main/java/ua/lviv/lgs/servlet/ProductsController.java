@@ -25,6 +25,7 @@ public class ProductsController extends HttpServlet {
 			throws ServletException, IOException {
 		List<Product> products = productService.readAll();
 		String json = new Gson().toJson(products);
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);

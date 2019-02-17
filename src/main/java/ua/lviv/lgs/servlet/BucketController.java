@@ -36,6 +36,7 @@ public class BucketController extends HttpServlet {
 		Product product = productService.read(Integer.parseInt(productId));
 
 		HttpSession session = request.getSession();
+		
 		Integer userId = (Integer) session.getAttribute("userId");
 		User user = userService.read(userId);
 
@@ -44,10 +45,9 @@ public class BucketController extends HttpServlet {
 		bucket.setProduct(product);
 		bucket.setUser(user);
 		bucket.setPurchaseDate(new Date());
-
 		bucketService.create(bucket);
 
-		response.setContentType("text");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("Success");
 	}
@@ -57,7 +57,7 @@ public class BucketController extends HttpServlet {
 		String bucketId = request.getParameter("bucketId");
 		bucketService.delete(Integer.parseInt(bucketId));
 
-		response.setContentType("text");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("Success");
 	}

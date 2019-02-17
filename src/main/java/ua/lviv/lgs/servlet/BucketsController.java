@@ -34,6 +34,7 @@ public class BucketsController extends HttpServlet {
 		Map<Integer, Product> idToProduct = productService.readAllMap();
 		List<BucketDto> listOfBucketDtos = map(buckets, idToProduct);
 		String json = new Gson().toJson(listOfBucketDtos);
+
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
@@ -44,10 +45,12 @@ public class BucketsController extends HttpServlet {
 			BucketDto bucketDto = new BucketDto();
 			bucketDto.bucketId = bucket.getId();
 			bucketDto.purchaseDate = bucket.getPurchaseDate();
+
 			Product product = idToProduct.get(bucket.getProduct().getId());
 			bucketDto.name = product.getName();
 			bucketDto.description = product.getDescription();
 			bucketDto.price = product.getPrice();
+
 			return bucketDto;
 		}).collect(Collectors.toList());
 	}

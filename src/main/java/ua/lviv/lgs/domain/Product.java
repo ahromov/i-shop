@@ -25,12 +25,19 @@ public class Product {
 	private Double price;
 
 	public Product() {
-		
+
 	}
 
-	public Product(String name, String description, Double price) {
-		this.name = name;
+	public Product(Integer id, String description, String name, Double price) {
+		this.id = id;
 		this.description = description;
+		this.name = name;
+		this.price = price;
+	}
+
+	public Product(String description, String name, Double price) {
+		this.description = description;
+		this.name = name;
 		this.price = price;
 	}
 

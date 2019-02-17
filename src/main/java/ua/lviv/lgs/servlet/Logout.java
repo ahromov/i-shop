@@ -11,9 +11,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/logout")
 public class Logout extends HttpServlet {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7014862132555465217L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +19,7 @@ public class Logout extends HttpServlet {
 			session.invalidate();
 		}
 		
-		response.setContentType("text");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write("index.jsp");
 	}

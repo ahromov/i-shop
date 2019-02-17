@@ -12,9 +12,7 @@ import com.google.gson.Gson;
 
 @WebServlet("/user-role")
 public class UserRoleServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3126597621501598507L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

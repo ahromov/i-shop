@@ -19,12 +19,11 @@ import ua.lviv.lgs.service.impl.UserServiceImpl;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1115455152301778383L;
 	private UserService userService = UserServiceImpl.getUserService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -34,12 +33,12 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("role", user.getRole().toString());
-			
+
 			UserLogin userLogin = new UserLogin();
 			userLogin.destinationUrl = "cabinet.jsp";
 			userLogin.userEmail = user.getEmail();
 			String json = new Gson().toJson(userLogin);
-			
+
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
