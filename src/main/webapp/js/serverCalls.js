@@ -1,12 +1,12 @@
 $("button.createProduct").click(function() {
 
-	var name = $("form.createProduct input.productName").val();
 	var description = $("form.createProduct input.productDescription").val();
+	var name = $("form.createProduct input.productName").val();
 	var price = $("form.createProduct input.productPrice").val();
 
 	var product = {
-		name : name,
 		description : description,
+		name : name,
 		price : price
 	};
 
@@ -15,12 +15,17 @@ $("button.createProduct").click(function() {
 			alert('Success');
 		}
 	});
+	
 });
 
+
+
 $("button.buy-product").click(function() {
+	
 	var productId = jQuery(this).attr("product-id");
+	
 	$.post("bucket", {
-		'productId' : productId
+		productId : productId
 	}, function(data) {
 		if (data == 'Success') {
 			$("[data-dismiss=modal]").trigger({
@@ -29,4 +34,5 @@ $("button.buy-product").click(function() {
 			alert('Success');
 		}
 	});
+	
 });

@@ -23,9 +23,9 @@
 	<div class="login-page">
 		<div class="form">
 			<form class="register-form">
-				<input class="firstName" type="text" placeholder="first name" /> <input
+				<input class="email" type="text" placeholder="email address" /> <input
+					class="firstName" type="text" placeholder="first name" /> <input
 					class="lastName" type="text" placeholder="last name" /> <input
-					class="email" type="text" placeholder="email address" /> <input
 					class="password" type="password" placeholder="password" /> <input
 					class="cpassword" type="password" placeholder="confirm password" />
 				<button class="register">create</button>
