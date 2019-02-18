@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="info">
+<Configuration status="warn">
 	<Properties>
 		<Property name="basePath">target/IShop/log</Property>
 	</Properties>
@@ -22,7 +22,7 @@
 	</Appenders>
 
 	<Loggers>
-		<Logger name="ua.lviv.lgs.IShop" level="debug" additivity="true">
+		<Logger name="ua.lviv.lgs" level="debug" additivity="true">
 			<appender-ref ref="fileLogger" level="debug" />
 		</Logger>
 		
