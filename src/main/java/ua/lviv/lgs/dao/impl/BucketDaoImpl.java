@@ -14,7 +14,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class BucketDaoImpl implements BucketDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = LogManager.getLogger(BucketDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(BucketDaoImpl.class.getName());
 
     @Override
     public Bucket create(Bucket bucket) {
@@ -22,6 +22,8 @@ public class BucketDaoImpl implements BucketDao {
 	    em.getTransaction().begin();
 	    em.persist(bucket);
 	    em.getTransaction().commit();
+	    LOGGER.info(
+		    "New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    LOGGER.error(e);

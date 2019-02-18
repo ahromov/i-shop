@@ -18,7 +18,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class UserDaoImpl implements UserDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(UserDaoImpl.class.getName());
 
     @Override
     public User create(User user) {
@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
 	    em.getTransaction().begin();
 	    em.persist(user);
 	    em.getTransaction().commit();
-	    LOGGER.info("New user " + user.getEmail() + " created.");
+	    LOGGER.info("New user '" + user.getEmail() + "' was created.");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    LOGGER.error(e);

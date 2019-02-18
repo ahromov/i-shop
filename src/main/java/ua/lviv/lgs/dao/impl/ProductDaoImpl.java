@@ -14,7 +14,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 public class ProductDaoImpl implements ProductDao {
 
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = LogManager.getLogger(ProductDaoImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(ProductDaoImpl.class.getName());
 
     @Override
     public Product create(Product product) {
@@ -22,6 +22,7 @@ public class ProductDaoImpl implements ProductDao {
 	    em.getTransaction().begin();
 	    em.persist(product);
 	    em.getTransaction().commit();
+	    LOGGER.info("New product '" + product.getName() + "' was added.");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    LOGGER.error(e);
