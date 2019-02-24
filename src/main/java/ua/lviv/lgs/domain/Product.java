@@ -35,10 +35,8 @@ public class Product {
     }
 
     public Product(Integer id, String description, String name, Double price) {
+	this(description, name, price);
 	this.id = id;
-	this.description = description;
-	this.name = name;
-	this.price = price;
     }
 
     public Integer getId() {
