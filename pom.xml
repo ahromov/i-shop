@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ua.lviv.lgs</groupId>
-	<artifactId>IShop</artifactId>
+	<artifactId>i-shop</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>IShop Maven Webapp</name>
@@ -24,12 +24,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.13</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.5</version>
 		</dependency>
 
 		<dependency>
@@ -89,7 +83,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>IShop</finalName>
+		<finalName>i-shop</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

@@ -13,61 +13,61 @@ import javax.persistence.Table;
 @Table(name = "bucket")
 public class Bucket {
 
-    @Id
-    @Column(name = "id")
-    private String id;
+	@Id
+	@Column(name = "id")
+	private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+	@ManyToOne
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	private Product product;
 
-    @Column(name = "purchase_date")
-    private Date purchaseDate;
+	@Column(name = "purchase_date")
+	private Date purchaseDate;
 
-    public Bucket() {
+	public Bucket() {
 
-    }
+	}
 
-    public String getId() {
-	return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String string) {
-	this.id = string;
-    }
+	public void setId(String string) {
+		this.id = string;
+	}
 
-    public Date getPurchaseDate() {
-	return purchaseDate;
-    }
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
 
-    public void setPurchaseDate(Date purchaseDate) {
-	this.purchaseDate = purchaseDate;
-    }
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
 
-    public Product getProduct() {
-	return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public User getUser() {
-	return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-	this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setProduct(Product product) {
-	this.product = product;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    @Override
-    public String toString() {
-	return "Bucket [id=" + id + ", userId=" + getUser().getId() + ", productId=" + getProduct().getId()
-		+ ", purchaseDate=" + purchaseDate + "]";
-    }
+	@Override
+	public String toString() {
+		return "Bucket [id=" + id + ", userId=" + getUser().getId() + ", productId=" + getProduct().getId()
+				+ ", purchaseDate=" + purchaseDate + "]";
+	}
 
 }
