@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -31,7 +32,9 @@ public class BucketsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Bucket> allBuckets = bucketService.readAll();
+		List<Bucket> allBuckets = bucketService.readAll().stream()
+				.filter(bucket -> bucket.getUser().getId() == request.getSession().getAttribute("userId"))
+				.collect(Collectors.toList());
 		Map<Integer, Product> allProducts = productService.readAllMap();
 
 		List<BucketDto> bucketsDtos = toDTO(allBuckets, allProducts);
