@@ -1,12 +1,12 @@
 function myFunction() {
-	
+
 	var input, filter, table, tr, td, i, txtValue;
-	
+
 	input = document.getElementById("myInput");
 	filter = input.value.toUpperCase();
 	table = document.getElementById("myTable");
 	tr = table.getElementsByTagName("tr");
-	
+
 	for (i = 0; i < tr.length; i++) {
 		td = tr[i].getElementsByTagName("td")[0];
 		if (td) {
@@ -18,42 +18,8 @@ function myFunction() {
 			}
 		}
 	}
-	
+
 }
-
-
-
-var buckets = null;
-
-$.get("buckets", function(data) {
-	if (data !== '') {
-		buckets = data;
-	}
-}).done(
-		function() {
-
-			var tableContent = "<tr class='header'>"
-				+ "<th style='width: 20%;'>PurchaseDate</th>"
-					+ "<th style='width: 20%;'>Name</th>"
-					+ "<th style='width: 20%;'>Description</th>"
-					+ "<th style='width: 20%;'>Price</th>"
-					+ "<th style='width: 20%;'>Options</th>" + "</tr>";
-
-			jQuery.each(buckets, function(i, value) {
-				tableContent += "<tr>" 
-					+ "<td>" + value.purchaseDate + "</td>"
-					+ "<td>" + value.productName + "</td>"
-					+ "<td>" + value.productDescription + "</td>" 
-					+ "<td>" + value.productPrice + "</td>"
-					+ "<td><button onclick=\"deleteOrderFromBucket('" + value.bucketId + "')\">delete</button></td>" 
-					+ "</tr>"
-			});
-
-			$('#myTable').html(tableContent);
-
-		});
-
-
 
 function deleteOrderFromBucket(bId) {
 	
@@ -65,7 +31,7 @@ function deleteOrderFromBucket(bId) {
 	}
 	
 	customUrl += 'bucket?bucketId=' + bId;
-
+	
 	$.ajax({
 		url : customUrl,
 		type : 'DELETE',
@@ -77,3 +43,30 @@ function deleteOrderFromBucket(bId) {
 	});
 	
 }
+
+var buckets = null;
+
+$.get("buckets", function(data) {
+	if (data !== '') {
+		buckets = data;
+	}
+}).done(
+		function() {
+			var tableContent = "<tr class='header'>"
+					+ "<th style='width: 20%;'>PurchaseDate</th>"
+					+ "<th style='width: 20%;'>Name</th>"
+					+ "<th style='width: 20%;'>Description</th>"
+					+ "<th style='width: 20%;'>Price</th>"
+					+ "<th style='width: 20%;'>Options</th>" + "</tr>";
+			jQuery.each(buckets, function(i, value) {
+				tableContent += "<tr>" + "<td>" + value.purchaseDate + "</td>"
+						+ "<td>" + value.productName + "</td>" + "<td>"
+						+ value.productDescription + "</td>" + "<td>"
+						+ value.productPrice + "</td>"
+						+ "<td><button onclick=\"deleteOrderFromBucket('"
+						+ value.bucketId + "')\">delete</button></td>"
+						+ "</tr>"
+			});
+			$('#myTable').html(tableContent);
+		});
+

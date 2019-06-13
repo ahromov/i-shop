@@ -7,11 +7,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="bscss.jsp"></jsp:include>
+<jsp:include page="bootstrap.html"></jsp:include>
+<jsp:include page="common_styles.html"></jsp:include>
 <title>Cabinet</title>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.html"></jsp:include>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -36,8 +37,10 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
-	<jsp:include page="bsjq.jsp"></jsp:include>
+	<jsp:include page="footer.html"></jsp:include>
+	
+	<jsp:include page="jquery.html"></jsp:include>
+	
 	<script src="js/header.js"></script>
 	<script src="js/serverCalls.js"></script>
 </body>

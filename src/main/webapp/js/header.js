@@ -1,13 +1,14 @@
 $(document).ready(function() {
+
 	$('.leftmenutrigger').on('click', function(e) {
 		$('.side-nav').toggleClass("open");
 		e.preventDefault();
 	});
+
 });
 
-
-
 $("button.product-logout").click(function() {
+
 	$.get("logout", function(data) {
 		if (data !== '') {
 			var customUrl = '';
@@ -19,9 +20,11 @@ $("button.product-logout").click(function() {
 			window.location = customUrl;
 		}
 	});
+
 });
 
 $(document).ready(function() {
+
 	$.get("user-role", function(data) {
 		if (data !== '') {
 			userRole = data;
@@ -33,4 +36,5 @@ $(document).ready(function() {
 			$('li.create-product-option').hide();
 		}
 	});
+
 });

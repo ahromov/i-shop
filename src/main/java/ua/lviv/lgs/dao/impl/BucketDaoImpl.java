@@ -13,8 +13,8 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class BucketDaoImpl implements BucketDao {
 
+	private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = LogManager.getLogger(BucketDaoImpl.class.getName());
 
     @Override
     public Bucket create(Bucket bucket) {
@@ -22,11 +22,11 @@ public class BucketDaoImpl implements BucketDao {
 	    em.getTransaction().begin();
 	    em.persist(bucket);
 	    em.getTransaction().commit();
-	    LOGGER.info(
+	    log.info(
 		    "New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return bucket;
     }
@@ -38,7 +38,7 @@ public class BucketDaoImpl implements BucketDao {
 	    bucket = em.find(Bucket.class, id);
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return bucket;
     }
@@ -57,7 +57,7 @@ public class BucketDaoImpl implements BucketDao {
 	    em.getTransaction().commit();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
     }
 
@@ -69,7 +69,7 @@ public class BucketDaoImpl implements BucketDao {
 	    query = em.createQuery("SELECT e FROM Bucket e");
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return (List<Bucket>) query.getResultList();
     }

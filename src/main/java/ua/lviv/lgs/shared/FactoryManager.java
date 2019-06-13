@@ -6,19 +6,19 @@ import javax.persistence.Persistence;
 
 public class FactoryManager {
 
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
+	private static EntityManagerFactory emf;
+	private static EntityManager em;
 
-    public static EntityManagerFactory getEntityManagerFactory() {
-	if (emf == null)
-	    emf = Persistence.createEntityManagerFactory("IShopPersistence");
-	return emf;
-    }
+	public static EntityManagerFactory getEntityManagerFactory() {
+		if (emf == null)
+			emf = Persistence.createEntityManagerFactory("IShopPersistence");
+		return emf;
+	}
 
-    public static EntityManager getEntityManager() {
-	if (em == null)
-	    em = getEntityManagerFactory().createEntityManager();
-	return em;
-    }
+	public static EntityManager getEntityManager() {
+		if (em == null)
+			em = getEntityManagerFactory().createEntityManager();
+		return em;
+	}
 
 }

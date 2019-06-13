@@ -16,15 +16,19 @@ import ua.lviv.lgs.shared.FilterService;
 
 @WebFilter("/bucket.jsp")
 public class BucketFilter implements Filter {
-	
-	private FilterService filterService = FilterService.getFilterService();
-	
-	public void destroy() {}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	private FilterService filterService = FilterService.getFilterService();
+
+	public void init(FilterConfig fConfig) throws ServletException {
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		filterService.doFilterValidation(request, response, chain, Arrays.asList(UserRole.USER));
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {}
-	
+	@Override
+	public void destroy() {
+	}
+
 }

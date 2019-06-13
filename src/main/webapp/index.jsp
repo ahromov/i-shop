@@ -7,9 +7,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="bscss.jsp"></jsp:include>
-<link rel="stylesheet" href="css/login.css">
 <title>Shop</title>
+<jsp:include page="bootstrap.html"></jsp:include>
+<jsp:include page="common_styles.html"></jsp:include>
+<link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 	<div class="login-page">
@@ -25,7 +26,7 @@
 					Already registered? <a href="#">Sign In</a>
 				</p>
 			</form>
-			
+
 			<form class="login-form">
 				<input class="email" type="text" placeholder="email address" /> <input
 					class="password" type="password" placeholder="password" />
@@ -35,7 +36,7 @@
 				</p>
 			</form>
 		</div>
-		
+
 		<div class="alert alert-success  alert-dismissible fade show"
 			role="alert">
 			<b>Success!</b> You are registered.
@@ -45,9 +46,11 @@
 			</button>
 		</div>
 	</div>
-	
-	<jsp:include page="footer.jsp"></jsp:include>
-	<jsp:include page="bsjq.jsp"></jsp:include>
+
+	<jsp:include page="footer.html"></jsp:include>
+
+	<jsp:include page="jquery.html"></jsp:include>
+
 	<script src="js/login.js"></script>
 </body>
 </html>

@@ -8,11 +8,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Cabinet</title>
-<jsp:include page="bscss.jsp"></jsp:include>
+<jsp:include page="bootstrap.html"></jsp:include>
+<jsp:include page="common_styles.html"></jsp:include>
 <link rel="stylesheet" href="css/bucket.css">
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.html"></jsp:include>
 
 	<div class="container-fluid">
 		<input type="text" id="myInput" onkeyup="myFunction()"
@@ -22,8 +23,10 @@
 		</table>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
-	<jsp:include page="bsjq.jsp"></jsp:include>
+	<jsp:include page="footer.html"></jsp:include>
+
+	<jsp:include page="jquery.html"></jsp:include>
+
 	<script src="js/header.js"></script>
 	<script src="js/bucket.js"></script>
 </body>

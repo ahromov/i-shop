@@ -15,15 +15,13 @@ $("button.createProduct").click(function() {
 			alert('Success');
 		}
 	});
-	
+
 });
 
-
-
 $("button.buy-product").click(function() {
-	
+
 	var productId = jQuery(this).attr("product-id");
-	
+
 	$.post("bucket", {
 		productId : productId
 	}, function(data) {
@@ -34,5 +32,5 @@ $("button.buy-product").click(function() {
 			alert('Success');
 		}
 	});
-	
+
 });

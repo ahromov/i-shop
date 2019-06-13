@@ -19,7 +19,7 @@ public class CreateProductFilter implements Filter {
 
     private FilterService filterService = FilterService.getFilterService();
 
-    public void destroy() {
+    public void init(FilterConfig fConfig) throws ServletException {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -27,7 +27,7 @@ public class CreateProductFilter implements Filter {
 	filterService.doFilterValidation(request, response, chain, Arrays.asList(UserRole.ADMINISTRATOR));
     }
 
-    public void init(FilterConfig fConfig) throws ServletException {
-    }
+	public void destroy() {
+	}
     
 }

@@ -7,7 +7,7 @@ import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.service.BucketService;
 
 public class BucketServiceImpl implements BucketService {
-	
+
 	private static BucketService bucketServiceImpl;
 	private BucketDao bucketDao;
 

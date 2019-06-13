@@ -24,41 +24,42 @@ import ua.lviv.lgs.service.impl.UserServiceImpl;
 @WebServlet("/bucket")
 public class BucketController extends HttpServlet {
 
-    private static final long serialVersionUID = -3449676006995456547L;
-    private BucketService bucketService = BucketServiceImpl.getBucketService();
-    private ProductService productService = ProductServiceImpl.getProductService();
-    private UserService userService = UserServiceImpl.getUserService();
+	private static final long serialVersionUID = -3449676006995456547L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	String productId = request.getParameter("productId");
-	Product product = productService.read(productId);
+	private BucketService bucketService = BucketServiceImpl.getBucketService();
+	private ProductService productService = ProductServiceImpl.getProductService();
+	private UserService userService = UserServiceImpl.getUserService();
 
-	HttpSession session = request.getSession();
-	Integer userId = (Integer) session.getAttribute("userId");
-	
-	User user = userService.read(userId.toString());
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String productId = request.getParameter("productId");
+		Product product = productService.read(productId);
 
-	Bucket bucket = new Bucket();
-	bucket.setId(UUID.randomUUID().toString());
-	bucket.setProduct(product);
-	bucket.setUser(user);
-	bucket.setPurchaseDate(new Date());
-	bucketService.create(bucket);
+		HttpSession session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
 
-	response.setContentType("text/html");
-	response.setCharacterEncoding("UTF-8");
-	response.getWriter().write("Success");
-    }
+		User user = userService.read(userId.toString());
 
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	String bucketId = request.getParameter("bucketId");
-	bucketService.delete(bucketId);
+		Bucket bucket = new Bucket();
+		bucket.setId(UUID.randomUUID().toString());
+		bucket.setProduct(product);
+		bucket.setUser(user);
+		bucket.setPurchaseDate(new Date());
+		bucketService.create(bucket);
 
-	response.setContentType("text/html");
-	response.setCharacterEncoding("UTF-8");
-	response.getWriter().write("Success");
-    }
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write("Success");
+	}
+
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String bucketId = request.getParameter("bucketId");
+		bucketService.delete(bucketId);
+
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write("Success");
+	}
 
 }

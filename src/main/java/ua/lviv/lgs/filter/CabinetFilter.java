@@ -19,14 +19,15 @@ public class CabinetFilter implements Filter {
 
 	private FilterService filterService = FilterService.getFilterService();
 
-	public void destroy() {}
+	public void init(FilterConfig fConfig) throws ServletException {}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		filterService.doFilterValidation(request, response, chain, Arrays.asList(UserRole.USER, UserRole.ADMINISTRATOR));
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {}
+	public void destroy() {
+	}
 	
 }
 

@@ -13,8 +13,8 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class ProductDaoImpl implements ProductDao {
 
+	private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
     private EntityManager em = FactoryManager.getEntityManager();
-    private static Logger LOGGER = LogManager.getLogger(ProductDaoImpl.class.getName());
 
     @Override
     public Product create(Product product) {
@@ -22,10 +22,10 @@ public class ProductDaoImpl implements ProductDao {
 	    em.getTransaction().begin();
 	    em.persist(product);
 	    em.getTransaction().commit();
-	    LOGGER.info("New product '" + product.getName() + "' was added.");
+	    log.info("New product '" + product.getName() + "' was added.");
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return product;
     }
@@ -37,7 +37,7 @@ public class ProductDaoImpl implements ProductDao {
 	    product = em.find(Product.class, Integer.parseInt(id));
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return product;
     }
@@ -60,7 +60,7 @@ public class ProductDaoImpl implements ProductDao {
 	    query = em.createQuery("SELECT e FROM Product e");
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    LOGGER.error(e);
+	    log.error(e);
 	}
 	return (List<Product>) query.getResultList();
     }
