@@ -8,11 +8,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Cabinet</title>
-<jsp:include page="bootstrap.html"></jsp:include>
-<jsp:include page="common_styles.html"></jsp:include>
+<jsp:include page="includes/bootstrap.html"></jsp:include>
+<jsp:include page="includes/common_styles.html"></jsp:include>
 </head>
 <body>
-	<jsp:include page="header.html"></jsp:include>
+	<jsp:include page="includes/header.html"></jsp:include>
 
 	<div class="container-fluid single-product">
 		<div class="col">
@@ -52,9 +52,9 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.html"></jsp:include>
+	<jsp:include page="includes/footer.html"></jsp:include>
 
-	<jsp:include page="jquery.html"></jsp:include>
+	<jsp:include page="includes/jquery.html"></jsp:include>
 
 	<script src="js/header.js"></script>
 	<script src="js/serverCalls.js"></script>

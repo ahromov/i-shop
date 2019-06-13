@@ -8,8 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Shop</title>
-<jsp:include page="bootstrap.html"></jsp:include>
-<jsp:include page="common_styles.html"></jsp:include>
+<jsp:include page="includes/bootstrap.html"></jsp:include>
+<jsp:include page="includes/common_styles.html"></jsp:include>
 <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -47,9 +47,9 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.html"></jsp:include>
+	<jsp:include page="includes/footer.html"></jsp:include>
 
-	<jsp:include page="jquery.html"></jsp:include>
+	<jsp:include page="includes/jquery.html"></jsp:include>
 
 	<script src="js/login.js"></script>
 </body>
