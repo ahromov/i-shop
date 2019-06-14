@@ -10,4 +10,13 @@ public class BucketDto {
 	public String productDescription;
 	public Double productPrice;
 
+	public BucketDto(String bucketId, Date purchaseDate, String productName, String productDescription,
+			Double productPrice) {
+		this.bucketId = bucketId;
+		this.purchaseDate = purchaseDate;
+		this.productName = productName;
+		this.productDescription = productDescription;
+		this.productPrice = productPrice;
+	}
+
 }

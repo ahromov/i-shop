@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -47,16 +46,10 @@ public class BucketsController extends HttpServlet {
 
 	public List<BucketDto> toDTO(List<Bucket> allBuckets, Map<Integer, Product> allProducts) {
 		return allBuckets.stream().map(bucket -> {
-			BucketDto bucketDto = new BucketDto();
-			bucketDto.bucketId = bucket.getId();
-			bucketDto.purchaseDate = bucket.getPurchaseDate();
-
-			Product product = allProducts.get(bucket.getProduct().getId());
-			bucketDto.productName = product.getName();
-			bucketDto.productDescription = product.getDescription();
-			bucketDto.productPrice = product.getPrice();
-
-			return bucketDto;
+			return new BucketDto(bucket.getId(), bucket.getPurchaseDate(),
+					allProducts.get(bucket.getProduct().getId()).getName(),
+					allProducts.get(bucket.getProduct().getId()).getDescription(),
+					allProducts.get(bucket.getProduct().getId()).getPrice());
 		}).collect(Collectors.toList());
 	}
 
