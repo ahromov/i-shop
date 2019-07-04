@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
 @WebServlet("/products")
@@ -20,11 +19,9 @@ public class ProductsController extends HttpServlet {
 
     private static final long serialVersionUID = -6987179294005671682L;
 
-    private ProductService productService = ProductServiceImpl.getProductService();
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	List<Product> products = productService.readAll();
+	List<Product> products = ProductServiceImpl.getProductService().readAll();
 	String json = new Gson().toJson(products);
 
 	response.setContentType("application/json");

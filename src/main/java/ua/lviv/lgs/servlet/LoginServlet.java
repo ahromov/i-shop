@@ -13,15 +13,12 @@ import com.google.gson.Gson;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.dto.UserLogin;
-import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 
 @WebServlet(value = "/login", loadOnStartup = 1)
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1115455152301778383L;
-
-//    private UserService userService = UserServiceImpl.getUserService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {

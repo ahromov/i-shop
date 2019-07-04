@@ -1,6 +1,7 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
 @WebServlet("/product")
@@ -16,9 +16,6 @@ public class ProductController extends HttpServlet {
 
     private static final long serialVersionUID = 530917315308551086L;
 
-    ProductService productService = ProductServiceImpl.getProductService();
-
-    // to create resource (product)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
@@ -27,7 +24,7 @@ public class ProductController extends HttpServlet {
 	String price = request.getParameter("price");
 
 	Product product = new Product(description, name, getValidatedPrice(price));
-	productService.create(product);
+	ProductServiceImpl.getProductService().create(product);
 
 	response.setContentType("text/html");
 	response.setCharacterEncoding("UTF-8");
@@ -45,7 +42,7 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	String productId = request.getParameter("id");
-	Product product = productService.read(productId);
+	Product product = ProductServiceImpl.getProductService().read(productId);
 
 	request.setAttribute("product", product);
 	request.getRequestDispatcher("singleProduct.jsp").forward(request, response);

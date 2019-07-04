@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Product;
 import ua.lviv.lgs.dto.BucketDto;
-import ua.lviv.lgs.service.BucketService;
-import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.impl.BucketServiceImpl;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
@@ -26,15 +24,12 @@ public class BucketsController extends HttpServlet {
 
     private static final long serialVersionUID = -7884991345661641441L;
 
-    private BucketService bucketService = BucketServiceImpl.getBucketService();
-    private ProductService productService = ProductServiceImpl.getProductService();
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	List<Bucket> allBuckets = bucketService.readAll().stream()
+	List<Bucket> allBuckets = BucketServiceImpl.getBucketService().readAll().stream()
 		.filter(bucket -> bucket.getUser().getId() == request.getSession().getAttribute("userId"))
 		.collect(Collectors.toList());
-	Map<Integer, Product> allProducts = productService.readAllMap();
+	Map<Integer, Product> allProducts = ProductServiceImpl.getProductService().readAllMap();
 
 	List<BucketDto> bucketsDtos = toDTO(allBuckets, allProducts);
 	String json = new Gson().toJson(bucketsDtos);

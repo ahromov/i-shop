@@ -9,14 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
-import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 
 public class RegistrationServlet extends HttpServlet {
 
     private static final long serialVersionUID = -9186251900623717347L;
-
-    private UserService userService = UserServiceImpl.getUserService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
@@ -26,7 +23,8 @@ public class RegistrationServlet extends HttpServlet {
 	String password = request.getParameter("password");
 
 	if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
-	    userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+	    UserServiceImpl.getUserService()
+		    .create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 	}
 
 	response.setContentType("text/html");
