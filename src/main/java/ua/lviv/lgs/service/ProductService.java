@@ -7,6 +7,6 @@ import ua.lviv.lgs.shared.AbstractCRUD;
 
 public interface ProductService extends AbstractCRUD<Product> {
 
-	public Map<Integer, Product> readAllMap();
+    public Map<Integer, Product> readAllMap();
 
 }

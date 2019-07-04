@@ -13,7 +13,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class ProductDaoImpl implements ProductDao {
 
-	private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
+    private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
     private EntityManager em = FactoryManager.getEntityManager();
 
     @Override

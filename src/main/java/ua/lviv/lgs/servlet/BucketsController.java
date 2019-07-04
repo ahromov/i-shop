@@ -24,33 +24,33 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 @WebServlet("/buckets")
 public class BucketsController extends HttpServlet {
 
-	private static final long serialVersionUID = -7884991345661641441L;
+    private static final long serialVersionUID = -7884991345661641441L;
 
-	private BucketService bucketService = BucketServiceImpl.getBucketService();
-	private ProductService productService = ProductServiceImpl.getProductService();
+    private BucketService bucketService = BucketServiceImpl.getBucketService();
+    private ProductService productService = ProductServiceImpl.getProductService();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		List<Bucket> allBuckets = bucketService.readAll().stream()
-				.filter(bucket -> bucket.getUser().getId() == request.getSession().getAttribute("userId"))
-				.collect(Collectors.toList());
-		Map<Integer, Product> allProducts = productService.readAllMap();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	List<Bucket> allBuckets = bucketService.readAll().stream()
+		.filter(bucket -> bucket.getUser().getId() == request.getSession().getAttribute("userId"))
+		.collect(Collectors.toList());
+	Map<Integer, Product> allProducts = productService.readAllMap();
 
-		List<BucketDto> bucketsDtos = toDTO(allBuckets, allProducts);
-		String json = new Gson().toJson(bucketsDtos);
+	List<BucketDto> bucketsDtos = toDTO(allBuckets, allProducts);
+	String json = new Gson().toJson(bucketsDtos);
 
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
-	}
+	response.setContentType("application/json");
+	response.setCharacterEncoding("UTF-8");
+	response.getWriter().write(json);
+    }
 
-	public List<BucketDto> toDTO(List<Bucket> allBuckets, Map<Integer, Product> allProducts) {
-		return allBuckets.stream().map(bucket -> {
-			return new BucketDto(bucket.getId(), bucket.getPurchaseDate(),
-					allProducts.get(bucket.getProduct().getId()).getName(),
-					allProducts.get(bucket.getProduct().getId()).getDescription(),
-					allProducts.get(bucket.getProduct().getId()).getPrice());
-		}).collect(Collectors.toList());
-	}
+    public List<BucketDto> toDTO(List<Bucket> allBuckets, Map<Integer, Product> allProducts) {
+	return allBuckets.stream().map(bucket -> {
+	    return new BucketDto(bucket.getId(), bucket.getPurchaseDate(),
+		    allProducts.get(bucket.getProduct().getId()).getName(),
+		    allProducts.get(bucket.getProduct().getId()).getDescription(),
+		    allProducts.get(bucket.getProduct().getId()).getPrice());
+	}).collect(Collectors.toList());
+    }
 
 }

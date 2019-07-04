@@ -27,7 +27,7 @@ public class CreateProductFilter implements Filter {
 	filterService.doFilterValidation(request, response, chain, Arrays.asList(UserRole.ADMINISTRATOR));
     }
 
-	public void destroy() {
-	}
-    
+    public void destroy() {
+    }
+
 }

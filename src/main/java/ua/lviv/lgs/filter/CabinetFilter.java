@@ -17,17 +17,18 @@ import ua.lviv.lgs.shared.FilterService;
 @WebFilter("/cabinet.jsp")
 public class CabinetFilter implements Filter {
 
-	private FilterService filterService = FilterService.getFilterService();
+    private FilterService filterService = FilterService.getFilterService();
 
-	public void init(FilterConfig fConfig) throws ServletException {}
+    public void init(FilterConfig fConfig) throws ServletException {
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		filterService.doFilterValidation(request, response, chain, Arrays.asList(UserRole.USER, UserRole.ADMINISTRATOR));
-	}
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	    throws IOException, ServletException {
+	filterService.doFilterValidation(request, response, chain,
+		Arrays.asList(UserRole.USER, UserRole.ADMINISTRATOR));
+    }
 
-	public void destroy() {
-	}
-	
+    public void destroy() {
+    }
+
 }
-

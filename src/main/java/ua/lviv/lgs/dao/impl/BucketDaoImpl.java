@@ -13,7 +13,7 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class BucketDaoImpl implements BucketDao {
 
-	private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
+    private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
     private EntityManager em = FactoryManager.getEntityManager();
 
     @Override
@@ -22,8 +22,7 @@ public class BucketDaoImpl implements BucketDao {
 	    em.getTransaction().begin();
 	    em.persist(bucket);
 	    em.getTransaction().commit();
-	    log.info(
-		    "New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
+	    log.info("New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    log.error(e);
