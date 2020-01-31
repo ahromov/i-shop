@@ -33,6 +33,8 @@ public class BucketController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String productId = request.getParameter("productId");
+		Integer pCount = Integer.parseInt(request.getParameter("qtty"));
+
 		Product product = productService.read(productId);
 
 		HttpSession session = request.getSession();
@@ -45,6 +47,7 @@ public class BucketController extends HttpServlet {
 		bucket.setProduct(product);
 		bucket.setUser(user);
 		bucket.setPurchaseDate(new Date());
+		bucket.setCount(pCount);
 		bucketService.create(bucket);
 
 		response.setContentType("text/html");

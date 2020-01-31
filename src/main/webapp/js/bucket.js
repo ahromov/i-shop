@@ -22,16 +22,16 @@ function myFunction() {
 }
 
 function deleteOrderFromBucket(bId) {
-	
+
 	var customUrl = '';
 	var urlContent = window.location.href.split('/');
-	
+
 	for (var i = 0; i < urlContent.length - 1; i++) {
 		customUrl += urlContent[i] + '/'
 	}
-	
+
 	customUrl += 'bucket?bucketId=' + bId;
-	
+
 	$.ajax({
 		url : customUrl,
 		type : 'DELETE',
@@ -41,7 +41,7 @@ function deleteOrderFromBucket(bId) {
 			}
 		}
 	});
-	
+
 }
 
 var buckets = null;
@@ -57,16 +57,17 @@ $.get("buckets", function(data) {
 					+ "<th style='width: 20%;'>Name</th>"
 					+ "<th style='width: 20%;'>Description</th>"
 					+ "<th style='width: 20%;'>Price</th>"
+					+ "<th style='width: 20%;'>Quantity</th>"
 					+ "<th style='width: 20%;'>Options</th>" + "</tr>";
 			jQuery.each(buckets, function(i, value) {
 				tableContent += "<tr>" + "<td>" + value.purchaseDate + "</td>"
 						+ "<td>" + value.productName + "</td>" + "<td>"
 						+ value.productDescription + "</td>" + "<td>"
-						+ value.productPrice + "</td>"
+						+ value.productPrice + "</td>" + "<td>"
+						+ value.productsCount + "</td>"
 						+ "<td><button onclick=\"deleteOrderFromBucket('"
 						+ value.bucketId + "')\">delete</button></td>"
 						+ "</tr>"
 			});
 			$('#myTable').html(tableContent);
 		});
-

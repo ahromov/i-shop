@@ -25,6 +25,9 @@ public class Bucket {
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private Product product;
 
+	@Column(name = "qtty")
+	private Integer productsCount;
+
 	@Column(name = "purchase_date")
 	private Date purchaseDate;
 
@@ -48,8 +51,20 @@ public class Bucket {
 		this.purchaseDate = purchaseDate;
 	}
 
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	public Product getProduct() {
 		return product;
+	}
+
+	public Integer getCount() {
+		return productsCount;
+	}
+
+	public void setCount(Integer count) {
+		this.productsCount = count;
 	}
 
 	public User getUser() {
@@ -58,10 +73,6 @@ public class Bucket {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
 	}
 
 }
