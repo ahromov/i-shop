@@ -13,56 +13,65 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class ProductDaoImpl implements ProductDao {
 
-    private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
-    private EntityManager em = FactoryManager.getEntityManager();
+	private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
+	private EntityManager em = FactoryManager.getEntityManager();
 
-    @Override
-    public Product create(Product product) {
-	try {
-	    em.getTransaction().begin();
-	    em.persist(product);
-	    em.getTransaction().commit();
-	    log.info("New product '" + product.getName() + "' was added.");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Product create(Product product) {
+		try {
+			em.getTransaction().begin();
+			em.persist(product);
+			em.getTransaction().commit();
+			log.info("New product '" + product.getName() + "' was added.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return product;
 	}
-	return product;
-    }
 
-    @Override
-    public Product read(String id) {
-	Product product = null;
-	try {
-	    product = em.find(Product.class, Integer.parseInt(id));
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Product read(String id) {
+		Product product = null;
+		try {
+			product = em.find(Product.class, Integer.parseInt(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return product;
 	}
-	return product;
-    }
 
-    @Override
-    public Product update(Product product) {
-	return null;
-    }
-
-    @Override
-    public void delete(String id) {
-
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Product> readAll() {
-	Query query = null;
-	try {
-	    query = em.createQuery("SELECT e FROM Product e");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Product update(Product product) {
+		return null;
 	}
-	return (List<Product>) query.getResultList();
-    }
+
+	@Override
+	public void delete(String id) {
+		Product product = read(id);
+		try {
+			em.getTransaction().begin();
+			em.remove(product);
+			em.getTransaction().commit();
+			log.info("Product '" + product.getName() + "' was deleted.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> readAll() {
+		Query query = null;
+		try {
+			query = em.createQuery("SELECT e FROM Product e");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return (List<Product>) query.getResultList();
+	}
 
 }

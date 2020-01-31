@@ -43,9 +43,29 @@ public class ProductController extends HttpServlet {
 			throws ServletException, IOException {
 		String productId = request.getParameter("id");
 		Product product = ProductServiceImpl.getProductService().read(productId);
+		String role = (String) request.getSession().getAttribute("role");
 
+		request.setAttribute("role", role);
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
+		String productId = request.getParameter("productId");
+
+		if (productId != null) {
+			ProductServiceImpl.getProductService().delete(productId);
+			response.getWriter().write("Success");
+		} else
+			response.getWriter().write("Error");
+
+//		request.setAttribute("product", product);
+//		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
 	}
 
 }

@@ -20,17 +20,36 @@ $("button.createProduct").click(function() {
 
 $("button.buy-product").click(function() {
 
-	var productId = jQuery(this).attr("product-id");
+	var productId = $("button.buy-product").attr("product-id");
+	let userRole = '';
 
-	$.post("bucket", {
-		productId : productId
-	}, function(data) {
-		if (data == 'Success') {
-			$("[data-dismiss=modal]").trigger({
-				type : "click"
+	$.get("user-role", function(data) {
+		if (data !== '') {
+			userRole = data;
+		} else
+			alert(data);
+	}).done(function() {
+		if (userRole === 'ADMINISTRATOR') {
+			$.ajax({
+				type : 'DELETE',
+				url : 'product?productId=' + productId,
+				success : function(data) {
+					alert(data);
+					$(location).attr('href', 'cabinet.jsp');
+				}
 			});
-			alert('Success');
-			$(location).attr('href', 'cabinet.jsp');
+		} else {
+			$.post("bucket", {
+				productId : productId
+			}, function(data) {
+				if (data == 'Success') {
+					$("[data-dismiss=modal]").trigger({
+						type : "click"
+					});
+					alert(data);
+					$(location).attr('href', 'cabinet.jsp');
+				}
+			});
 		}
 	});
 

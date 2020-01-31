@@ -11,48 +11,48 @@ import ua.lviv.lgs.service.ProductService;
 
 public class ProductServiceImpl implements ProductService {
 
-    private static ProductService productServiceImpl;
-    private ProductDao productDao;
+	private static ProductService productServiceImpl;
+	private ProductDao productDao;
 
-    private ProductServiceImpl() {
-	productDao = new ProductDaoImpl();
-    }
-
-    public static ProductService getProductService() {
-	if (productServiceImpl == null) {
-	    productServiceImpl = new ProductServiceImpl();
+	private ProductServiceImpl() {
+		productDao = new ProductDaoImpl();
 	}
-	return productServiceImpl;
-    }
 
-    @Override
-    public Product create(Product t) {
-	return productDao.create(t);
-    }
+	public static ProductService getProductService() {
+		if (productServiceImpl == null) {
+			productServiceImpl = new ProductServiceImpl();
+		}
+		return productServiceImpl;
+	}
 
-    @Override
-    public Product read(String id) {
-	return productDao.read(id);
-    }
+	@Override
+	public Product create(Product t) {
+		return productDao.create(t);
+	}
 
-    @Override
-    public Product update(Product t) {
-	return productDao.update(t);
-    }
+	@Override
+	public Product read(String id) {
+		return productDao.read(id);
+	}
 
-    @Override
-    public void delete(String id) {
-	productDao.delete(id);
-    }
+	@Override
+	public Product update(Product t) {
+		return productDao.update(t);
+	}
 
-    @Override
-    public List<Product> readAll() {
-	return productDao.readAll();
-    }
+	@Override
+	public void delete(String id) {
+		productDao.delete(id);
+	}
 
-    @Override
-    public Map<Integer, Product> readAllMap() {
-	return readAll().stream().collect(Collectors.toMap(Product::getId, Function.identity()));
-    }
+	@Override
+	public List<Product> readAll() {
+		return productDao.readAll();
+	}
+
+	@Override
+	public Map<Integer, Product> readAllMap() {
+		return readAll().stream().collect(Collectors.toMap(Product::getId, Function.identity()));
+	}
 
 }
