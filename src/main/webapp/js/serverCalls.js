@@ -30,6 +30,7 @@ $("button.buy-product").click(function() {
 				type : "click"
 			});
 			alert('Success');
+			$(location).attr('href', 'cabinet.jsp');
 		}
 	});
 

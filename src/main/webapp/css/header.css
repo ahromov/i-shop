@@ -10,10 +10,15 @@ body {
 	flex-direction: column;
 }
 
+#productCards {
+	display: flex;
+}
+
 .card {
 	margin-bottom: 15px;
 	border-radius: 0;
 	box-shadow: 0 3px 5px rgba(0, 0, 0, .1);
+	width: max-content;
 }
 
 .header-top {

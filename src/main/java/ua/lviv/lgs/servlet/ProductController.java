@@ -46,7 +46,6 @@ public class ProductController extends HttpServlet {
 
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
-//		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
 	}
 
 }

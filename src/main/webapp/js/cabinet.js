@@ -13,7 +13,7 @@ $.get("products", function(data) {
 						+ "<div class='card-body'>" + "<h5 class='card-title'>"
 						+ value.name + "</h5>"
 						+ "<h6 class='card-subtitle mb-2 text-muted'>"
-						+ value.price + "</h6>" + "<p class='card-text'>"
+						+ value.price + "$</h6>" + "<p class='card-text'>"
 						+ value.description + "</p>"
 						+ "<a class='productCardElement'  href='product?id="
 						+ value.id + "' class='card-link'>Buy</a>" + "</div>"
@@ -31,5 +31,5 @@ $.get("products", function(data) {
 			$('a.productCardElement').hide();
 		}
 	});
-	
+
 });
