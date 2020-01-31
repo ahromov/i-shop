@@ -14,38 +14,39 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 @WebServlet("/product")
 public class ProductController extends HttpServlet {
 
-    private static final long serialVersionUID = 530917315308551086L;
+	private static final long serialVersionUID = 530917315308551086L;
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	String description = request.getParameter("description");
-	String name = request.getParameter("name");
-	String price = request.getParameter("price");
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String description = request.getParameter("description");
+		String name = request.getParameter("name");
+		String price = request.getParameter("price");
 
-	Product product = new Product(description, name, getValidatedPrice(price));
-	ProductServiceImpl.getProductService().create(product);
+		Product product = new Product(description, name, getValidatedPrice(price));
+		ProductServiceImpl.getProductService().create(product);
 
-	response.setContentType("text/html");
-	response.setCharacterEncoding("UTF-8");
-	response.getWriter().write("Success");
-    }
-
-    private double getValidatedPrice(String price) {
-	if (price == null || price.isEmpty()) {
-	    return 0;
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write("Success");
 	}
-	return Double.parseDouble(price);
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	String productId = request.getParameter("id");
-	Product product = ProductServiceImpl.getProductService().read(productId);
+	private double getValidatedPrice(String price) {
+		if (price == null || price.isEmpty()) {
+			return 0;
+		}
+		return Double.parseDouble(price);
+	}
 
-	request.setAttribute("product", product);
-	request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
-    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String productId = request.getParameter("id");
+		Product product = ProductServiceImpl.getProductService().read(productId);
+
+		request.setAttribute("product", product);
+		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
+//		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
+	}
 
 }
