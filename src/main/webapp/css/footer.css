@@ -110,9 +110,9 @@ footer p {
 }
 
 .social_footer_ul li {
-	padding-left: 20px;
 	padding-top: 10px;
 	float: left;
+	margin: 0 5px 0 5px;
 }
 
 .social_footer_ul li a {
