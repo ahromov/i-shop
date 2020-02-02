@@ -63,9 +63,6 @@ public class ProductController extends HttpServlet {
 			response.getWriter().write("Success");
 		} else
 			response.getWriter().write("Error");
-
-//		request.setAttribute("product", product);
-//		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
 	}
 
 	@Override
