@@ -12,12 +12,14 @@
 		<class>ua.lviv.lgs.domain.Product</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://127.0.0.1:3306/i-shop?serverTimezone=UTC" />
-			<property name="javax.persistence.jdbc.user" value="root" />
+				value="jdbc:postgresql://
+ec2-79-125-126-205.eu-west-1.compute.amazonaws.com:5432/ddc9tgnsouse42" />
+			<property name="javax.persistence.jdbc.user"
+				value="fegxwlwrcldykr" />
 			<property name="javax.persistence.jdbc.password"
-				value="toor" />
+				value="c7bf23a969b6a7923a607a49ade17b90a713d78e5b96678d83e62a995bd3bfa4" />
 			<property name="javax.persistence.jdbc.driver"
-				value="com.mysql.cj.jdbc.Driver" />
+				value="org.postgresql.Driver" />
 			<property name="javax.persistence.schema-generation-action"
 				value="drop-and-create" />
 			<property name="eclipselink.ddl-generation"

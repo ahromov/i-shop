@@ -3,7 +3,6 @@ $("button.createProduct").click(function() {
 	var description = $("form.createProduct input.productDescription").val();
 	var name = $("form.createProduct input.productName").val();
 	var price = $("form.createProduct input.productPrice").val();
-	
 
 	var product = {
 		description : description,
@@ -41,19 +40,24 @@ $("button.buy-product").click(function() {
 			});
 		} else {
 			var qtty = $("input.number").val();
-			
-			$.post("bucket", {
-				productId : productId,
-				qtty: qtty
-			}, function(data) {
-				if (data == 'Success') {
-					$("[data-dismiss=modal]").trigger({
-						type : "click"
-					});
-					alert(data);
-					$(location).attr('href', 'cabinet.jsp');
-				}
-			});
+
+			if (qtty >= 1 && qtty <= 100) {
+				$.post("bucket", {
+					productId : productId,
+					qtty : qtty
+				}, function(data) {
+					if (data == 'Success') {
+						$("[data-dismiss=modal]").trigger({
+							type : "click"
+						});
+						alert(data);
+						$(location).attr('href', 'cabinet.jsp');
+					}
+				});
+			} else {
+				alert("Invalid quantity of items");
+				$(location).attr('href', 'cabinet.jsp');
+			}
 		}
 	});
 

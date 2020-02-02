@@ -21,8 +21,7 @@
 					<h5 class="card-title">${product.name}</h5>
 					<h6 class="card-subtitle mb-2 text-muted">${product.price}</h6>
 					<p class="card-text">${product.description}</p>
-					${role.equals("ADMINISTRATOR") ? "" : "<label>Quantity: <input type=\"number\" class=\"number\"
-						style=\"width: 60px\"></label><br>"}
+					${role.equals("ADMINISTRATOR") ? "" : "<label>Quantity: <input type=\"number\" class=\"number\" value=\"1\" min=\"1\" max=\"100\"></label><br>"}
 					<a href="" data-toggle="modal" data-target="#buyProductModal">${role.equals("ADMINISTRATOR") ? "Delete" : "Buy"}</a>
 				</div>
 			</div>

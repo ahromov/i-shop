@@ -13,64 +13,64 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class BucketDaoImpl implements BucketDao {
 
-    private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
-    private EntityManager em = FactoryManager.getEntityManager();
+	private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
+	private EntityManager em = FactoryManager.getEntityManager();
 
-    @Override
-    public Bucket create(Bucket bucket) {
-	try {
-	    em.getTransaction().begin();
-	    em.persist(bucket);
-	    em.getTransaction().commit();
-	    log.info("New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Bucket create(Bucket bucket) {
+		try {
+			em.getTransaction().begin();
+			em.persist(bucket);
+			em.getTransaction().commit();
+			log.info("New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return bucket;
 	}
-	return bucket;
-    }
 
-    @Override
-    public Bucket read(String id) {
-	Bucket bucket = null;
-	try {
-	    bucket = em.find(Bucket.class, id);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Bucket read(String id) {
+		Bucket bucket = null;
+		try {
+			bucket = em.find(Bucket.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return bucket;
 	}
-	return bucket;
-    }
 
-    @Override
-    public Bucket update(Bucket t) {
-	throw new IllegalStateException("there is no update for bucket");
-    }
-
-    @Override
-    public void delete(String id) {
-	try {
-	    Bucket bucket = read(id);
-	    em.getTransaction().begin();
-	    em.remove(bucket);
-	    em.getTransaction().commit();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public Bucket update(Bucket t) {
+		throw new IllegalStateException("there is no update for bucket");
 	}
-    }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Bucket> readAll() {
-	Query query = null;
-	try {
-	    query = em.createQuery("SELECT e FROM Bucket e");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    log.error(e);
+	@Override
+	public void delete(String id) {
+		try {
+			Bucket bucket = read(id);
+			em.getTransaction().begin();
+			em.remove(bucket);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
 	}
-	return (List<Bucket>) query.getResultList();
-    }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Bucket> readAll() {
+		Query query = null;
+		try {
+			query = em.createQuery("SELECT e FROM Bucket e");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return (List<Bucket>) query.getResultList();
+	}
 
 }
