@@ -12,11 +12,11 @@
 		<class>ua.lviv.lgs.domain.Product</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://ec2-79-125-126-205.eu-west-1.compute.amazonaws.com:5432/ddc9tgnsouse42" />
+				value="jdbc:postgresql://localhost:5432/i-shop" />
 			<property name="javax.persistence.jdbc.user"
-				value="fegxwlwrcldykr" />
+				value="postgres" />
 			<property name="javax.persistence.jdbc.password"
-				value="c7bf23a969b6a7923a607a49ade17b90a713d78e5b96678d83e62a995bd3bfa4" />
+				value="postgres" />
 			<property name="javax.persistence.jdbc.driver"
 				value="org.postgresql.Driver" />
 			<property name="javax.persistence.schema-generation-action"
