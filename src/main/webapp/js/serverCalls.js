@@ -62,3 +62,25 @@ $("button.buy-product").click(function() {
 	});
 
 });
+
+$("button.save-product").click(
+		function() {
+
+			var productId = $("button.save-product").attr("product-id");
+			var description = $("input#newProductDescription").val();
+			var name = $("input#newProductName").val();
+			var price = $("input#newProductPrice").val();
+
+			$.ajax({
+				type : 'PUT',
+				url : 'product?productId=' + productId
+						+ '&newProductDescription=' + description
+						+ '&newProductName=' + name + '&newProductPrice='
+						+ price,
+				success : function(data) {
+					alert(data);
+					$(location).attr('href', 'cabinet.jsp');
+				}
+			});
+
+		});

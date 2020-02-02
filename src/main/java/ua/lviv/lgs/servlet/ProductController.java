@@ -68,4 +68,30 @@ public class ProductController extends HttpServlet {
 //		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
 	}
 
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
+		String productId = request.getParameter("productId");
+		String description = request.getParameter("newProductDescription");
+		String name = request.getParameter("newProductName");
+		String price = request.getParameter("newProductPrice");
+
+		Product product = ProductServiceImpl.getProductService().read(productId);
+		product.setName(name);
+		product.setDescription(description);
+		product.setPrice(getValidatedPrice(price));
+
+		if (productId != null) {
+			ProductServiceImpl.getProductService().update(product);
+			response.getWriter().write("Success");
+		} else
+			response.getWriter().write("Error");
+
+//		request.setAttribute("product", product);
+//		request.getRequestDispatcher("cabinet.jsp").forward(request, response);
+	}
+
 }

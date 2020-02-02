@@ -44,7 +44,14 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public Product update(Product product) {
-		return null;
+		try {
+			product = em.merge(product);
+			log.info("Product '" + product.getName() + "' was updated.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		return product;
 	}
 
 	@Override

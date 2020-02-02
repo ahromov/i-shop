@@ -22,6 +22,7 @@
 					<h6 class="card-subtitle mb-2 text-muted">${product.price}</h6>
 					<p class="card-text">${product.description}</p>
 					${role.equals("ADMINISTRATOR") ? "" : "<label>Quantity: <input type=\"number\" class=\"number\" value=\"1\" min=\"1\" max=\"100\"></label><br>"}
+					<a href="" data-toggle="modal" data-target="#editProductModal">${role.equals("ADMINISTRATOR") ? "Edit" : ""}</a><br>
 					<a href="" data-toggle="modal" data-target="#buyProductModal">${role.equals("ADMINISTRATOR") ? "Delete" : "Buy"}</a>
 				</div>
 			</div>
@@ -46,7 +47,33 @@
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Cancel</button>
 					<button type="button" product-id="${product.id}"
-						class="btn btn-primary buy-product">Buy</button>
+						class="btn btn-primary buy-product">${role.equals("ADMINISTRATOR") ? "Delete" : "Buy"}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="editProductModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Edit product</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label>Name:<input id="newProductName" type="text" value="${product.name}"></label><br>
+					<label>Description:<input id="newProductDescription" type="text" value="${product.description}"></label><br>
+					<label>Price:<input id="newProductPrice" type="number" value="${product.price}"></label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cancel</button>
+					<button type="button" product-id="${product.id}"
+						class="btn btn-primary save-product">Save</button>
 				</div>
 			</div>
 		</div>
