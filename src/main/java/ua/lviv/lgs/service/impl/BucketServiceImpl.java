@@ -8,44 +8,44 @@ import ua.lviv.lgs.service.BucketService;
 
 public class BucketServiceImpl implements BucketService {
 
-    private static BucketService bucketServiceImpl;
-    private BucketDao bucketDao;
+	private static BucketService bucketServiceImpl;
+	private BucketDao bucketDao;
 
-    private BucketServiceImpl() {
-	bucketDao = new BucketDaoImpl();
-    }
-
-    public static BucketService getBucketService() {
-	if (bucketServiceImpl == null) {
-	    bucketServiceImpl = new BucketServiceImpl();
+	private BucketServiceImpl() {
+		bucketDao = new BucketDaoImpl();
 	}
 
-	return bucketServiceImpl;
-    }
+	public static BucketService getBucketService() {
+		if (bucketServiceImpl == null) {
+			bucketServiceImpl = new BucketServiceImpl();
+		}
 
-    @Override
-    public Bucket create(Bucket t) {
-	return bucketDao.create(t);
-    }
+		return bucketServiceImpl;
+	}
 
-    @Override
-    public Bucket read(String id) {
-	return bucketDao.read(id);
-    }
+	@Override
+	public Bucket create(Bucket t) {
+		return bucketDao.create(t);
+	}
 
-    @Override
-    public Bucket update(Bucket t) {
-	return bucketDao.update(t);
-    }
+	@Override
+	public Bucket read(String id) {
+		return bucketDao.read(id);
+	}
 
-    @Override
-    public void delete(String id) {
-	bucketDao.delete(id);
-    }
+	@Override
+	public Bucket update(Bucket t) {
+		return bucketDao.update(t);
+	}
 
-    @Override
-    public List<Bucket> readAll() {
-	return bucketDao.readAll();
-    }
+	@Override
+	public void delete(String id) {
+		bucketDao.delete(id);
+	}
+
+	@Override
+	public List<Bucket> readAll() {
+		return bucketDao.readAll();
+	}
 
 }

@@ -8,48 +8,48 @@ import ua.lviv.lgs.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
-    private static UserService userServiceImpl;
-    private UserDao userDao;
+	private static UserService userServiceImpl;
+	private UserDao userDao;
 
-    private UserServiceImpl() {
-	userDao = new UserDaoImpl();
-    }
-
-    public static UserService getUserService() {
-	if (userServiceImpl == null) {
-	    userServiceImpl = new UserServiceImpl();
+	private UserServiceImpl() {
+		userDao = new UserDaoImpl();
 	}
-	return userServiceImpl;
-    }
 
-    @Override
-    public User create(User t) {
-	return userDao.create(t);
-    }
+	public static UserService getUserService() {
+		if (userServiceImpl == null) {
+			userServiceImpl = new UserServiceImpl();
+		}
+		return userServiceImpl;
+	}
 
-    @Override
-    public User read(String id) {
-	return userDao.read(id);
-    }
+	@Override
+	public User create(User t) {
+		return userDao.create(t);
+	}
 
-    @Override
-    public User update(User t) {
-	return userDao.update(t);
-    }
+	@Override
+	public User read(String id) {
+		return userDao.read(id);
+	}
 
-    @Override
-    public void delete(String id) {
-	userDao.delete(id);
-    }
+	@Override
+	public User update(User t) {
+		return userDao.update(t);
+	}
 
-    @Override
-    public List<User> readAll() {
-	return userDao.readAll();
-    }
+	@Override
+	public void delete(String id) {
+		userDao.delete(id);
+	}
 
-    @Override
-    public User getUserByEmail(String email) {
-	return userDao.getUserByEmail(email);
-    }
+	@Override
+	public List<User> readAll() {
+		return userDao.readAll();
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return userDao.getUserByEmail(email);
+	}
 
 }

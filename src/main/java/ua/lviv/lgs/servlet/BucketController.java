@@ -48,6 +48,7 @@ public class BucketController extends HttpServlet {
 		bucket.setUser(user);
 		bucket.setPurchaseDate(new Date());
 		bucket.setCount(pCount);
+
 		bucketService.create(bucket);
 
 		response.setContentType("text/html");

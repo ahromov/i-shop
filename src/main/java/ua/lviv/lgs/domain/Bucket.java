@@ -17,19 +17,19 @@ public class Bucket {
 	@Column(name = "id")
 	private String id;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
-
-	@ManyToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private Product product;
-
 	@Column(name = "qtty")
 	private Integer productsCount;
 
 	@Column(name = "purchase_date")
 	private Date purchaseDate;
+
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 
 	public Bucket() {
 

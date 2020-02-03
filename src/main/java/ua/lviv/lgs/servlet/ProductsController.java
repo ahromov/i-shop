@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ua.lviv.lgs.domain.Product;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
@@ -17,16 +17,17 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 @WebServlet("/products")
 public class ProductsController extends HttpServlet {
 
-    private static final long serialVersionUID = -6987179294005671682L;
+	private static final long serialVersionUID = -6987179294005671682L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	List<Product> products = ProductServiceImpl.getProductService().readAll();
-	String json = new Gson().toJson(products);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Product> products = ProductServiceImpl.getProductService().readAll();
 
-	response.setContentType("application/json");
-	response.setCharacterEncoding("UTF-8");
-	response.getWriter().write(json);
-    }
+		String json = new ObjectMapper().writeValueAsString(products);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	}
 
 }

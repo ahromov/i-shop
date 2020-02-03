@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Product;
@@ -32,7 +32,8 @@ public class BucketsController extends HttpServlet {
 		Map<Integer, Product> allProducts = ProductServiceImpl.getProductService().readAllMap();
 
 		List<BucketDto> bucketsDtos = toDto(allBuckets, allProducts);
-		String json = new Gson().toJson(bucketsDtos);
+
+		String json = new ObjectMapper().writeValueAsString(bucketsDtos);
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
