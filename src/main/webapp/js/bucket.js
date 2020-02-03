@@ -60,7 +60,7 @@ $.get("buckets", function(data) {
 					+ "<th style='width: 20%;'>Quantity</th>"
 					+ "<th style='width: 20%;'>Options</th>" + "</tr>";
 			jQuery.each(buckets, function(i, value) {
-				tableContent += "<tr>" + "<td>" + value.purchaseDate + "</td>"
+				tableContent += "<tr>" + "<td>" + new Date(value.purchaseDate) + "</td>"
 						+ "<td>" + value.productName + "</td>" + "<td>"
 						+ value.productDescription + "</td>" + "<td>"
 						+ value.productPrice + "</td>" + "<td>"
