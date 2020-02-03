@@ -16,8 +16,8 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<form class="createProduct" enctype="multipart/form-data"
-				method="post" action="product">
+			<form class="createProduct" enctype="multipart/form-data">
+				<!-- method="post" action="product"> -->
 				<div class="form-group">
 					<input type="text" name="name" class="form-control productName"
 						placeholder="enter product name">
@@ -38,7 +38,7 @@
 					<input type="file" name="file" class="form-control productPhoto">
 				</div>
 
-				<button type="submit" class="btn btn-primary createProduct">Submit</button>
+				<button type="button" class="btn btn-primary createProduct">Submit</button>
 			</form>
 		</div>
 	</div>
