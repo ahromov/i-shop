@@ -20,6 +20,7 @@ public class BucketDaoImpl implements BucketDao {
 	public Bucket create(Bucket bucket) {
 		try {
 			em.getTransaction().begin();
+			bucket.getProduct().addBucket(bucket);
 			em.persist(bucket);
 			em.getTransaction().commit();
 			log.info("New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
@@ -27,18 +28,21 @@ public class BucketDaoImpl implements BucketDao {
 			e.printStackTrace();
 			log.error(e);
 		}
+		
 		return bucket;
 	}
 
 	@Override
 	public Bucket read(String id) {
 		Bucket bucket = null;
+		
 		try {
 			bucket = em.find(Bucket.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
+		
 		return bucket;
 	}
 
@@ -64,12 +68,14 @@ public class BucketDaoImpl implements BucketDao {
 	@Override
 	public List<Bucket> readAll() {
 		Query query = null;
+		
 		try {
 			query = em.createQuery("SELECT e FROM Bucket e");
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
+		
 		return (List<Bucket>) query.getResultList();
 	}
 

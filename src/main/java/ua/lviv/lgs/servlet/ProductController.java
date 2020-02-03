@@ -2,16 +2,24 @@ package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+import org.apache.commons.io.IOUtils;
+
+import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.Product;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
 @WebServlet("/product")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, maxFileSize = 1024 * 1024 * 30, maxRequestSize = 1024 * 1024
+		* 50)
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 530917315308551086L;
@@ -19,22 +27,50 @@ public class ProductController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String description = request.getParameter("description");
-		String name = request.getParameter("name");
-		String price = request.getParameter("price");
+		if (((String) request.getSession().getAttribute("role")).equals("ADMINISTRATOR")) {
+			Product product = new Product(request.getParameter("description"), request.getParameter("name"),
+					getValidatedPrice(request.getParameter("price")), getPhoto(request, response));
+			ProductServiceImpl.getProductService().create(product);
 
-		Product product = new Product(description, name, getValidatedPrice(price));
-		ProductServiceImpl.getProductService().create(product);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("cabinet.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
 
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("Success");
+	private Photo getPhoto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String fileName = "";
+		Photo photo = null;
+
+		for (Part part : request.getParts()) {
+			fileName = extractFileName(part);
+			photo = new Photo();
+			photo.setFileName(fileName);
+			photo.setFileSize(part.getSize() / 1024);
+			photo.setContent(IOUtils.toByteArray(part.getInputStream()));
+			photo.setUploadStatus("Success");
+		}
+
+		return photo;
+	}
+
+	private String extractFileName(Part part) {
+		String fileName = "", contentDisposition = part.getHeader("content-disposition");
+		String[] items = contentDisposition.split(";");
+		for (String item : items) {
+			if (item.trim().startsWith("filename")) {
+				fileName = item.substring(item.indexOf("=") + 2, item.length() - 1);
+			}
+		}
+
+		return fileName;
 	}
 
 	private double getValidatedPrice(String price) {
 		if (price == null || price.isEmpty()) {
 			return 0;
 		}
+
 		return Double.parseDouble(price);
 	}
 

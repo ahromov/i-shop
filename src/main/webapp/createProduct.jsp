@@ -16,31 +16,37 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<form class="createProduct">
+			<form class="createProduct" enctype="multipart/form-data"
+				method="post" action="product">
 				<div class="form-group">
-					<input type="text" class="form-control productName" 
+					<input type="text" name="name" class="form-control productName"
 						placeholder="enter product name">
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control productDescription" 
+					<input type="text" name="description"
+						class="form-control productDescription"
 						placeholder="enter product description">
 				</div>
 
 				<div class="form-group">
-					<input type="number" class="form-control productPrice" 
+					<input type="number" name="price" class="form-control productPrice"
 						placeholder="enter product price">
 				</div>
 
-				<button class="btn btn-primary createProduct">Submit</button>
+				<div class="form-group">
+					<input type="file" name="file" class="form-control productPhoto">
+				</div>
+
+				<button type="submit" class="btn btn-primary createProduct">Submit</button>
 			</form>
 		</div>
 	</div>
 
 	<jsp:include page="includes/footer.html"></jsp:include>
-	
+
 	<jsp:include page="includes/jquery.html"></jsp:include>
-	
+
 	<script src="js/header.js"></script>
 	<script src="js/serverCalls.js"></script>
 </body>
