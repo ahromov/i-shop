@@ -27,36 +27,44 @@ public class ProductDaoImpl implements ProductDao {
 			e.printStackTrace();
 			log.error(e);
 		}
+
 		return product;
 	}
 
 	@Override
 	public Product read(String id) {
 		Product product = null;
+
 		try {
 			product = em.find(Product.class, Integer.parseInt(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
+
 		return product;
 	}
 
 	@Override
 	public Product update(Product product) {
 		try {
-			product = em.merge(product);
+			em.getTransaction().begin();
+			em.merge(product);
+			em.getTransaction().commit();
 			log.info("Product '" + product.getName() + "' was updated.");
+			return product;
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
-		return product;
+
+		return null;
 	}
 
 	@Override
 	public void delete(String id) {
 		Product product = read(id);
+
 		try {
 			em.getTransaction().begin();
 			em.remove(product);
@@ -66,6 +74,7 @@ public class ProductDaoImpl implements ProductDao {
 			e.printStackTrace();
 			log.error(e);
 		}
+
 	}
 
 	@SuppressWarnings("unchecked")
