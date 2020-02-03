@@ -65,9 +65,11 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<label>Name:<input id="newProductName" type="text" value="${product.name}"></label><br>
-					<label>Description:<input id="newProductDescription" type="text" value="${product.description}"></label><br>
-					<label>Price:<input id="newProductPrice" type="number" value="${product.price}"></label>
+					<label>Name:<input id="newProductName" type="text"
+						value="${product.name}"></label><br> <label>Description:<input
+						id="newProductDescription" type="text"
+						value="${product.description}"></label><br> <label>Price:<input
+						id="newProductPrice" type="number" value="${product.price}"></label>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
