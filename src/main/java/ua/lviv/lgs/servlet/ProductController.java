@@ -2,7 +2,6 @@ package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +31,7 @@ public class ProductController extends HttpServlet {
 					getValidatedPrice(request.getParameter("price")), getPhoto(request, response));
 			ProductServiceImpl.getProductService().create(product);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("cabinet.jsp");
-			dispatcher.forward(request, response);
+			response.getWriter().write("Success");
 		}
 	}
 
