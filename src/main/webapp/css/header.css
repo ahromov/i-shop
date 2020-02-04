@@ -1,6 +1,7 @@
 body {
 	background: #f9f9f9;
 	display: flex;
+	min-height: 100vh;
 	flex-direction: column;
 }
 
@@ -70,6 +71,7 @@ body {
 
 div.container-fluid {
 	min-height: 500px;
+	flex: 1;
 }
 
 form.createProduct {
