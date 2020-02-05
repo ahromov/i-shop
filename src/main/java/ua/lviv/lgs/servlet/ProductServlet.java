@@ -54,11 +54,20 @@ public class ProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (((String) request.getSession().getAttribute("role")).equals("ADMINISTRATOR")) {
-			Product product = new Product(request.getParameter("description"), request.getParameter("name"),
-					getValidatedPrice(request.getParameter("price")), getPhoto(request, response));
-			ProductServiceImpl.getProductService().create(product);
+			String name = request.getParameter("name");
+			String description = request.getParameter("description");
+			Double price = 0.0;
+			if (!request.getParameter("price").equals(""))
+				price = Double.parseDouble(request.getParameter("price"));
+			Photo photo = getPhoto(request, response);
 
-			response.getWriter().write("Success");
+			if (name.equals("") || description.equals("") || price <= 0 || photo.getFileSize() == 0) {
+				response.getWriter().write("Error");
+			} else {
+				Product product = new Product(description, name, price, photo);
+				ProductServiceImpl.getProductService().create(product);
+				response.getWriter().write("Success");
+			}
 		}
 	}
 
