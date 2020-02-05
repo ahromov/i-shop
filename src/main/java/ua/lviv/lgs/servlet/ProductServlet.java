@@ -81,7 +81,7 @@ public class ProductServlet extends HttpServlet {
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(getValidatedPrice(price));
-				if (photo != null)
+				if (photo.getFileSize() != 0)
 					product.setPhoto(photo);
 
 				ProductServiceImpl.getProductService().update(product);
