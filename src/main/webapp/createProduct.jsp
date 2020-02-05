@@ -17,27 +17,22 @@
 	<div class="container-fluid">
 		<div class="row">
 			<form class="createProduct" enctype="multipart/form-data">
-				<!-- method="post" action="product"> -->
 				<div class="form-group">
 					<input type="text" name="name" class="form-control productName"
 						placeholder="enter product name">
 				</div>
-
 				<div class="form-group">
 					<input type="text" name="description"
 						class="form-control productDescription"
 						placeholder="enter product description">
 				</div>
-
 				<div class="form-group">
 					<input type="number" name="price" class="form-control productPrice"
 						placeholder="enter product price">
 				</div>
-
 				<div class="form-group">
 					<input type="file" name="file" class="form-control productPhoto">
 				</div>
-
 				<button type="button" class="btn btn-primary createProduct">Submit</button>
 			</form>
 		</div>
