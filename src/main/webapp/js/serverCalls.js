@@ -9,8 +9,8 @@ $("button.createProduct").click(function() {
 		data : form,
 		processData : false,
 		contentType : false,
-		success : function() {
-			alert('Success');
+		success : function(data) {
+			alert(data);
 		}
 	})
 
