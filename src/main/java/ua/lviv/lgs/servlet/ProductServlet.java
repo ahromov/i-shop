@@ -19,7 +19,7 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 @WebServlet("/product")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, maxFileSize = 1024 * 1024 * 30, maxRequestSize = 1024 * 1024
 		* 50)
-public class ProductController extends HttpServlet {
+public class ProductServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 530917315308551086L;
 

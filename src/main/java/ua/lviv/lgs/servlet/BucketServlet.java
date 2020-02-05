@@ -22,7 +22,7 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 
 @WebServlet("/bucket")
-public class BucketController extends HttpServlet {
+public class BucketServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3449676006995456547L;
 
