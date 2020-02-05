@@ -24,6 +24,33 @@ public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 530917315308551086L;
 
 	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String productId = request.getParameter("id");
+		Product product = ProductServiceImpl.getProductService().read(productId);
+		String role = (String) request.getSession().getAttribute("role");
+
+		request.setAttribute("role", role);
+		request.setAttribute("product", product);
+		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
+		String productId = request.getParameter("productId");
+
+		if (productId != null) {
+			ProductServiceImpl.getProductService().delete(productId);
+			response.getWriter().write("Success");
+		} else
+			response.getWriter().write("Error");
+	}
+
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (((String) request.getSession().getAttribute("role")).equals("ADMINISTRATOR")) {
@@ -32,6 +59,35 @@ public class ProductController extends HttpServlet {
 			ProductServiceImpl.getProductService().create(product);
 
 			response.getWriter().write("Success");
+		}
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (((String) request.getSession().getAttribute("role")).equals("ADMINISTRATOR")) {
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+
+			String productId = request.getParameter("productId");
+
+			if (productId != null) {
+				String name = request.getParameter("name");
+				String description = request.getParameter("description");
+				String price = request.getParameter("price");
+				Photo photo = getPhoto(request, response);
+
+				Product product = ProductServiceImpl.getProductService().read(productId);
+				product.setName(name);
+				product.setDescription(description);
+				product.setPrice(getValidatedPrice(price));
+				if (photo != null)
+					product.setPhoto(photo);
+
+				ProductServiceImpl.getProductService().update(product);
+				response.getWriter().write("Success");
+			} else
+				response.getWriter().write("Error");
 		}
 	}
 
@@ -70,56 +126,6 @@ public class ProductController extends HttpServlet {
 		}
 
 		return Double.parseDouble(price);
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String productId = request.getParameter("id");
-		Product product = ProductServiceImpl.getProductService().read(productId);
-		String role = (String) request.getSession().getAttribute("role");
-
-		request.setAttribute("role", role);
-		request.setAttribute("product", product);
-		request.getRequestDispatcher("singleProduct.jsp").forward(request, response);
-	}
-
-	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-
-		String productId = request.getParameter("productId");
-
-		if (productId != null) {
-			ProductServiceImpl.getProductService().delete(productId);
-			response.getWriter().write("Success");
-		} else
-			response.getWriter().write("Error");
-	}
-
-	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-
-		String productId = request.getParameter("productId");
-		String description = request.getParameter("newProductDescription");
-		String name = request.getParameter("newProductName");
-		String price = request.getParameter("newProductPrice");
-
-		Product product = ProductServiceImpl.getProductService().read(productId);
-		product.setName(name);
-		product.setDescription(description);
-		product.setPrice(getValidatedPrice(price));
-
-		if (productId != null) {
-			ProductServiceImpl.getProductService().update(product);
-			response.getWriter().write("Success");
-		} else
-			response.getWriter().write("Error");
 	}
 
 }

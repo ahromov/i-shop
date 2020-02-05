@@ -61,24 +61,19 @@ $("button.buy-product").click(function() {
 
 });
 
-$("button.save-product").click(
-		function() {
+$("button.save-product").click(function() {
+	
+	const formData = new FormData($('#editProductModal form.updateProduct')[0]);
 
-			var productId = $("button.save-product").attr("product-id");
-			var description = $("input#newProductDescription").val();
-			var name = $("input#newProductName").val();
-			var price = $("input#newProductPrice").val();
-
-			$.ajax({
-				type : 'PUT',
-				url : 'product?productId=' + productId
-						+ '&newProductDescription=' + description
-						+ '&newProductName=' + name + '&newProductPrice='
-						+ price,
-				success : function(data) {
-					alert(data);
-					$(location).attr('href', 'cabinet.jsp');
-				}
-			});
-
-		});
+	fetch('product', {
+		method: 'PUT',
+		body: formData
+	}).then((response) => response).then((result) => {
+	if (result.status == 200)
+		alert('Success');
+		$(location).attr('href', 'cabinet.jsp');
+	}).catch((error) => {
+		alert('Error:', error);
+	});
+	
+});

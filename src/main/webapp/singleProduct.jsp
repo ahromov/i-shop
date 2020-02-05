@@ -64,19 +64,22 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<label>Name:<input id="newProductName" type="text"
-						value="${product.name}"></label><br> <label>Description:<input
-						id="newProductDescription" type="text"
-						value="${product.description}"></label><br> <label>Price:<input
-						id="newProductPrice" type="number" value="${product.price}"></label>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Cancel</button>
-					<button type="button" product-id="${product.id}"
-						class="btn btn-primary save-product">Save</button>
-				</div>
+				<form class="updateProduct" enctype="multipart/form-data">
+					<div class="modal-body">
+						ID:<input type="text" name="productId" value="${product.id}"><br>
+						Name:<input type="text" name="name" value="${product.name}"><br>
+						Description:<input type="text" name="description"
+							value="${product.description}"><br> Price:<input
+							type="number" name="price" value="${product.price}"><br>
+						Photo:<input name="file" type="file">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Cancel</button>
+						<button type="button" product-id="${product.id}"
+							class="btn btn-primary save-product">Save</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
