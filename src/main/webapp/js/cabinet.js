@@ -23,9 +23,9 @@ $
 												+ value.price
 												+ "$</h6><p class='card-text'>"
 												+ value.description
-												+ "</p><a class='btn btn-primary productCardElement' href='product?id="
+												+ "</p><a class='btn btn-primary productCardElement' onclick='checkRole("
 												+ value.id
-												+ "' class='card-link'>Buy</a></div></div></div></div>"
+												+ ")' class='card-link'>Buy</a></div></div></div></div>"
 									});
 
 					$('#productCards').html(cardsContent);
@@ -41,3 +41,15 @@ $
 			});
 
 		});
+
+function checkRole(id) {
+
+	$.get("user-role", function(data) {
+		if (data === null) {
+			alert('You must be loginned for purchase!');
+			$(location).attr('href', 'login.jsp');
+		} else
+			$(location).attr('href', 'product?id=' + id);
+	})
+
+}

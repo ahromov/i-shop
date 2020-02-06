@@ -7,6 +7,14 @@ $(document).ready(function() {
 
 });
 
+$("button.product-login").click(function() {
+
+	$(location).attr('href', 'login.jsp')
+
+});
+
+
+
 $("button.product-logout").click(function() {
 
 	$.get("logout", function(data) {
