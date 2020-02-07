@@ -10,6 +10,8 @@
 <title>Cabinet</title>
 <jsp:include page="includes/bootstrap.html"></jsp:include>
 <jsp:include page="includes/common_styles.html"></jsp:include>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<div id="wrapper" class="animate">
