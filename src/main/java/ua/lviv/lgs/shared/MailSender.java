@@ -3,6 +3,7 @@ package ua.lviv.lgs.shared;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -40,7 +41,7 @@ public class MailSender {
 	}
 
 	public void sendMail(String to, String subject, String text) {
-		Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+		Session session = Session.getInstance(prop, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(prop.getProperty("username"), prop.getProperty("password"));
 			}
