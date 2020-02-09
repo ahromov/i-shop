@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
+import ua.lviv.lgs.shared.MailSender;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -27,6 +28,9 @@ public class RegistrationServlet extends HttpServlet {
 		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
 			UserServiceImpl.getUserService()
 					.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+
+			MailSender.getMailSender().sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
+					"Yours login " + email + ", and password " + password);
 		}
 
 		response.setContentType("text/html");
