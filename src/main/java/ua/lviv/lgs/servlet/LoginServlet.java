@@ -29,21 +29,24 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		User user = UserServiceImpl.getUserService().getUserByEmail(email);
 
-		if (user != null && user.getPassword().equals(password)) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("userId", user.getId());
-			session.setAttribute("userName", user.getFirstName());
-			session.setAttribute("role", user.getRole().toString());
+		if (user != null) {
+			if (user.getPassword().equals(password)) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("userId", user.getId());
+				session.setAttribute("userName", user.getFirstName());
+				session.setAttribute("role", user.getRole().toString());
 
-			UserLogin userLogin = new UserLogin();
-			userLogin.userEmail = user.getEmail();
-			userLogin.destinationUrl = "cabinet.jsp";
+				UserLogin userLogin = new UserLogin();
+				userLogin.userEmail = user.getEmail();
+				userLogin.destinationUrl = "cabinet.jsp";
 
-			ObjectMapper objectMapper = new ObjectMapper();
-			String json = objectMapper.writeValueAsString(userLogin);
+				ObjectMapper objectMapper = new ObjectMapper();
+				String json = objectMapper.writeValueAsString(userLogin);
 
-			response.getWriter().write(json);
-		}
+				response.getWriter().write(json);
+			}
+		} else
+			response.getWriter().write("NotExists");
 	}
 
 }

@@ -15,6 +15,11 @@ function showAlertAfterRegistration(data) {
 		$('div.alert.alert-warning').show();
 		return;
 	}
+
+	if (data == 'NotExists') {
+		$('div.alert.alert-danger').show();
+		return;
+	}
 }
 
 $('.message a').on('click', function() {
@@ -74,16 +79,22 @@ $("button.login").click(function() {
 		};
 
 		$.post("login", userLogin, function(data) {
-			if (data !== '') {
+			if (data == 'NotExists')
+				showAlertAfterRegistration(data);
+			else {
 				var customUrl = '';
 				var urlContent = window.location.href.split('/');
+
 				for (var i = 0; i < urlContent.length - 1; i++) {
 					customUrl += urlContent[i] + '/'
 				}
+
 				customUrl += data.destinationUrl;
 				window.location = customUrl;
+
+				$("form")[1].reset();
 			}
-			$("form")[1].reset();
+
 		});
 	}
 

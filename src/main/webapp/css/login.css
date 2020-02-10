@@ -110,3 +110,7 @@ div.login-page div.alert.alert-success {
 div.login-page div.alert.alert-warning {
 	display: none;
 }
+
+div.login-page div.alert.alert-danger {
+	display: none;
+}

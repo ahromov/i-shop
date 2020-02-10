@@ -35,10 +35,11 @@ public class RegistrationServlet extends HttpServlet {
 				UserServiceImpl.getUserService()
 						.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 
+				response.getWriter().write("Success");
+
 				MailSender.getMailSender().sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
 						"Yours login " + email + ", and password " + password);
 
-				response.getWriter().write("Success");
 			} else {
 				response.getWriter().write("Exists");
 			}
