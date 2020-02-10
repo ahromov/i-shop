@@ -5,16 +5,29 @@ function loginRegisterSwitch() {
 	}, "slow");
 }
 
-function showAlertAfterRegistration() {
-	$('div.alert.alert-success').show();
+function showAlertAfterRegistration(data) {
+	if (data == 'Success') {
+		$('div.alert.alert-success').show();
+		return;
+	}
+
+	if (data == 'Exists') {
+		$('div.alert.alert-warning').show();
+		return;
+	}
 }
+
+$('.alert .close.close-alert').on('click', function() {
+	$('.alert').css('display', 'none');
+});
 
 $('.message a').click(function() {
 	loginRegisterSwitch();
 });
 
 $("button.register")
-		.click(
+		.on(
+				'click',
 				function() {
 
 					var email = $("form.register-form input.email").val();
@@ -40,14 +53,13 @@ $("button.register")
 							password : password
 						};
 
-						$.post("registration", userRegistration,
+						$.post("registration", userRegistration).done(
 								function(data) {
-									if (data == 'Success') {
-										$("form")[0].reset();
-										$("form")[1].reset();
-										loginRegisterSwitch();
-										showAlertAfterRegistration();
-									}
+									$("form")[0].reset();
+									$("form")[1].reset();
+									loginRegisterSwitch();
+									showAlertAfterRegistration(data);
+									return;
 								});
 					}
 

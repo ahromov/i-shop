@@ -106,3 +106,7 @@ body {
 div.login-page div.alert.alert-success {
 	display: none;
 }
+
+div.login-page div.alert.alert-warning {
+	display: none;
+}

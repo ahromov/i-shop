@@ -22,6 +22,9 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		User user = UserServiceImpl.getUserService().getUserByEmail(email);
@@ -39,8 +42,6 @@ public class LoginServlet extends HttpServlet {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(userLogin);
 
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}
 	}

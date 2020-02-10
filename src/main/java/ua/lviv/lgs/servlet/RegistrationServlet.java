@@ -20,22 +20,30 @@ public class RegistrationServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
 		String email = request.getParameter("email");
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String password = request.getParameter("password");
 
 		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
-			UserServiceImpl.getUserService()
-					.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+			User user = UserServiceImpl.getUserService().getUserByEmail(email);
 
-			MailSender.getMailSender().sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
-					"Yours login " + email + ", and password " + password);
+			if (user == null) {
+				UserServiceImpl.getUserService()
+						.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+
+				MailSender.getMailSender().sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
+						"Yours login " + email + ", and password " + password);
+
+				response.getWriter().write("Success");
+			} else {
+				response.getWriter().write("Exists");
+			}
 		}
 
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("Success");
 	}
 
 }

@@ -48,6 +48,14 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
+
+		<div class="alert alert-warning alert-dismissible fade show"
+			role="alert">
+			<b>Warning!</b> This e-mail address is registered.
+			<button type="button" class="close close-alert" >
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
 	</div>
 
 	<jsp:include page="includes/footer.html"></jsp:include>
