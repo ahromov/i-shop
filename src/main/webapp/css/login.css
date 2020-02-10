@@ -114,3 +114,7 @@ div.login-page div.alert.alert-warning {
 div.login-page div.alert.alert-danger {
 	display: none;
 }
+
+div.login-page div.alert.alert-primary {
+	display: none;
+}

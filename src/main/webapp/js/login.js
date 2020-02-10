@@ -12,7 +12,7 @@ function showAlertAfterRegistration(data) {
 	}
 
 	if (data == 'Exists') {
-		$('div.alert.alert-warning').show();
+		$('div.alert.alert-warning.account-exists').show();
 		return;
 	}
 
@@ -20,12 +20,31 @@ function showAlertAfterRegistration(data) {
 		$('div.alert.alert-danger').show();
 		return;
 	}
+
+	if (data == 'InvalidPassword') {
+		$('div.alert.alert-warning.invalid-password').show();
+		return;
+	}
+
+	if (data == 'PasswordSended') {
+		$('div.alert.alert-primary.sended-password').show();
+		return;
+	}
+}
+
+function hideAlert() {
+	$('.alert').css('display', 'none');
 }
 
 $('.message a').on('click', function() {
 	loginRegisterSwitch();
-	$('.alert').css('display', 'none');
+	hideAlert();
 });
+
+$('button.close').on('click', function() {
+	hideAlert();
+});
+
 
 $("button.register")
 		.on(
@@ -63,10 +82,11 @@ $("button.register")
 									return;
 								});
 					}
-
 				});
 
-$("button.login").click(function() {
+$("button.login").on('click', function() {
+	hideAlert();
+	
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
 
@@ -78,24 +98,38 @@ $("button.login").click(function() {
 			password : password
 		};
 
-		$.post("login", userLogin, function(data) {
-			if (data == 'NotExists')
+		$.post("login", userLogin).done(function(data) {
+			if (data == 'NotExists') {
 				showAlertAfterRegistration(data);
-			else {
-				var customUrl = '';
-				var urlContent = window.location.href.split('/');
-
-				for (var i = 0; i < urlContent.length - 1; i++) {
-					customUrl += urlContent[i] + '/'
-				}
-
-				customUrl += data.destinationUrl;
-				window.location = customUrl;
-
-				$("form")[1].reset();
+				return;
 			}
 
+			if (data == 'InvalidPassword') {
+				showAlertAfterRegistration(data);
+				return;
+			}
+
+			var customUrl = '';
+			var urlContent = window.location.href.split('/');
+
+			for (var i = 0; i < urlContent.length - 1; i++) {
+				customUrl += urlContent[i] + '/'
+			}
+
+			customUrl += data.destinationUrl;
+			window.location = customUrl;
+
+			$("form")[1].reset();
 		});
 	}
+});
 
+$("a.remind-passwd").on('click', function() {
+	hideAlert();
+	
+	var email = $("form.login-form input.email").val();
+
+	$.get("login?email=" + email).done(function(data) {
+		showAlertAfterRegistration(data);
+	});
 });
