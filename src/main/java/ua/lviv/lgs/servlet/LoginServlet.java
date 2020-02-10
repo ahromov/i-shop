@@ -2,6 +2,8 @@ package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,10 +66,16 @@ public class LoginServlet extends HttpServlet {
 		User user = UserServiceImpl.getUserService().getUserByEmail(email);
 
 		if (user != null) {
-			MailSender.getMailSender().sendMail(email, "Hello " + user.getFirstName(),
-					"Your password " + user.getPassword());
-			
-			response.getWriter().write("PasswordSended");
+			try {
+				MailSender.getMailSender().sendMail(email, "Hello " + user.getFirstName(),
+						"Your password " + user.getPassword());
+
+				response.getWriter().write("PasswordSended");
+			} catch (AddressException e) {
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		} else {
 			response.getWriter().write("NotExists");
 		}
