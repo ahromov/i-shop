@@ -2,11 +2,16 @@ package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
@@ -17,6 +22,7 @@ import ua.lviv.lgs.shared.MailSender;
 public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9186251900623717347L;
+	private static final Logger log = LogManager.getLogger(RegistrationServlet.class.getName());
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,19 +38,28 @@ public class RegistrationServlet extends HttpServlet {
 			User user = UserServiceImpl.getUserService().getUserByEmail(email);
 
 			if (user == null) {
-				UserServiceImpl.getUserService()
-						.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 
-				response.getWriter().write("Success");
+				try {
+					MailSender.getMailSender().sendMail(email,
+							"Hello " + firstName + "!\n Your account was rigistered!\n",
+							"Yours login " + email + ", and password " + password);
 
-				MailSender.getMailSender().sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
-						"Yours login " + email + ", and password " + password);
+					UserServiceImpl.getUserService()
+							.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 
-			} else {
-				response.getWriter().write("Exists");
+					response.getWriter().write("Success");
+				} catch (AddressException e) {
+					log.error("Can`t user registered, invalid email: ", e);
+					response.getWriter().write("InvalidEmail");
+				} catch (MessagingException e) {
+					log.error("Can`t user registered, mesaging error: ", e);
+					response.getWriter().write("InvalidEmail");
+				}
 			}
-		}
 
+		} else {
+			response.getWriter().write("Exists");
+		}
 	}
 
 }

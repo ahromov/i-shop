@@ -37,10 +37,6 @@
 				<p class="message">
 					Not registered? <a href="#">Create an account</a>
 				</p>
-				<p>
-					<a href="#" class="remind-passwd"> Remind password</a>
-
-				</p>
 				<p class="message">
 					<a href="index.jsp">Back to main page</a>
 				</p>
@@ -63,9 +59,17 @@
 			</button>
 		</div>
 
-		<div class="alert alert-danger alert-dismissible fade show"
+		<div class="alert alert-danger not-exists alert-dismissible fade show"
 			role="alert">
 			<b>Error!</b> Account, not found.
+			<button type="button" class="close close-alert">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		
+		<div class="alert alert-danger invalid-email alert-dismissible fade show"
+			role="alert">
+			<b>Error!</b> Incorrect email. Check your email address.
 			<button type="button" class="close close-alert">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -74,7 +78,7 @@
 		<div
 			class="alert alert-warning invalid-password alert-dismissible fade show"
 			role="alert">
-			<b>Warning!</b> Invalid password. Forgot it?
+			<b>Warning!</b> Invalid password. Forgot it? <a href="#" class="remind-passwd"> Remind password</a>
 			<button type="button" class="close close-alert">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -88,6 +92,13 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
+		
+		<div
+			class="alert alert-loading fade show"
+			role="alert">
+			<div class="lds-dual-ring"></div>
+		</div>
+		
 	</div>
 
 	<jsp:include page="includes/footer.html"></jsp:include>

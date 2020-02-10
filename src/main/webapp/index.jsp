@@ -32,7 +32,7 @@
 				</ul>
 				<ul class="navbar-nav ml-md-auto d-md-flex">
 					<li class="nav-item">
-						<button class="nav-link product-login"
+						<button class="btn btn-lg nav-link product-login"
 							style="background-color: green">Login</button>
 					</li>
 				</ul>

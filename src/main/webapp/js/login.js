@@ -5,7 +5,13 @@ function loginRegisterSwitch() {
 	}, "slow");
 }
 
+function hideAlert() {
+	$('.alert').css('display', 'none');
+}
+
 function showAlertAfterRegistration(data) {
+	hideAlert();
+
 	if (data == 'Success') {
 		$('div.alert.alert-success').show();
 		return;
@@ -17,7 +23,7 @@ function showAlertAfterRegistration(data) {
 	}
 
 	if (data == 'NotExists') {
-		$('div.alert.alert-danger').show();
+		$('div.alert.alert-danger.not-exists').show();
 		return;
 	}
 
@@ -30,10 +36,11 @@ function showAlertAfterRegistration(data) {
 		$('div.alert.alert-primary.sended-password').show();
 		return;
 	}
-}
-
-function hideAlert() {
-	$('.alert').css('display', 'none');
+	
+	if (data == 'InvalidEmail') {
+		$('div.alert.alert-danger.invalid-email').show();
+		return;
+	}
 }
 
 $('.message a').on('click', function() {
@@ -44,7 +51,6 @@ $('.message a').on('click', function() {
 $('button.close').on('click', function() {
 	hideAlert();
 });
-
 
 $("button.register")
 		.on(
@@ -78,15 +84,15 @@ $("button.register")
 									$("form")[0].reset();
 									$("form")[1].reset();
 									loginRegisterSwitch();
+									$('div.alert.alert-loading').show();
 									showAlertAfterRegistration(data);
-									return;
 								});
 					}
 				});
 
 $("button.login").on('click', function() {
 	hideAlert();
-	
+
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
 
@@ -126,7 +132,8 @@ $("button.login").on('click', function() {
 
 $("a.remind-passwd").on('click', function() {
 	hideAlert();
-	
+	$('div.alert.alert-loading').show();
+
 	var email = $("form.login-form input.email").val();
 
 	$.get("login?email=" + email).done(function(data) {
