@@ -17,19 +17,15 @@ function showAlertAfterRegistration(data) {
 	}
 }
 
-$('.alert .close.close-alert').on('click', function() {
-	$('.alert').css('display', 'none');
-});
-
-$('.message a').click(function() {
+$('.message a').on('click', function() {
 	loginRegisterSwitch();
+	$('.alert').css('display', 'none');
 });
 
 $("button.register")
 		.on(
 				'click',
 				function() {
-
 					var email = $("form.register-form input.email").val();
 					var firstName = $("form.register-form input.firstName")
 							.val();
@@ -66,7 +62,6 @@ $("button.register")
 				});
 
 $("button.login").click(function() {
-
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
 
