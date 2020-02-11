@@ -34,7 +34,7 @@
 				</ul>
 				<ul class="navbar-nav ml-md-auto d-md-flex">
 					<li class="nav-item">
-						<button class="nav-link product-logout"
+						<button class="btn btn-lg nav-link product-logout"
 							style="background-color: green">LogOut</button>
 					</li>
 				</ul>
