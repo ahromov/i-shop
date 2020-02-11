@@ -16,8 +16,6 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.lviv.lgs.dao.impl.BucketDaoImpl;
-
 public class MailSender {
 
 	private final static Logger log = LogManager.getLogger(MailSender.class.getName());
