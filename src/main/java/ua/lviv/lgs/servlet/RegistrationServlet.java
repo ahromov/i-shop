@@ -38,7 +38,6 @@ public class RegistrationServlet extends HttpServlet {
 			User user = UserServiceImpl.getUserService().getUserByEmail(email);
 
 			if (user == null) {
-
 				try {
 					MailSender.getMailSender().sendMail(email,
 							"Hello " + firstName + "!\n Your account was rigistered!\n",
