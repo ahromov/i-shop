@@ -17,6 +17,10 @@ body {
 	cursor: pointer;
 }
 
+.container-fluid .row {
+	justify-content: center;
+}
+
 #productCards {
 	display: flex;
 	flex-wrap: inherit;
