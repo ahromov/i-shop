@@ -39,12 +39,12 @@ public class RegistrationServlet extends HttpServlet {
 
 			if (user == null) {
 				try {
+					UserServiceImpl.getUserService()
+							.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+
 					MailSender.getMailSender().sendMail(email,
 							"Hello " + firstName + "!\n Your account was rigistered!\n",
 							"Yours login " + email + ", and password " + password);
-
-					UserServiceImpl.getUserService()
-							.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 
 					response.getWriter().write("Success");
 				} catch (AddressException e) {
@@ -54,11 +54,11 @@ public class RegistrationServlet extends HttpServlet {
 					log.error("Can`t user registered, mesaging error: ", e);
 					response.getWriter().write("InvalidEmail");
 				}
+			} else {
+				response.getWriter().write("Exists");
 			}
-
-		} else {
-			response.getWriter().write("Exists");
-		}
+		} else 
+			response.getWriter().write("InvalidData");
 	}
 
 }
