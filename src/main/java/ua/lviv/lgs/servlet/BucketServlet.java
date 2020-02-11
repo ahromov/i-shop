@@ -26,9 +26,9 @@ public class BucketServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3449676006995456547L;
 
-	private BucketService bucketService = BucketServiceImpl.getBucketService();
-	private ProductService productService = ProductServiceImpl.getProductService();
-	private UserService userService = UserServiceImpl.getUserService();
+	private static final BucketService bucketService = BucketServiceImpl.getBucketServiceImpl();
+	private static final ProductService productService = ProductServiceImpl.getProductService();
+	private static final UserService userService = UserServiceImpl.getUserService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

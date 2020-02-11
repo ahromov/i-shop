@@ -13,8 +13,21 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class BucketDaoImpl implements BucketDao {
 
-	private static Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
-	private EntityManager em = FactoryManager.getEntityManager();
+	private static final Logger log = LogManager.getLogger(BucketDaoImpl.class.getName());
+	private static final EntityManager em = FactoryManager.getEntityManager();
+
+	private static BucketDaoImpl bucketDaoImpl;
+
+	private BucketDaoImpl() {
+	}
+
+	public static BucketDaoImpl getBucketDaoImpl() {
+		if (bucketDaoImpl == null) {
+			bucketDaoImpl = new BucketDaoImpl();
+		}
+
+		return bucketDaoImpl;
+	}
 
 	@Override
 	public Bucket create(Bucket bucket) {
@@ -28,21 +41,21 @@ public class BucketDaoImpl implements BucketDao {
 			e.printStackTrace();
 			log.error(e);
 		}
-		
+
 		return bucket;
 	}
 
 	@Override
 	public Bucket read(String id) {
 		Bucket bucket = null;
-		
+
 		try {
 			bucket = em.find(Bucket.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
-		
+
 		return bucket;
 	}
 
@@ -68,14 +81,14 @@ public class BucketDaoImpl implements BucketDao {
 	@Override
 	public List<Bucket> readAll() {
 		Query query = null;
-		
+
 		try {
 			query = em.createQuery("SELECT e FROM Bucket e");
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
-		
+
 		return (List<Bucket>) query.getResultList();
 	}
 

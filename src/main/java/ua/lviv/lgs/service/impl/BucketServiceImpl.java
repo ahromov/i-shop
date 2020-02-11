@@ -8,14 +8,14 @@ import ua.lviv.lgs.service.BucketService;
 
 public class BucketServiceImpl implements BucketService {
 
-	private static BucketService bucketServiceImpl;
-	private BucketDao bucketDao;
+	private static final BucketDao bucketDao = BucketDaoImpl.getBucketDaoImpl();
+
+	private static BucketServiceImpl bucketServiceImpl;
 
 	private BucketServiceImpl() {
-		bucketDao = new BucketDaoImpl();
 	}
 
-	public static BucketService getBucketService() {
+	public static BucketServiceImpl getBucketServiceImpl() {
 		if (bucketServiceImpl == null) {
 			bucketServiceImpl = new BucketServiceImpl();
 		}

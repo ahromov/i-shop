@@ -8,11 +8,11 @@ import ua.lviv.lgs.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
+	private static final UserDao userDao = UserDaoImpl.getUserDaoImpl();
+	
 	private static UserService userServiceImpl;
-	private UserDao userDao;
 
 	private UserServiceImpl() {
-		userDao = new UserDaoImpl();
 	}
 
 	public static UserService getUserService() {

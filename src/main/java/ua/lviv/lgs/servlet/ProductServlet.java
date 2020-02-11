@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.Product;
+import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
 @WebServlet("/product")
@@ -22,12 +23,14 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 public class ProductServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 530917315308551086L;
+	
+	private static final ProductService productService = ProductServiceImpl.getProductService();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String productId = request.getParameter("id");
-		Product product = ProductServiceImpl.getProductService().read(productId);
+		Product product = productService.read(productId);
 		String role = (String) request.getSession().getAttribute("role");
 
 		request.setAttribute("role", role);
@@ -44,7 +47,7 @@ public class ProductServlet extends HttpServlet {
 		String productId = request.getParameter("productId");
 
 		if (productId != null) {
-			ProductServiceImpl.getProductService().delete(productId);
+			productService.delete(productId);
 			response.getWriter().write("Success");
 		} else
 			response.getWriter().write("Error");
@@ -59,13 +62,13 @@ public class ProductServlet extends HttpServlet {
 			Double price = 0.0;
 			if (!request.getParameter("price").equals(""))
 				price = Double.parseDouble(request.getParameter("price"));
-			Photo photo = getPhoto(request, response);
+			Photo photo = getFileContent(request, response);
 
 			if (name.equals("") || description.equals("") || price <= 0 || photo.getFileSize() == 0) {
 				response.getWriter().write("Error");
 			} else {
 				Product product = new Product(description, name, price, photo);
-				ProductServiceImpl.getProductService().create(product);
+				productService.create(product);
 				response.getWriter().write("Success");
 			}
 		}
@@ -84,23 +87,23 @@ public class ProductServlet extends HttpServlet {
 				String name = request.getParameter("name");
 				String description = request.getParameter("description");
 				String price = request.getParameter("price");
-				Photo photo = getPhoto(request, response);
+				Photo photo = getFileContent(request, response);
 
-				Product product = ProductServiceImpl.getProductService().read(productId);
+				Product product = productService.read(productId);
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(getValidatedPrice(price));
 				if (photo.getFileSize() != 0)
 					product.setPhoto(photo);
 
-				ProductServiceImpl.getProductService().update(product);
+				productService.update(product);
 				response.getWriter().write("Success");
 			} else
 				response.getWriter().write("Error");
 		}
 	}
 
-	private Photo getPhoto(HttpServletRequest request, HttpServletResponse response)
+	private Photo getFileContent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String fileName = "";
 		Photo photo = null;

@@ -3,6 +3,7 @@ package ua.lviv.lgs.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,40 +14,88 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class PhotoDaoImpl implements PhotoDao {
 
-	private static Logger log = LogManager.getLogger(PhotoDaoImpl.class.getName());
-	private EntityManager em = FactoryManager.getEntityManager();
+	private static final Logger log = LogManager.getLogger(PhotoDaoImpl.class.getName());
+	private static final EntityManager em = FactoryManager.getEntityManager();
 
-	public Photo create(Photo photo) {
+	private static PhotoDaoImpl photoDaoImpl;
+
+	private PhotoDaoImpl() {
+	}
+
+	public static PhotoDaoImpl getPhotoDaoImpl() {
+		if (photoDaoImpl == null) {
+			photoDaoImpl = new PhotoDaoImpl();
+		}
+
+		return photoDaoImpl;
+	}
+
+	public Photo create(Photo file) {
 		try {
 			em.getTransaction().begin();
-			em.persist(photo);
+			em.persist(file);
 			em.getTransaction().commit();
-			log.info("New Photo '" + photo.getFileName() + "' was saved.");
+			log.info("New photo '" + file.getFileName() + "' was saved.");
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+			log.error("Can`t saving photo: ", e);
 		}
-		return photo;
+		return file;
 	}
 
 	@Override
 	public Photo read(String id) {
+		Photo file = null;
+
+		try {
+			file = em.find(Photo.class, Integer.parseInt(id));
+		} catch (Exception e) {
+			log.error("Photo file not found: ", e);
+		}
+
+		return file;
+	}
+
+	@Override
+	public Photo update(Photo file) {
+		try {
+			em.getTransaction().begin();
+			em.merge(file);
+			em.getTransaction().commit();
+			log.info("Photo '" + file.getFileName() + "' was updated.");
+			return file;
+		} catch (Exception e) {
+			log.error(e);
+		}
+
 		return null;
 	}
 
 	@Override
-	public Photo update(Photo t) {
-		return null;
+	public void delete(String id) {
+		Photo file = read(id);
+
+		try {
+			em.getTransaction().begin();
+			em.remove(file);
+			em.getTransaction().commit();
+			log.info("Photo '" + file.getFileName() + "' was deleted.");
+		} catch (Exception e) {
+			log.error(e);
+		}
 	}
 
-	@Override
-	public void delete(String bucketId) {
-
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Photo> readAll() {
-		return null;
+		Query query = null;
+
+		try {
+			query = em.createQuery("SELECT e FROM Photo e");
+		} catch (Exception e) {
+			log.error("Can`t read files: ", e);
+		}
+
+		return (List<Photo>) query.getResultList();
 	}
 
 }

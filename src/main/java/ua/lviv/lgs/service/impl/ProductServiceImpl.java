@@ -12,17 +12,18 @@ import ua.lviv.lgs.service.ProductService;
 
 public class ProductServiceImpl implements ProductService {
 
+	private static final ProductDao productDao = ProductDaoImpl.getProductDaoImpl();
+	
 	private static ProductService productServiceImpl;
-	private ProductDao productDao;
 
 	private ProductServiceImpl() {
-		productDao = new ProductDaoImpl();
 	}
 
 	public static ProductService getProductService() {
 		if (productServiceImpl == null) {
 			productServiceImpl = new ProductServiceImpl();
 		}
+		
 		return productServiceImpl;
 	}
 

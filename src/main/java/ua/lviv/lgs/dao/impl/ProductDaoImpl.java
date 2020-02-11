@@ -1,6 +1,7 @@
 package ua.lviv.lgs.dao.impl;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -13,8 +14,21 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class ProductDaoImpl implements ProductDao {
 
-	private static Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
-	private EntityManager em = FactoryManager.getEntityManager();
+	private static final Logger log = LogManager.getLogger(ProductDaoImpl.class.getName());
+	private static final EntityManager em = FactoryManager.getEntityManager();
+
+	private static ProductDaoImpl productDaoImpl;
+
+	private ProductDaoImpl() {
+	}
+
+	public static ProductDaoImpl getProductDaoImpl() {
+		if (productDaoImpl == null) {
+			productDaoImpl = new ProductDaoImpl();
+		}
+
+		return productDaoImpl;
+	}
 
 	@Override
 	public Product create(Product product) {
@@ -24,7 +38,6 @@ public class ProductDaoImpl implements ProductDao {
 			em.getTransaction().commit();
 			log.info("New product '" + product.getName() + "' was added.");
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e);
 		}
 
@@ -38,7 +51,6 @@ public class ProductDaoImpl implements ProductDao {
 		try {
 			product = em.find(Product.class, Integer.parseInt(id));
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e);
 		}
 
@@ -54,7 +66,6 @@ public class ProductDaoImpl implements ProductDao {
 			log.info("Product '" + product.getName() + "' was updated.");
 			return product;
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e);
 		}
 
@@ -71,22 +82,21 @@ public class ProductDaoImpl implements ProductDao {
 			em.getTransaction().commit();
 			log.info("Product '" + product.getName() + "' was deleted.");
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error(e);
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> readAll() {
 		Query query = null;
+
 		try {
 			query = em.createQuery("SELECT e FROM Product e");
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+			log.error("Can`t read products: ", e);
 		}
+
 		return (List<Product>) query.getResultList();
 	}
 

@@ -17,8 +17,21 @@ import ua.lviv.lgs.shared.FactoryManager;
 
 public class UserDaoImpl implements UserDao {
 
-	private static Logger log = LogManager.getLogger(UserDaoImpl.class.getName());
-	private EntityManager em = FactoryManager.getEntityManager();
+	private static final Logger log = LogManager.getLogger(UserDaoImpl.class.getName());
+	private static final EntityManager em = FactoryManager.getEntityManager();
+
+	private static UserDaoImpl userDaoImpl;
+
+	private UserDaoImpl() {
+	}
+
+	public static UserDaoImpl getUserDaoImpl() {
+		if (userDaoImpl == null) {
+			userDaoImpl = new UserDaoImpl();
+		}
+
+		return userDaoImpl;
+	}
 
 	@Override
 	public User create(User user) {

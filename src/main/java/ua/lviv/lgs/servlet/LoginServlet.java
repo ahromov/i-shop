@@ -1,6 +1,7 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -11,10 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.dto.UserLogin;
+import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 import ua.lviv.lgs.shared.MailSender;
 
@@ -23,13 +28,17 @@ public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1115455152301778383L;
 
+	private static final Logger log = LogManager.getLogger(LoginServlet.class.getName());
+	private static final UserService userService = UserServiceImpl.getUserService();
+	private static final MailSender mailSender = MailSender.getMailSender();
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		User user = UserServiceImpl.getUserService().getUserByEmail(email);
+		User user = userService.getUserByEmail(email);
 
 		if (user != null) {
 			if (user.getPassword().equals(password)) {
@@ -37,6 +46,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("userId", user.getId());
 				session.setAttribute("userName", user.getFirstName());
 				session.setAttribute("role", user.getRole().toString());
+				log.info("Session of user ID " + session.getAttribute("userId") + " started at: " + LocalDateTime.now());
 
 				UserLogin userLogin = new UserLogin();
 				userLogin.userEmail = user.getEmail();
@@ -63,18 +73,17 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html");
 
 		String email = request.getParameter("email");
-		User user = UserServiceImpl.getUserService().getUserByEmail(email);
+		User user = userService.getUserByEmail(email);
 
 		if (user != null) {
 			try {
-				MailSender.getMailSender().sendMail(email, "Hello " + user.getFirstName(),
-						"Your password " + user.getPassword());
-
+				mailSender.sendMail(email, "Hello " + user.getFirstName(), "Your password " + user.getPassword());
+				
 				response.getWriter().write("PasswordSended");
 			} catch (AddressException e) {
-				e.printStackTrace();
+				log.error("Invalid email eddress: ", e);
 			} catch (MessagingException e) {
-				e.printStackTrace();
+				log.error("Can`t send email: ", e);
 			}
 		} else {
 			response.getWriter().write("NotExists");

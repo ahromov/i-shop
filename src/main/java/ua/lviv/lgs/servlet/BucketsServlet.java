@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Product;
 import ua.lviv.lgs.dto.BucketDto;
+import ua.lviv.lgs.service.BucketService;
+import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.impl.BucketServiceImpl;
 import ua.lviv.lgs.service.impl.ProductServiceImpl;
 
@@ -23,13 +25,16 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 public class BucketsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7884991345661641441L;
+	
+	private static final BucketService bucketService = BucketServiceImpl.getBucketServiceImpl();
+	private static final ProductService productService = ProductServiceImpl.getProductService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Bucket> allBuckets = BucketServiceImpl.getBucketService().readAll().stream()
+		List<Bucket> allBuckets = bucketService.readAll().stream()
 				.filter(bucket -> bucket.getUser().getId() == request.getSession().getAttribute("userId"))
 				.collect(Collectors.toList());
-		Map<Integer, Product> allProducts = ProductServiceImpl.getProductService().readAllMap();
+		Map<Integer, Product> allProducts = productService.readAllMap();
 
 		List<BucketDto> bucketsDtos = toDto(allBuckets, allProducts);
 

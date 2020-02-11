@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
+import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
 import ua.lviv.lgs.shared.MailSender;
 
@@ -22,7 +23,10 @@ import ua.lviv.lgs.shared.MailSender;
 public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9186251900623717347L;
+	
 	private static final Logger log = LogManager.getLogger(RegistrationServlet.class.getName());
+	private static final UserService userService = UserServiceImpl.getUserService();
+	private static final MailSender mailSender = MailSender.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,17 +39,14 @@ public class RegistrationServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
-			User user = UserServiceImpl.getUserService().getUserByEmail(email);
+			User user = userService.getUserByEmail(email);
 
 			if (user == null) {
 				try {
-
-					MailSender.getMailSender().sendMail(email,
-							"Hello " + firstName + "!\n Your account was rigistered!\n",
+					mailSender.sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
 							"Yours login " + email + ", and password " + password);
 
-					UserServiceImpl.getUserService()
-							.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+					userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
 
 					response.getWriter().write("Success");
 				} catch (AddressException e) {
