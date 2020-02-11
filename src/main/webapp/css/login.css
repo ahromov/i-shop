@@ -1,5 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+body {
+	font-family: "Roboto", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 .login-page {
 	width: 360px;
 	padding: 8% 0 0;
@@ -97,12 +103,37 @@
 	color: #EF3B3A;
 }
 
-body {
-	font-family: "Roboto", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+div.login-page div.alert.alert-success, div.login-page div.alert.alert-warning,
+	div.login-page div.alert.alert-danger, div.login-page div.alert.alert-primary, div.alert.alert-danger.invalid-email, div.alert.alert-loading
+	{
+	display: none;
 }
 
-div.login-page div.alert.alert-success {
-	display: none;
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  transform: translateX(145%);
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #008040;
+  border-color: #008000 transparent #c0c0c0 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

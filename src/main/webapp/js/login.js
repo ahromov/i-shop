@@ -5,17 +5,58 @@ function loginRegisterSwitch() {
 	}, "slow");
 }
 
-function showAlertAfterRegistration() {
-	$('div.alert.alert-success').show();
+function hideAlert() {
+	$('.alert').css('display', 'none');
 }
 
-$('.message a').click(function() {
+function showAlertAfterRegistration(data) {
+	hideAlert();
+
+	if (data == 'Success') {
+		$('div.alert.alert-success').show();
+		return;
+	}
+
+	if (data == 'Exists') {
+		$('div.alert.alert-warning.account-exists').show();
+		return;
+	}
+
+	if (data == 'NotExists') {
+		$('div.alert.alert-danger.not-exists').show();
+		return;
+	}
+
+	if (data == 'InvalidPassword') {
+		$('div.alert.alert-warning.invalid-password').show();
+		return;
+	}
+
+	if (data == 'PasswordSended') {
+		$('div.alert.alert-primary.sended-password').show();
+		return;
+	}
+
+	if (data == 'InvalidEmail') {
+		$('div.alert.alert-danger.invalid-email').show();
+		return;
+	}
+}
+
+$('.message a').on('click', function() {
+	hideAlert();
 	loginRegisterSwitch();
 });
 
+$('button.close').on('click', function() {
+	hideAlert();
+});
+
 $("button.register")
-		.click(
+		.on(
+				'click',
 				function() {
+					$('div.alert.alert-loading').show();
 
 					var email = $("form.register-form input.email").val();
 					var firstName = $("form.register-form input.firstName")
@@ -42,18 +83,16 @@ $("button.register")
 
 						$.post("registration", userRegistration,
 								function(data) {
-									if (data == 'Success') {
-										$("form")[0].reset();
-										$("form")[1].reset();
-										loginRegisterSwitch();
-										showAlertAfterRegistration();
-									}
+									$("form")[0].reset();
+									$("form")[1].reset();
+									loginRegisterSwitch();
+									showAlertAfterRegistration(data);
 								});
 					}
-
 				});
 
-$("button.login").click(function() {
+$("button.login").on('click', function() {
+	hideAlert();
 
 	var email = $("form.login-form input.email").val();
 	var password = $("form.login-form input.password").val();
@@ -66,18 +105,40 @@ $("button.login").click(function() {
 			password : password
 		};
 
-		$.post("login", userLogin, function(data) {
-			if (data !== '') {
-				var customUrl = '';
-				var urlContent = window.location.href.split('/');
-				for (var i = 0; i < urlContent.length - 1; i++) {
-					customUrl += urlContent[i] + '/'
-				}
-				customUrl += data.destinationUrl;
-				window.location = customUrl;
+		$.post("login", userLogin).done(function(data) {
+			if (data == 'NotExists') {
+				showAlertAfterRegistration(data);
+				return;
 			}
+
+			if (data == 'InvalidPassword') {
+				showAlertAfterRegistration(data);
+				return;
+			}
+
+			var customUrl = '';
+			var urlContent = window.location.href.split('/');
+
+			for (var i = 0; i < urlContent.length - 1; i++) {
+				customUrl += urlContent[i] + '/'
+			}
+
+			customUrl += data.destinationUrl;
+			window.location = customUrl;
+
 			$("form")[1].reset();
 		});
 	}
+});
 
+$("a.remind-passwd").on('click', function() {
+	hideAlert();
+
+	$('div.alert.alert-loading').show();
+
+	var email = $("form.login-form input.email").val();
+
+	$.get("login?email=" + email).done(function(data) {
+		showAlertAfterRegistration(data);
+	});
 });

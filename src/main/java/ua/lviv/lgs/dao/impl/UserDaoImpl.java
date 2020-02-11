@@ -69,6 +69,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByEmail(String email) {
 		User user = null;
+
 		try {
 			CriteriaBuilder builder = em.getCriteriaBuilder();
 			CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -80,6 +81,7 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			log.error(e);
 		}
+
 		return user;
 	}
 

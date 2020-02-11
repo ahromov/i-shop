@@ -26,17 +26,13 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav animate side-nav">
-					<li class="nav-item"><a class="nav-link" href="cabinet.jsp">Home
+					<li class="nav-item"><a class="nav-link" href="index.jsp">Home
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item create-product-option"><a class="nav-link"
-						href="createProduct.jsp">Add product</a></li>
-					<li class="nav-item user-bucket-option"><a class="nav-link"
-						href="bucket.jsp">Bucket</a></li>
 				</ul>
 				<ul class="navbar-nav ml-md-auto d-md-flex">
 					<li class="nav-item">
-						<button class="nav-link product-login"
+						<button class="btn btn-lg nav-link product-login"
 							style="background-color: green">Login</button>
 					</li>
 				</ul>
