@@ -23,7 +23,7 @@ import ua.lviv.lgs.service.impl.ProductServiceImpl;
 public class ProductServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 530917315308551086L;
-	
+
 	private static final ProductService productService = ProductServiceImpl.getProductService();
 
 	@Override
@@ -87,14 +87,22 @@ public class ProductServlet extends HttpServlet {
 				String name = request.getParameter("name");
 				String description = request.getParameter("description");
 				String price = request.getParameter("price");
-				Photo photo = getFileContent(request, response);
+				Photo newPhoto = getFileContent(request, response);
 
 				Product product = productService.read(productId);
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(getValidatedPrice(price));
-				if (photo.getFileSize() != 0)
-					product.setPhoto(photo);
+				
+				if (newPhoto.getFileSize() != 0) {
+					Photo oldPhoto = product.getPhoto();
+					oldPhoto.setFileName(newPhoto.getFileName());
+					oldPhoto.setFileSize(newPhoto.getFileSize());
+					oldPhoto.setContent(newPhoto.getContent());
+					oldPhoto.setUploadStatus(newPhoto.getUploadStatus());
+					
+					product.setPhoto(oldPhoto);
+				}
 
 				productService.update(product);
 				response.getWriter().write("Success");
