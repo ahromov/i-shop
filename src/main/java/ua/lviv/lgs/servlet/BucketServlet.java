@@ -7,11 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.service.BucketService;
 import ua.lviv.lgs.service.ProductService;
 import ua.lviv.lgs.service.UserService;
@@ -36,12 +34,8 @@ public class BucketServlet extends HttpServlet {
 		Product product = productService.read(productId);
 		product.setBuyCount(buyCount);
 
-		HttpSession session = request.getSession();
-		Integer userId = (Integer) session.getAttribute("userId");
-
-		User user = userService.read(userId.toString());
-		Bucket bucket = user.getBucket();
-
+		Bucket bucket = userService.read(((Integer) request.getSession().getAttribute("userId")).toString())
+				.getBucket();
 		bucket.addProduct(product);
 		bucketService.update(bucket);
 
@@ -52,12 +46,8 @@ public class BucketServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String productId = request.getParameter("pId");
-		User user = userService.read(request.getSession().getAttribute("userId").toString());
-
-		Bucket bucket = user.getBucket();
-		bucket.removeProduct(productService.read(productId));
-
+		Bucket bucket = userService.read(request.getSession().getAttribute("userId").toString()).getBucket();
+		bucket.removeProduct(productService.read(request.getParameter("pId")));
 		bucketService.update(bucket);
 
 		response.setContentType("text/html");
