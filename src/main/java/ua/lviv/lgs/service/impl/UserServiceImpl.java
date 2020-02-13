@@ -13,9 +13,10 @@ public class UserServiceImpl implements UserService {
 	private static UserService userServiceImpl;
 
 	private UserServiceImpl() {
+		
 	}
 
-	public static UserService getUserService() {
+	public static UserService getUserServiceImpl() {
 		if (userServiceImpl == null) {
 			userServiceImpl = new UserServiceImpl();
 		}

@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1115455152301778383L;
 
 	private static final Logger log = LogManager.getLogger(LoginServlet.class.getName());
-	private static final UserService userService = UserServiceImpl.getUserService();
+	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
 	private static final MailSender mailSender = MailSender.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

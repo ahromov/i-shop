@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
 import ua.lviv.lgs.service.UserService;
@@ -23,9 +24,9 @@ import ua.lviv.lgs.shared.MailSender;
 public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9186251900623717347L;
-	
+
 	private static final Logger log = LogManager.getLogger(RegistrationServlet.class.getName());
-	private static final UserService userService = UserServiceImpl.getUserService();
+	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
 	private static final MailSender mailSender = MailSender.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +47,13 @@ public class RegistrationServlet extends HttpServlet {
 					mailSender.sendMail(email, "Hello " + firstName + "!\n Your account was rigistered!\n",
 							"Yours login " + email + ", and password " + password);
 
-					userService.create(new User(email, firstName, lastName, UserRole.USER.toString(), password));
+					user = new User(email, firstName, lastName, UserRole.USER.toString(), password);
+
+					Bucket bucket = new Bucket();
+					bucket.setUser(user);
+					user.setBucket(bucket);
+
+					userService.create(user);
 
 					response.getWriter().write("Success");
 				} catch (AddressException e) {

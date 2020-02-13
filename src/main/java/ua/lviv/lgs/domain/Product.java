@@ -1,6 +1,7 @@
 package ua.lviv.lgs.domain;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,13 +34,16 @@ public class Product {
 	@Column(name = "price")
 	private Double price;
 
+	@Column(name = "buy_qtty")
+	private Integer buyCount;
+
 	@OneToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "photo_id" /* , unique = true */, nullable = true/* , updatable = false */ )
+	@JoinColumn(name = "photo_id", nullable = true)
 	private Photo photo;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	private Set<Bucket> buckets;
+	@ManyToMany(mappedBy = "products")
+	private List<Bucket> buckets = new ArrayList<>();
 
 	public Product() {
 
@@ -89,6 +93,14 @@ public class Product {
 		this.price = price;
 	}
 
+	public Integer getBuyCount() {
+		return buyCount;
+	}
+
+	public void setBuyCount(Integer buyCount) {
+		this.buyCount = buyCount;
+	}
+
 	public Photo getPhoto() {
 		return photo;
 	}
@@ -97,22 +109,12 @@ public class Product {
 		this.photo = photo;
 	}
 
-	public Set<Bucket> getBuckets() {
+	public List<Bucket> getBuckets() {
 		return buckets;
 	}
 
-	public void setBuckets(Set<Bucket> buckets) {
+	public void setBuckets(List<Bucket> buckets) {
 		this.buckets = buckets;
-	}
-
-	public void addBucket(Bucket bucket) {
-		buckets.add(bucket);
-		bucket.setProduct(this);
-	}
-
-	public void removeBucket(Bucket bucket) {
-		buckets.remove(bucket);
-		bucket.setProduct(null);
 	}
 
 }

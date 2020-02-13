@@ -1,12 +1,16 @@
 package ua.lviv.lgs.domain;
 
-import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,22 +21,15 @@ public class Bucket {
 	@Column(name = "id")
 	private String id;
 
-	@Column(name = "qtty")
-	private Integer productsCount;
-
-	@Column(name = "purchase_date")
-	private Date purchaseDate;
-
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product product;
-
-	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@OneToOne(mappedBy = "bucket")
 	private User user;
 
-	public Bucket() {
+	@ManyToMany(cascade = { CascadeType.ALL, })
+	@JoinTable(name = "bucket_product", joinColumns = @JoinColumn(name = "bucket_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private List<Product> products;
 
+	public Bucket() {
+		this.id = UUID.randomUUID().toString();
 	}
 
 	public String getId() {
@@ -43,36 +40,30 @@ public class Bucket {
 		this.id = string;
 	}
 
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public Integer getCount() {
-		return productsCount;
-	}
-
-	public void setCount(Integer count) {
-		this.productsCount = count;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public void addProduct(Product product) {
+		products.add(product);
+		product.getBuckets().add(this);
+	}
+
+	public void removeProduct(Product product) {
+		products.remove(product);
+		product.getBuckets().remove(this);
 	}
 
 }

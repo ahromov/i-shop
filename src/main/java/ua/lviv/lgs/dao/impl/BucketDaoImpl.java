@@ -33,7 +33,6 @@ public class BucketDaoImpl implements BucketDao {
 	public Bucket create(Bucket bucket) {
 		try {
 			em.getTransaction().begin();
-			bucket.getProduct().addBucket(bucket);
 			em.persist(bucket);
 			em.getTransaction().commit();
 			log.info("New bucket '" + bucket.getId() + "' for user '" + bucket.getUser().getEmail() + "' was created.");
@@ -61,7 +60,17 @@ public class BucketDaoImpl implements BucketDao {
 
 	@Override
 	public Bucket update(Bucket t) {
-		throw new IllegalStateException("there is no update for bucket");
+		try {
+			em.getTransaction().begin();
+			em.merge(t);
+			em.getTransaction().commit();
+			log.info("Bucket '" + t.getUser().getFirstName() + "' was updated.");
+			return t;
+		} catch (Exception e) {
+			log.error(e);
+		}
+
+		return null;
 	}
 
 	@Override

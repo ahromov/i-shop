@@ -1,8 +1,6 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,28 +26,24 @@ public class BucketServlet extends HttpServlet {
 
 	private static final BucketService bucketService = BucketServiceImpl.getBucketServiceImpl();
 	private static final ProductService productService = ProductServiceImpl.getProductService();
-	private static final UserService userService = UserServiceImpl.getUserService();
+	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String productId = request.getParameter("productId");
-		Integer pCount = Integer.parseInt(request.getParameter("qtty"));
+		Integer buyCount = Integer.parseInt(request.getParameter("qtty"));
 
 		Product product = productService.read(productId);
+		product.setBuyCount(buyCount);
 
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
 
 		User user = userService.read(userId.toString());
+		Bucket bucket = user.getBucket();
 
-		Bucket bucket = new Bucket();
-		bucket.setId(UUID.randomUUID().toString());
-		bucket.setProduct(product);
-		bucket.setUser(user);
-		bucket.setPurchaseDate(new Date());
-		bucket.setCount(pCount);
-
-		bucketService.create(bucket);
+		bucket.addProduct(product);
+		bucketService.update(bucket);
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
@@ -58,8 +52,13 @@ public class BucketServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String bucketId = request.getParameter("bucketId");
-		bucketService.delete(bucketId);
+		String productId = request.getParameter("pId");
+		User user = userService.read(request.getSession().getAttribute("userId").toString());
+
+		Bucket bucket = user.getBucket();
+		bucket.removeProduct(productService.read(productId));
+
+		bucketService.update(bucket);
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
