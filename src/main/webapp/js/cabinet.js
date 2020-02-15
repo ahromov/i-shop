@@ -1,5 +1,12 @@
 var products = null;
 
+function checkProdImg(data) {
+	if (data == '')
+		return 'img/default_prod.jpg';
+	else
+		return 'data:image/png;base64,' + data;
+}
+
 $
 		.get("products", function(data) {
 			if (data !== '') {
@@ -15,8 +22,8 @@ $
 									products,
 									function(i, value) {
 										cardsContent += "<div class='col'><div class='card'>"
-												+ "<div class='card-body'><div class='image' style='height: 200px'><img style='width: 200px; margin-bottom: 20px' src='data:image/png;base64,"
-												+ value.photo.content
+												+ "<div class='card-body'><div class='image' style='height: 200px'><img style='width: 200px; margin-bottom: 20px' src='"
+												+ checkProdImg(value.photo.content)
 												+ "'></div><h5 class='card-title'>"
 												+ value.name
 												+ "</h5><h6 class='card-subtitle mb-2 text-muted'>"

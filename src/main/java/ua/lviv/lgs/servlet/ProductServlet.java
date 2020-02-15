@@ -60,15 +60,18 @@ public class ProductServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			Double price = 0.0;
+
 			if (!request.getParameter("price").equals(""))
 				price = Double.parseDouble(request.getParameter("price"));
+
 			Photo photo = getFileContent(request, response);
 
-			if (name.equals("") || description.equals("") || price <= 0 || photo.getFileSize() == 0) {
+			if (name.equals("") || description.equals("") || price <= 0) {
 				response.getWriter().write("Error");
 			} else {
 				Product product = new Product(description, name, price, photo);
 				productService.create(product);
+
 				response.getWriter().write("Success");
 			}
 		}
@@ -93,15 +96,16 @@ public class ProductServlet extends HttpServlet {
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(getValidatedPrice(price));
-				
+
 				if (newPhoto.getFileSize() != 0) {
 					Photo oldPhoto = product.getPhoto();
 					oldPhoto.setFileName(newPhoto.getFileName());
 					oldPhoto.setFileSize(newPhoto.getFileSize());
 					oldPhoto.setContent(newPhoto.getContent());
 					oldPhoto.setUploadStatus(newPhoto.getUploadStatus());
-					
+
 					product.setPhoto(oldPhoto);
+					System.out.println(newPhoto.getContent());
 				}
 
 				productService.update(product);
