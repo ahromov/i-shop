@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import ua.lviv.lgs.dao.BucketDao;
+import ua.lviv.lgs.dao.manager.FactoryManager;
 import ua.lviv.lgs.domain.Bucket;
-import ua.lviv.lgs.shared.FactoryManager;
 
 public class BucketDaoImpl implements BucketDao {
 

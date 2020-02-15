@@ -9,8 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.PhotoDao;
+import ua.lviv.lgs.dao.manager.FactoryManager;
 import ua.lviv.lgs.domain.Photo;
-import ua.lviv.lgs.shared.FactoryManager;
 
 public class PhotoDaoImpl implements PhotoDao {
 

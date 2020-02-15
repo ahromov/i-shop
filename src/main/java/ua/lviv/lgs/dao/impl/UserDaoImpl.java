@@ -12,8 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.UserDao;
+import ua.lviv.lgs.dao.manager.FactoryManager;
 import ua.lviv.lgs.domain.User;
-import ua.lviv.lgs.shared.FactoryManager;
 
 public class UserDaoImpl implements UserDao {
 
