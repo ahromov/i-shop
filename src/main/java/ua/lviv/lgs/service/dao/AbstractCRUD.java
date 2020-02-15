@@ -1,4 +1,4 @@
-package ua.lviv.lgs.shared;
+package ua.lviv.lgs.service.dao;
 
 import java.util.List;
 
