@@ -1,4 +1,4 @@
-package ua.lviv.lgs.service.dao;
+package ua.lviv.lgs.service.dao.AI;
 
 import java.util.List;
 
