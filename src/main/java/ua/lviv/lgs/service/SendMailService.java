@@ -1,4 +1,4 @@
-package ua.lviv.lgs.shared;
+package ua.lviv.lgs.service;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -16,14 +16,14 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MailSender {
+public class SendMailService {
 
-	private final static Logger log = LogManager.getLogger(MailSender.class.getName());
+	private final static Logger log = LogManager.getLogger(SendMailService.class.getName());
 	private final static Properties prop = new Properties();
 
-	private static MailSender ms;
+	private static SendMailService ms;
 
-	private MailSender() {
+	private SendMailService() {
 		try {
 			prop.load(getClass().getClassLoader().getResourceAsStream("mail.properties"));
 		} catch (IOException e) {
@@ -31,9 +31,9 @@ public class MailSender {
 		}
 	}
 
-	public static MailSender getMailSender() {
+	public static SendMailService getMailSender() {
 		if (ms == null) {
-			ms = new MailSender();
+			ms = new SendMailService();
 		}
 
 		return ms;

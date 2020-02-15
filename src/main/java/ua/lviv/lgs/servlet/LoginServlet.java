@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.dto.UserLogin;
+import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
-import ua.lviv.lgs.shared.MailSender;
 
 @WebServlet(value = "/login", loadOnStartup = 1)
 public class LoginServlet extends HttpServlet {
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
 	private static final Logger log = LogManager.getLogger(LoginServlet.class.getName());
 	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
-	private static final MailSender mailSender = MailSender.getMailSender();
+	private static final SendMailService mailSender = SendMailService.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

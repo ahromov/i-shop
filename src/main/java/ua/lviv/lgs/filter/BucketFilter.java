@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 import ua.lviv.lgs.domain.UserRole;
-import ua.lviv.lgs.shared.FilterService;
+import ua.lviv.lgs.service.FilterService;
 
 @WebFilter("/bucket.jsp")
 public class BucketFilter implements Filter {

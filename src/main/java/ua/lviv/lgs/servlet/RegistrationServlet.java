@@ -16,9 +16,9 @@ import org.apache.logging.log4j.Logger;
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
+import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.UserService;
 import ua.lviv.lgs.service.impl.UserServiceImpl;
-import ua.lviv.lgs.shared.MailSender;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -27,7 +27,7 @@ public class RegistrationServlet extends HttpServlet {
 
 	private static final Logger log = LogManager.getLogger(RegistrationServlet.class.getName());
 	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
-	private static final MailSender mailSender = MailSender.getMailSender();
+	private static final SendMailService mailSender = SendMailService.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
