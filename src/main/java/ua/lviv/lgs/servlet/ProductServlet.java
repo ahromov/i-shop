@@ -60,11 +60,18 @@ public class ProductServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			Double price = 0.0;
+			Photo photo = getFileContent(request, response);
 
 			if (!request.getParameter("price").equals(""))
 				price = Double.parseDouble(request.getParameter("price"));
 
-			Photo photo = getFileContent(request, response);
+			if (photo.getFileSize() == 0) {
+				photo.setFileName("default");
+				byte[] content = IOUtils.toByteArray(getServletContext().getResourceAsStream("WEB-INF/default_prod.jpg"));
+				photo.setFileSize(content.length / 1024);
+				photo.setContent(content);
+				photo.setUploadStatus("Success");
+			}
 
 			if (name.equals("") || description.equals("") || price <= 0) {
 				response.getWriter().write("Error");
