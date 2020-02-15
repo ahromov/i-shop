@@ -1,4 +1,4 @@
-package ua.lviv.lgs.shared;
+package ua.lviv.lgs.dao.manager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
