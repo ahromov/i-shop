@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ua.lviv.lgs.domain.Product;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.dto.BucketDto;
-import ua.lviv.lgs.service.UserService;
-import ua.lviv.lgs.service.impl.UserServiceImpl;
+import ua.lviv.lgs.service.dao.UserService;
+import ua.lviv.lgs.service.dao.impl.UserServiceImpl;
 
 @WebServlet("/buckets")
 public class BucketsServlet extends HttpServlet {

@@ -1,4 +1,4 @@
-package ua.lviv.lgs.service;
+package ua.lviv.lgs.service.dao;
 
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.shared.AbstractCRUD;

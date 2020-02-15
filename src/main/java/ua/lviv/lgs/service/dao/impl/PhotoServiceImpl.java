@@ -1,11 +1,11 @@
-package ua.lviv.lgs.service.impl;
+package ua.lviv.lgs.service.dao.impl;
 
 import java.util.List;
 
 import ua.lviv.lgs.dao.PhotoDao;
 import ua.lviv.lgs.dao.impl.PhotoDaoImpl;
 import ua.lviv.lgs.domain.Photo;
-import ua.lviv.lgs.service.PhotoService;
+import ua.lviv.lgs.service.dao.PhotoService;
 
 public class PhotoServiceImpl implements PhotoService {
 

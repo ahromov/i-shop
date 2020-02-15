@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.BucketService;
-import ua.lviv.lgs.service.ProductService;
-import ua.lviv.lgs.service.UserService;
-import ua.lviv.lgs.service.impl.BucketServiceImpl;
-import ua.lviv.lgs.service.impl.ProductServiceImpl;
-import ua.lviv.lgs.service.impl.UserServiceImpl;
+import ua.lviv.lgs.service.dao.BucketService;
+import ua.lviv.lgs.service.dao.ProductService;
+import ua.lviv.lgs.service.dao.UserService;
+import ua.lviv.lgs.service.dao.impl.BucketServiceImpl;
+import ua.lviv.lgs.service.dao.impl.ProductServiceImpl;
+import ua.lviv.lgs.service.dao.impl.UserServiceImpl;
 
 @WebServlet("/bucket")
 public class BucketServlet extends HttpServlet {

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.ProductService;
-import ua.lviv.lgs.service.impl.ProductServiceImpl;
+import ua.lviv.lgs.service.dao.ProductService;
+import ua.lviv.lgs.service.dao.impl.ProductServiceImpl;
 
 @WebServlet("/products")
 public class ProductsController extends HttpServlet {

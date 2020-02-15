@@ -14,8 +14,8 @@ import org.apache.commons.io.IOUtils;
 
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.ProductService;
-import ua.lviv.lgs.service.impl.ProductServiceImpl;
+import ua.lviv.lgs.service.dao.ProductService;
+import ua.lviv.lgs.service.dao.impl.ProductServiceImpl;
 
 @WebServlet("/product")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, maxFileSize = 1024 * 1024 * 30, maxRequestSize = 1024 * 1024

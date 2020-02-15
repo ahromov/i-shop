@@ -17,8 +17,8 @@ import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
 import ua.lviv.lgs.service.SendMailService;
-import ua.lviv.lgs.service.UserService;
-import ua.lviv.lgs.service.impl.UserServiceImpl;
+import ua.lviv.lgs.service.dao.UserService;
+import ua.lviv.lgs.service.dao.impl.UserServiceImpl;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {

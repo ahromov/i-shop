@@ -1,10 +1,10 @@
-package ua.lviv.lgs.service.impl;
+package ua.lviv.lgs.service.dao.impl;
 
 import java.util.List;
 import ua.lviv.lgs.dao.BucketDao;
 import ua.lviv.lgs.dao.impl.BucketDaoImpl;
 import ua.lviv.lgs.domain.Bucket;
-import ua.lviv.lgs.service.BucketService;
+import ua.lviv.lgs.service.dao.BucketService;
 
 public class BucketServiceImpl implements BucketService {
 

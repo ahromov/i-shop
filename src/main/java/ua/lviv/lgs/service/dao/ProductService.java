@@ -1,4 +1,4 @@
-package ua.lviv.lgs.service;
+package ua.lviv.lgs.service.dao;
 
 import java.util.Map;
 

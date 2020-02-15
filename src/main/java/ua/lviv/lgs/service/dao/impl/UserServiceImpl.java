@@ -1,10 +1,10 @@
-package ua.lviv.lgs.service.impl;
+package ua.lviv.lgs.service.dao.impl;
 
 import java.util.List;
 import ua.lviv.lgs.dao.UserDao;
 import ua.lviv.lgs.dao.impl.UserDaoImpl;
 import ua.lviv.lgs.domain.User;
-import ua.lviv.lgs.service.UserService;
+import ua.lviv.lgs.service.dao.UserService;
 
 public class UserServiceImpl implements UserService {
 

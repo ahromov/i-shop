@@ -1,4 +1,4 @@
-package ua.lviv.lgs.service.impl;
+package ua.lviv.lgs.service.dao.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import ua.lviv.lgs.dao.ProductDao;
 import ua.lviv.lgs.dao.impl.ProductDaoImpl;
 import ua.lviv.lgs.domain.Product;
-import ua.lviv.lgs.service.ProductService;
+import ua.lviv.lgs.service.dao.ProductService;
 
 public class ProductServiceImpl implements ProductService {
 
