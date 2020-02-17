@@ -15,7 +15,7 @@ import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.ProductService;
 
 @WebServlet("/products")
-public class ProductsController extends HttpServlet {
+public class ProductsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6987179294005671682L;
 
