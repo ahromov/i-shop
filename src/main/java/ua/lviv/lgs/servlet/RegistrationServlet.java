@@ -18,7 +18,6 @@ import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRole;
 import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.dao.UserService;
-import ua.lviv.lgs.service.dao.impl.UserServiceImpl;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -26,7 +25,7 @@ public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = -9186251900623717347L;
 
 	private static final Logger log = LogManager.getLogger(RegistrationServlet.class.getName());
-	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
+	private static final UserService userService = UserService.getUserService();
 	private static final SendMailService mailSender = SendMailService.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

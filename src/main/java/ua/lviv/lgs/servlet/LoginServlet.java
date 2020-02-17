@@ -21,7 +21,6 @@ import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.dto.UserLogin;
 import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.dao.UserService;
-import ua.lviv.lgs.service.dao.impl.UserServiceImpl;
 
 @WebServlet(value = "/login", loadOnStartup = 1)
 public class LoginServlet extends HttpServlet {
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1115455152301778383L;
 
 	private static final Logger log = LogManager.getLogger(LoginServlet.class.getName());
-	private static final UserService userService = UserServiceImpl.getUserServiceImpl();
+	private static final UserService userService = UserService.getUserService();
 	private static final SendMailService mailSender = SendMailService.getMailSender();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +45,8 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("userId", user.getId());
 				session.setAttribute("userName", user.getFirstName());
 				session.setAttribute("role", user.getRole().toString());
-				log.info("Session of user ID " + session.getAttribute("userId") + " started at: " + LocalDateTime.now());
+				log.info(
+						"Session of user ID " + session.getAttribute("userId") + " started at: " + LocalDateTime.now());
 
 				UserLogin userLogin = new UserLogin();
 				userLogin.userEmail = user.getEmail();
@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 		if (user != null) {
 			try {
 				mailSender.sendMail(email, "Hello " + user.getFirstName(), "Your password " + user.getPassword());
-				
+
 				response.getWriter().write("PasswordSended");
 			} catch (AddressException e) {
 				log.error("Invalid email eddress: ", e);
