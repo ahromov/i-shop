@@ -13,9 +13,8 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 
 import ua.lviv.lgs.domain.Photo;
-import ua.lviv.lgs.domain.Product;
+import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.ProductService;
-import ua.lviv.lgs.service.dao.impl.ProductServiceImpl;
 
 @WebServlet("/product")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, maxFileSize = 1024 * 1024 * 30, maxRequestSize = 1024 * 1024
@@ -24,7 +23,7 @@ public class ProductServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 530917315308551086L;
 
-	private static final ProductService productService = ProductServiceImpl.getProductService();
+	private static final ProductService productService = ProductService.getProductService();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

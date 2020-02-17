@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -35,8 +33,8 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL, optional = false)
+//	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bucket_id", nullable = false)
 	private Bucket bucket;
 

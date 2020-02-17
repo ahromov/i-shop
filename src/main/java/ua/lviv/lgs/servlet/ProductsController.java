@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ua.lviv.lgs.domain.Product;
+import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.ProductService;
-import ua.lviv.lgs.service.dao.impl.ProductServiceImpl;
 
 @WebServlet("/products")
 public class ProductsController extends HttpServlet {
 
 	private static final long serialVersionUID = -6987179294005671682L;
-	
-	private static final ProductService productService = ProductServiceImpl.getProductService();
+
+	private static final ProductService productService = ProductService.getProductService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
