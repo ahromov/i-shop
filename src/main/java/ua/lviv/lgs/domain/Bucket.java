@@ -6,12 +6,16 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import ua.lviv.lgs.domain.product.BucketProduct;
+import ua.lviv.lgs.domain.product.Product;
 
 @Entity
 @Table(name = "bucket")
@@ -21,12 +25,12 @@ public class Bucket {
 	@Column(name = "id")
 	private String id;
 
-	@OneToOne(mappedBy = "bucket")
+	@OneToOne(mappedBy = "bucket", fetch = FetchType.EAGER)
 	private User user;
 
-	@ManyToMany(cascade = { CascadeType.ALL, })
-	@JoinTable(name = "bucket_product", joinColumns = @JoinColumn(name = "bucket_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-	private List<Product> products;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "bucket_bproduct", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "bpoduct_id", referencedColumnName = "id"))
+	private List<BucketProduct> bProducts;
 
 	public Bucket() {
 		this.id = UUID.randomUUID().toString();
@@ -48,22 +52,37 @@ public class Bucket {
 		this.user = user;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<BucketProduct> getBProducts() {
+		return bProducts;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setBProducts(List<BucketProduct> products) {
+		this.bProducts = products;
 	}
 
-	public void addProduct(Product product) {
-		products.add(product);
-		product.getBuckets().add(this);
+	public void addBProduct(BucketProduct bProduct) {
+		bProducts.add(bProduct);
+		bProduct.getBuckets().add(this);
 	}
 
-	public void removeProduct(Product product) {
-		products.remove(product);
-		product.getBuckets().remove(this);
+	public void removeBProduct(BucketProduct bProduct) {
+		bProducts.remove(bProduct);
+		bProduct.getBuckets().remove(this);
+	}
+
+	public boolean isPresent(BucketProduct product) {
+		if (bProducts.contains(product))
+			return true;
+		return false;
+	}
+
+	public BucketProduct findBPbyProductId(int id) {
+		for (BucketProduct bucketProduct : bProducts) {
+			if (bucketProduct.getProduct().getId() == id)
+				return bucketProduct;
+		}
+
+		return null;
 	}
 
 }
