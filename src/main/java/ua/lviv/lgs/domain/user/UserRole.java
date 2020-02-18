@@ -1,4 +1,4 @@
-package ua.lviv.lgs.domain;
+package ua.lviv.lgs.domain.user;
 
 public enum UserRole {
 

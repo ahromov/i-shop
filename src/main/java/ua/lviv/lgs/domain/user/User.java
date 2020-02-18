@@ -1,4 +1,4 @@
-package ua.lviv.lgs.domain;
+package ua.lviv.lgs.domain.user;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import ua.lviv.lgs.domain.Bucket;
 
 @Entity
 @Table(name = "users")
