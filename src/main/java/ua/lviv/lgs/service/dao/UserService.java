@@ -3,7 +3,7 @@ package ua.lviv.lgs.service.dao;
 import java.util.List;
 
 import ua.lviv.lgs.dao.UserDao;
-import ua.lviv.lgs.domain.User;
+import ua.lviv.lgs.domain.user.User;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class UserService implements AbstractCRUD<User> {

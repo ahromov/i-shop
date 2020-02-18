@@ -14,8 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.domain.Bucket;
-import ua.lviv.lgs.domain.User;
-import ua.lviv.lgs.domain.UserRole;
+import ua.lviv.lgs.domain.user.User;
+import ua.lviv.lgs.domain.user.UserRole;
 import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.dao.UserService;
 

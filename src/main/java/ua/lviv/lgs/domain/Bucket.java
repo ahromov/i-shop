@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ua.lviv.lgs.domain.product.BucketProduct;
+import ua.lviv.lgs.domain.user.User;
 
 @Entity
 @Table(name = "bucket")

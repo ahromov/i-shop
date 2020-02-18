@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import ua.lviv.lgs.domain.UserRole;
+import ua.lviv.lgs.domain.user.UserRole;
 
 public class FilterService {
 

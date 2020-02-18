@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.product.BucketProduct;
+import ua.lviv.lgs.domain.user.User;
 import ua.lviv.lgs.dto.BucketDto;
 import ua.lviv.lgs.service.dao.UserService;
 

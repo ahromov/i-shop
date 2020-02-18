@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.manager.FactoryManager;
-import ua.lviv.lgs.domain.User;
+import ua.lviv.lgs.domain.user.User;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class UserDao implements AbstractCRUD<User> {

@@ -11,7 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-import ua.lviv.lgs.domain.UserRole;
+import ua.lviv.lgs.domain.user.UserRole;
 import ua.lviv.lgs.service.FilterService;
 
 @WebFilter("/createProduct.jsp")
