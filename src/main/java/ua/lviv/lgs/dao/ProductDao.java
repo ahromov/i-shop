@@ -39,13 +39,14 @@ public class ProductDao implements AbstractCRUD<Product> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t create " + product.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return product;
 	}
 
 	@Override
-	public Product read(String id) {
+	public Product getById(String id) {
 		Product product = null;
 
 		try {
@@ -65,21 +66,21 @@ public class ProductDao implements AbstractCRUD<Product> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t update " + product.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return product;
 	}
 
 	@Override
-	public void delete(String id) {
-		Product product = read(id);
-
+	public void delete(Product product) {
 		try {
 			em.getTransaction().begin();
 			em.remove(product);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t delete " + product.getId(), e);
+			em.getTransaction().rollback();
 		}
 	}
 

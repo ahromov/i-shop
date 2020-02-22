@@ -29,8 +29,8 @@ public class BucketService implements AbstractCRUD<Bucket> {
 	}
 
 	@Override
-	public Bucket read(String id) {
-		return bucketDao.read(id);
+	public Bucket getById(String id) {
+		return bucketDao.getById(id);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class BucketService implements AbstractCRUD<Bucket> {
 	}
 
 	@Override
-	public void delete(String id) {
-		bucketDao.delete(id);
+	public void delete(Bucket t) {
+		bucketDao.delete(t);
 	}
 
 	@Override

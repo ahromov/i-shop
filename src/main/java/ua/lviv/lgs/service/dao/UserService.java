@@ -29,8 +29,8 @@ public class UserService implements AbstractCRUD<User> {
 	}
 
 	@Override
-	public User read(String id) {
-		return userDao.read(id);
+	public User getById(String id) {
+		return userDao.getById(id);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class UserService implements AbstractCRUD<User> {
 	}
 
 	@Override
-	public void delete(String id) {
-		userDao.delete(id);
+	public void delete(User user) {
+		userDao.delete(user);
 	}
 
 	@Override

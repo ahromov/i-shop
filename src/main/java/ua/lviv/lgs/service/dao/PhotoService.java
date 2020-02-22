@@ -29,8 +29,8 @@ public class PhotoService implements AbstractCRUD<Photo> {
 	}
 
 	@Override
-	public Photo read(String id) {
-		return photoDao.read(id);
+	public Photo getById(String id) {
+		return photoDao.getById(id);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class PhotoService implements AbstractCRUD<Photo> {
 	}
 
 	@Override
-	public void delete(String id) {
-		photoDao.delete(id);
+	public void delete(Photo photo) {
+		photoDao.delete(photo);
 	}
 
 	@Override

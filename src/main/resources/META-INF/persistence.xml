@@ -11,8 +11,7 @@
 		<class>ua.lviv.lgs.domain.Bucket</class>
 		<class>ua.lviv.lgs.domain.product.Product</class>
 		<class>ua.lviv.lgs.domain.Photo</class>
-		<class>ua.lviv.lgs.domain.product.ProductQtty</class>
-		<class>ua.lviv.lgs.domain.product.BucketProduct</class>
+		<class>ua.lviv.lgs.domain.ProductQtty</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url"

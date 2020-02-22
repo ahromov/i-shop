@@ -39,6 +39,7 @@ public class RegistrationServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty() && !password.isEmpty()) {
+
 			User user = userService.getUserByEmail(email);
 
 			if (user == null) {
@@ -50,8 +51,8 @@ public class RegistrationServlet extends HttpServlet {
 
 					Bucket bucket = new Bucket();
 					bucket.setUser(user);
-					user.setBucket(bucket);
 
+					user.setBucket(bucket);
 					userService.create(user);
 
 					response.getWriter().write("Success");

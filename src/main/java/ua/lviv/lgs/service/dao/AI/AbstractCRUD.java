@@ -6,11 +6,11 @@ public interface AbstractCRUD<T> {
 
 	T create(T t);
 
-	T read(String id);
+	T getById(String id);
 
 	T update(T t);
 
-	void delete(String bucketId);
+	void delete(T t);
 
 	List<T> readAll();
 

@@ -38,13 +38,14 @@ public class PhotoDao implements AbstractCRUD<Photo> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t create " + file.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return file;
 	}
 
 	@Override
-	public Photo read(String id) {
+	public Photo getById(String id) {
 		Photo file = null;
 
 		try {
@@ -64,21 +65,21 @@ public class PhotoDao implements AbstractCRUD<Photo> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t update " + file.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return file;
 	}
 
 	@Override
-	public void delete(String id) {
-		Photo file = read(id);
-
+	public void delete(Photo file) {
 		try {
 			em.getTransaction().begin();
 			em.remove(file);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t delete " + file.getId(), e);
+			em.getTransaction().rollback();
 		}
 	}
 

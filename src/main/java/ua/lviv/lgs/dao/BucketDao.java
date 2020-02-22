@@ -39,13 +39,14 @@ public class BucketDao implements AbstractCRUD<Bucket> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t create " + bucket.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return bucket;
 	}
 
 	@Override
-	public Bucket read(String id) {
+	public Bucket getById(String id) {
 		Bucket bucket = null;
 
 		try {
@@ -65,21 +66,21 @@ public class BucketDao implements AbstractCRUD<Bucket> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t update " + bucket.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return bucket;
 	}
 
 	@Override
-	public void delete(String id) {
-		Bucket bucket = read(id);
-
+	public void delete(Bucket bucket) {
 		try {
 			em.getTransaction().begin();
 			em.remove(bucket);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t delete " + bucket.getId(), e);
+			em.getTransaction().rollback();
 		}
 	}
 

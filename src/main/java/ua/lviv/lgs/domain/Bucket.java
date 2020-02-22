@@ -1,12 +1,12 @@
 package ua.lviv.lgs.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -14,7 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import ua.lviv.lgs.domain.product.BucketProduct;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.domain.user.User;
 
 @Entity
@@ -25,12 +27,18 @@ public class Bucket {
 	@Column(name = "id")
 	private String id;
 
-	@OneToOne(mappedBy = "bucket", fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "bucket")
 	private User user;
 
+	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "bucket_bproduct", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "bpoduct_id", referencedColumnName = "id"))
-	private List<BucketProduct> bProducts;
+	@JoinTable(name = "bucket_product", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+	private List<Product> products = new ArrayList<>();
+
+	@JsonIgnore
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "bucket_pqtty", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pqtty_id", referencedColumnName = "id"))
+	private List<ProductQtty> productQttys = new ArrayList<>();
 
 	public Bucket() {
 		this.id = UUID.randomUUID().toString();
@@ -52,37 +60,47 @@ public class Bucket {
 		this.user = user;
 	}
 
-	public List<BucketProduct> getBProducts() {
-		return bProducts;
+	public List<Product> getProducts() {
+		return products;
 	}
 
-	public void setBProducts(List<BucketProduct> products) {
-		this.bProducts = products;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
-	public void addBProduct(BucketProduct bProduct) {
-		bProducts.add(bProduct);
-		bProduct.getBuckets().add(this);
+	public void addProduct(Product product) {
+		products.add(product);
+		product.getBuckets().add(this);
 	}
 
-	public void removeBProduct(BucketProduct bProduct) {
-		bProducts.remove(bProduct);
-		bProduct.getBuckets().remove(this);
+	public void removeProduct(Product product) {
+		products.remove(product);
+		product.getBuckets().remove(this);
 	}
 
-	public boolean isPresent(BucketProduct product) {
-		if (bProducts.contains(product))
+	public void addProductQtty(ProductQtty pqtty) {
+		productQttys.add(pqtty);
+		pqtty.getBuckets().add(this);
+	}
+
+	public void removeProductQtty(ProductQtty pqtty) {
+		productQttys.remove(pqtty);
+		pqtty.getBuckets().remove(this);
+	}
+
+	public boolean isProductPresent(Product product) {
+		if (products.contains(product))
 			return true;
+
 		return false;
 	}
 
-	public BucketProduct findBPbyProductId(int id) {
-		for (BucketProduct bucketProduct : bProducts) {
-			if (bucketProduct.getProduct().getId() == id)
-				return bucketProduct;
-		}
+	public Product findProductById(int id) {
+		return products.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+	}
 
-		return null;
+	public ProductQtty findQttyByProdId(int id) {
+		return productQttys.stream().filter(pq -> pq.getProduct().getId() == id).findFirst().orElse(null);
 	}
 
 }

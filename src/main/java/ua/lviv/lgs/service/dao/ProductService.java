@@ -32,8 +32,8 @@ public class ProductService implements AbstractCRUD<Product> {
 	}
 
 	@Override
-	public Product read(String id) {
-		return productDao.read(id);
+	public Product getById(String id) {
+		return productDao.getById(id);
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class ProductService implements AbstractCRUD<Product> {
 	}
 
 	@Override
-	public void delete(String id) {
-		productDao.delete(id);
+	public void delete(Product product) {
+		productDao.delete(product);
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package ua.lviv.lgs.service.dao;
 import java.util.List;
 
 import ua.lviv.lgs.dao.ProductQttyDao;
-import ua.lviv.lgs.domain.product.ProductQtty;
+import ua.lviv.lgs.domain.ProductQtty;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class ProductQttyService implements AbstractCRUD<ProductQtty> {
@@ -13,9 +13,10 @@ public class ProductQttyService implements AbstractCRUD<ProductQtty> {
 	private static ProductQttyService productQttyService;
 
 	private ProductQttyService() {
+
 	}
 
-	public static ProductQttyService getProductService() {
+	public static ProductQttyService getProductQttyService() {
 		if (productQttyService == null) {
 			productQttyService = new ProductQttyService();
 		}
@@ -29,8 +30,8 @@ public class ProductQttyService implements AbstractCRUD<ProductQtty> {
 	}
 
 	@Override
-	public ProductQtty read(String id) {
-		return productQttyDao.read(id);
+	public ProductQtty getById(String id) {
+		return productQttyDao.getById(id);
 	}
 
 	@Override
@@ -39,8 +40,8 @@ public class ProductQttyService implements AbstractCRUD<ProductQtty> {
 	}
 
 	@Override
-	public void delete(String id) {
-		productQttyDao.delete(id);
+	public void delete(ProductQtty pq) {
+		productQttyDao.delete(pq);
 	}
 
 	@Override

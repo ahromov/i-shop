@@ -1,6 +1,8 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,6 +14,7 @@ import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
 
+import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.ProductService;
@@ -29,7 +32,7 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String productId = request.getParameter("id");
-		Product product = productService.read(productId);
+		Product product = productService.getById(productId);
 		String role = (String) request.getSession().getAttribute("role");
 
 		request.setAttribute("role", role);
@@ -45,8 +48,20 @@ public class ProductServlet extends HttpServlet {
 
 		String productId = request.getParameter("productId");
 
-		if (productId != null) {
-			productService.delete(productId);
+		Product product = productService.getById(productId);
+
+		if (!productId.equals("")) {
+			List<Bucket> bkts = product.getBuckets();
+
+			Iterator<Bucket> buketsIter = bkts.stream().iterator();
+
+			while (buketsIter.hasNext()) {
+				buketsIter.next().removeProductQtty(buketsIter.next().findQttyByProdId(product.getId()));
+				buketsIter.next().removeProduct(product);
+			}
+
+			productService.delete(product);
+
 			response.getWriter().write("Success");
 		} else
 			response.getWriter().write("Error");
@@ -57,8 +72,11 @@ public class ProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 		if (((String) request.getSession().getAttribute("role")).equals("ADMINISTRATOR")) {
 			String name = request.getParameter("name");
+
 			String description = request.getParameter("description");
+
 			Double price = 0.0;
+
 			Photo photo = getFileContent(request, response);
 
 			if (!request.getParameter("price").equals(""))
@@ -66,7 +84,8 @@ public class ProductServlet extends HttpServlet {
 
 			if (photo.getFileSize() == 0) {
 				photo.setFileName("default");
-				byte[] content = IOUtils.toByteArray(getServletContext().getResourceAsStream("WEB-INF/default_prod.jpg"));
+				byte[] content = IOUtils
+						.toByteArray(getServletContext().getResourceAsStream("WEB-INF/default_prod.jpg"));
 				photo.setFileSize(content.length / 1024);
 				photo.setContent(content);
 				photo.setUploadStatus("Success");
@@ -98,7 +117,7 @@ public class ProductServlet extends HttpServlet {
 				String price = request.getParameter("price");
 				Photo newPhoto = getFileContent(request, response);
 
-				Product product = productService.read(productId);
+				Product product = productService.getById(productId);
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(getValidatedPrice(price));
@@ -115,6 +134,7 @@ public class ProductServlet extends HttpServlet {
 				}
 
 				productService.update(product);
+
 				response.getWriter().write("Success");
 			} else
 				response.getWriter().write("Error");
@@ -124,10 +144,12 @@ public class ProductServlet extends HttpServlet {
 	private Photo getFileContent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String fileName = "";
+
 		Photo photo = null;
 
 		for (Part part : request.getParts()) {
 			fileName = extractFileName(part);
+
 			photo = new Photo();
 			photo.setFileName(fileName);
 			photo.setFileSize(part.getSize() / 1024);
@@ -140,6 +162,7 @@ public class ProductServlet extends HttpServlet {
 
 	private String extractFileName(Part part) {
 		String fileName = "", contentDisposition = part.getHeader("content-disposition");
+
 		String[] items = contentDisposition.split(";");
 		for (String item : items) {
 			if (item.trim().startsWith("filename")) {

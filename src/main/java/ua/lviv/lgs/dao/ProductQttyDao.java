@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.manager.FactoryManager;
-import ua.lviv.lgs.domain.product.ProductQtty;
+import ua.lviv.lgs.domain.ProductQtty;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class ProductQttyDao implements AbstractCRUD<ProductQtty> {
@@ -20,7 +20,6 @@ public class ProductQttyDao implements AbstractCRUD<ProductQtty> {
 	private static ProductQttyDao productQttyDao;
 
 	private ProductQttyDao() {
-
 	}
 
 	public static ProductQttyDao getProductQttyDao() {
@@ -39,19 +38,20 @@ public class ProductQttyDao implements AbstractCRUD<ProductQtty> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t create " + productQtty.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return productQtty;
 	}
 
 	@Override
-	public ProductQtty read(String id) {
+	public ProductQtty getById(String id) {
 		ProductQtty productQtty = null;
 
 		try {
 			productQtty = em.find(ProductQtty.class, Long.parseLong(id));
 		} catch (Exception e) {
-			log.error("Can`t read " + productQtty.getId(), e);
+			log.error("Can`t read pqtty ", e);
 		}
 
 		return productQtty;
@@ -65,21 +65,21 @@ public class ProductQttyDao implements AbstractCRUD<ProductQtty> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t update " + productQtty.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return productQtty;
 	}
 
 	@Override
-	public void delete(String bucketId) {
-		ProductQtty productQtty = read(bucketId);
-
+	public void delete(ProductQtty pq) {
 		try {
 			em.getTransaction().begin();
-			em.remove(productQtty);
+			em.remove(pq);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			log.error("Can`t delete " + productQtty.getId(), e);
+			log.error("Can`t delete pQtty", e);
+			em.getTransaction().rollback();
 		}
 	}
 

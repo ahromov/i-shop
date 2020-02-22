@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ua.lviv.lgs.domain.Bucket;
-import ua.lviv.lgs.domain.product.BucketProduct;
-import ua.lviv.lgs.domain.product.ProductQtty;
-import ua.lviv.lgs.domain.user.User;
-import ua.lviv.lgs.service.dao.BucketProductService;
+import ua.lviv.lgs.domain.ProductQtty;
+import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.BucketService;
+import ua.lviv.lgs.service.dao.ProductQttyService;
 import ua.lviv.lgs.service.dao.ProductService;
 import ua.lviv.lgs.service.dao.UserService;
 
@@ -23,23 +22,32 @@ public class BucketServlet extends HttpServlet {
 	private static final long serialVersionUID = -3449676006995456547L;
 
 	private static final BucketService bucketService = BucketService.getBucketService();
-	private static final BucketProductService bpService = BucketProductService.getProductService();
 	private static final ProductService productService = ProductService.getProductService();
 	private static final UserService userService = UserService.getUserService();
+	private static final ProductQttyService productQttyService = ProductQttyService.getProductQttyService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String productId = request.getParameter("productId");
+
 		Integer buyCount = Integer.parseInt(request.getParameter("qtty"));
 
-		User user = userService.read(((Integer) request.getSession().getAttribute("userId")).toString());
-		Bucket bucket = user.getBucket();
-		BucketProduct bp = bucket.findBPbyProductId(Integer.parseInt(productId));
+		Bucket bucket = userService.getById(((Integer) request.getSession().getAttribute("userId")).toString())
+				.getBucket();
 
-		if (bp != null && bucket.isPresent(bp)) {
-			bp.getQtty().setProductBuysQtty(buyCount);
+		Product p = bucket.findProductById(Integer.parseInt(productId));
+
+		if (p != null) {
+			ProductQtty pq = bucket.findQttyByProdId(Integer.parseInt(productId));
+			pq.setProductQtty(buyCount);
 		} else {
-			bucket.addBProduct(new BucketProduct(productService.read(productId), new ProductQtty(buyCount)));
+			p = productService.getById(productId);
+			ProductQtty pq = new ProductQtty(buyCount);
+			pq.setProduct(p);
+			bucket.addProductQtty(pq);
+
+			p.addProductQtty(pq);
+			bucket.addProduct(p);
 		}
 
 		bucketService.update(bucket);
@@ -51,13 +59,18 @@ public class BucketServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Bucket bucket = userService.read(request.getSession().getAttribute("userId").toString()).getBucket();
+		Bucket bucket = userService.getById(request.getSession().getAttribute("userId").toString()).getBucket();
 
-		BucketProduct bProduct = bpService.read(request.getParameter("pId"));
+		Product product = bucket.findProductById(Integer.parseInt(request.getParameter("pId")));
 
-		if (bucket.isPresent(bProduct)) {
-			bucket.removeBProduct(bProduct);
-			bpService.delete(bProduct.getId().toString());
+		if (bucket.isProductPresent(product)) {
+			ProductQtty pq = product.findQttyByProductId(request.getParameter("pId"));
+			product.removeProductQtty(pq);
+
+			bucket.removeProductQtty(pq);
+			bucket.removeProduct(product);
+
+			productQttyService.delete(pq);
 			bucketService.update(bucket);
 		}
 

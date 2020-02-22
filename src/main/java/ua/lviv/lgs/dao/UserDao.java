@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -43,13 +42,14 @@ public class UserDao implements AbstractCRUD<User> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t create " + user.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return user;
 	}
 
 	@Override
-	public User read(String id) {
+	public User getById(String id) {
 		User user = null;
 
 		try {
@@ -69,21 +69,21 @@ public class UserDao implements AbstractCRUD<User> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t update " + user.getId(), e);
+			em.getTransaction().rollback();
 		}
 
 		return user;
 	}
 
 	@Override
-	public void delete(String id) {
-		User user = read(id);
-
+	public void delete(User user) {
 		try {
 			em.getTransaction().begin();
 			em.remove(user);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			log.error("Can`t delete " + user.getId(), e);
+			em.getTransaction().rollback();
 		}
 	}
 
@@ -106,14 +106,17 @@ public class UserDao implements AbstractCRUD<User> {
 
 		try {
 			CriteriaBuilder builder = em.getCriteriaBuilder();
+
 			CriteriaQuery<User> query = builder.createQuery(User.class);
+
 			Root<User> from = query.from(User.class);
+
 			query.select(from);
 			query.where(builder.equal(from.get("email"), email));
-			TypedQuery<User> tq = em.createQuery(query);
-			user = tq.getSingleResult();
+
+			user = em.createQuery(query).getSingleResult();
 		} catch (Exception e) {
-			log.error("Can`t find " + user.getEmail(), e);
+			log.error("Can`t find user with email " + email);
 		}
 
 		return user;

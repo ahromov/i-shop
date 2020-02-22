@@ -33,7 +33,7 @@ $("button.buy-product").click(function() {
 				url : 'product?productId=' + productId,
 				success : function(data) {
 					alert(data);
-					$(location).attr('href', 'cabinet.jsp');
+					$(location).attr('href', 'bucket.jsp');
 				}
 			});
 		} else {
