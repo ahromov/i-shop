@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ua.lviv.lgs.domain.product.Product;
+import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.domain.user.User;
 
 @Entity
@@ -31,12 +33,12 @@ public class Bucket {
 	private User user;
 
 	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "bucket_product", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
 	private List<Product> products = new ArrayList<>();
 
 	@JsonIgnore
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "bucket_pqtty", joinColumns = @JoinColumn(name = "bucket_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pqtty_id", referencedColumnName = "id"))
 	private List<ProductQtty> productQttys = new ArrayList<>();
 
