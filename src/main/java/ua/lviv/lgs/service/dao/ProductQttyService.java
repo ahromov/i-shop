@@ -3,7 +3,7 @@ package ua.lviv.lgs.service.dao;
 import java.util.List;
 
 import ua.lviv.lgs.dao.ProductQttyDao;
-import ua.lviv.lgs.domain.ProductQtty;
+import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class ProductQttyService implements AbstractCRUD<ProductQtty> {

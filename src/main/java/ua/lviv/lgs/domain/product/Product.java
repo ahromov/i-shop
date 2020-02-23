@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Photo;
-import ua.lviv.lgs.domain.ProductQtty;
 
 @Entity
 @Table(name = "product")

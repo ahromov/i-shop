@@ -1,4 +1,4 @@
-package ua.lviv.lgs.domain;
+package ua.lviv.lgs.domain.product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import ua.lviv.lgs.domain.product.Product;
+import ua.lviv.lgs.domain.Bucket;
 
 @Entity
 @Table(name = "pqtty")

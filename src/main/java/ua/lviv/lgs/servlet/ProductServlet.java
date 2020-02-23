@@ -1,8 +1,6 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,7 +12,6 @@ import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
 
-import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.service.dao.ProductService;
@@ -51,15 +48,6 @@ public class ProductServlet extends HttpServlet {
 		Product product = productService.getById(productId);
 
 		if (!productId.equals("")) {
-			List<Bucket> bkts = product.getBuckets();
-
-			Iterator<Bucket> buketsIter = bkts.stream().iterator();
-
-			while (buketsIter.hasNext()) {
-				buketsIter.next().removeProductQtty(buketsIter.next().findQttyByProdId(product.getId()));
-				buketsIter.next().removeProduct(product);
-			}
-
 			productService.delete(product);
 
 			response.getWriter().write("Success");

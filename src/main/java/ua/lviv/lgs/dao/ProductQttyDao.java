@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.lviv.lgs.dao.manager.FactoryManager;
-import ua.lviv.lgs.domain.ProductQtty;
+import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.service.dao.AI.AbstractCRUD;
 
 public class ProductQttyDao implements AbstractCRUD<ProductQtty> {

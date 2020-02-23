@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ua.lviv.lgs.domain.Bucket;
-import ua.lviv.lgs.domain.ProductQtty;
 import ua.lviv.lgs.domain.product.Product;
+import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.service.dao.BucketService;
 import ua.lviv.lgs.service.dao.ProductQttyService;
 import ua.lviv.lgs.service.dao.ProductService;
