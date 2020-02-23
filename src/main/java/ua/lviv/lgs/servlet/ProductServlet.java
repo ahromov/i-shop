@@ -1,6 +1,9 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,8 +15,10 @@ import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
 
+import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.product.Product;
+import ua.lviv.lgs.service.dao.BucketService;
 import ua.lviv.lgs.service.dao.ProductService;
 
 @WebServlet("/product")
@@ -24,6 +29,7 @@ public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 530917315308551086L;
 
 	private static final ProductService productService = ProductService.getProductService();
+	private static final BucketService bucketService = BucketService.getBucketService();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -48,6 +54,19 @@ public class ProductServlet extends HttpServlet {
 		Product product = productService.getById(productId);
 
 		if (!productId.equals("")) {
+			List<Bucket> bkts = product.getBuckets();
+
+			Iterator<Bucket> buketsIter = bkts.stream().iterator();
+
+			while (buketsIter.hasNext()) {
+				Bucket b = buketsIter.next();
+
+				b.removeProductQtty(b.findQttyByProdId(product.getId()));
+				b.removeProduct(product);
+
+				bucketService.update(b);
+			}
+
 			productService.delete(product);
 
 			response.getWriter().write("Success");
