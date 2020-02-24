@@ -43,47 +43,52 @@ public class OrderServlet extends HttpServlet {
 
 		Bucket bucket = user.getBucket();
 
-		Double sum = 0.0;
+		if (bucket.getProducts().size() > 0) {
+			Double sum = 0.0;
 
-		sb.append("\n*** Your items: ***\n\n");
+			sb.append("\n*** Your items: ***\n\n");
 
-		for (Iterator<Product> bucketProductsIter = bucket.getProducts().iterator(); bucketProductsIter.hasNext();) {
-			Product product = bucketProductsIter.next();
+			for (Iterator<Product> bucketProductsIter = bucket.getProducts().iterator(); bucketProductsIter
+					.hasNext();) {
+				Product product = bucketProductsIter.next();
 
-			ProductQtty pq = bucket.findQttyByProdId(product.getId());
+				ProductQtty pq = bucket.findQttyByProdId(product.getId());
 
-			sb.append("NAME:\t\t" + product.getName() + "\n").append("DESCRIPTION:\t" + product.getDescription() + "\n")
-					.append("PRICE:\t\t" + product.getPrice() + "\n").append("QUANTITY:\t" + pq.getQtty() + "\n")
-					.append("\n");
+				sb.append("NAME:\t\t" + product.getName() + "\n")
+						.append("DESCRIPTION:\t" + product.getDescription() + "\n")
+						.append("PRICE:\t\t" + product.getPrice() + "\n").append("QUANTITY:\t" + pq.getQtty() + "\n")
+						.append("\n");
 
-			sum += product.getPrice();
+				sum += product.getPrice();
 
-			for (Iterator<ProductQtty> qttysIter = bucket.getProductQttys().iterator(); qttysIter.hasNext();) {
-				ProductQtty pqtty = qttysIter.next();
-				if (pq.getId() == pqtty.getId()) {
-					qttysIter.remove();
-					productQttyService.delete(pqtty);
+				for (Iterator<ProductQtty> qttysIter = bucket.getProductQttys().iterator(); qttysIter.hasNext();) {
+					ProductQtty pqtty = qttysIter.next();
+					if (pq.getId() == pqtty.getId()) {
+						qttysIter.remove();
+						productQttyService.delete(pqtty);
+					}
 				}
+
+				bucketProductsIter.remove();
 			}
 
-			bucketProductsIter.remove();
-		}
+			sb.append("TOTAL PRICE:\t" + sum);
 
-		sb.append("TOTAL PRICE:\t" + sum);
+			bucketService.update(bucket);
 
-		bucketService.update(bucket);
+			try {
+				SendMailService.getMailSender().sendMail(user.getEmail(), "Your order", sb.toString());
 
-		try {
-			SendMailService.getMailSender().sendMail(user.getEmail(), "Your order", sb.toString());
+				log.info(sb.toString());
 
-			log.info(sb.toString());
+				response.getWriter().write("Success");
+			} catch (MessagingException e) {
+				log.error(e);
 
-			response.getWriter().write("Success");
-		} catch (MessagingException e) {
-			log.error(e);
-
-			response.getWriter().write("Error");
-		}
+				response.getWriter().write("Error");
+			}
+		} else
+			response.getWriter().write("BucketEmpty");
 	}
 
 }
