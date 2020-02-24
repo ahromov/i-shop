@@ -64,7 +64,7 @@ public class ProductServlet extends HttpServlet {
 						for (Iterator<ProductQtty> qttysIter = bucket.getProductQttys().iterator(); qttysIter
 								.hasNext();) {
 							ProductQtty pqtty = qttysIter.next();
-							if (bucket.findQttyByProdId(product.getId()).getId() == pqtty.getId()) {
+							if (bucket.findQttyByProdId(p.getId()).getId() == pqtty.getId()) {
 								qttysIter.remove();
 								productQttyService.delete(pqtty);
 							}
