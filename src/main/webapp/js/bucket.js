@@ -44,6 +44,18 @@ function deleteOrderFromBucket(bId) {
 
 }
 
+function checkRole(id) {
+
+	$.get("user-role", function(data) {
+		if (data === null) {
+			alert('You must be loginned for purchase!');
+			$(location).attr('href', 'login.jsp');
+		} else
+			$(location).attr('href', 'product?id=' + id);
+	})
+
+}
+
 var buckets = null;
 
 $
@@ -66,9 +78,11 @@ $
 									function(i, value) {
 										tableContent += "<tr><td><img style='width: 50px; margin-bottom: 20px' src='data:image/png;base64,"
 												+ value.bs
-												+ "'><td>"
+												+ "'><td><a href='#' onclick='checkRole("
+												+ value.productId
+												+ ")'>"
 												+ value.productName
-												+ "</td><td>"
+												+ "</a></td><td>"
 												+ value.productPrice
 												+ "</td><td>"
 												+ value.productsCount
@@ -80,3 +94,31 @@ $
 									});
 					$('#myTable').html(tableContent);
 				});
+
+function goHomePage() {
+	$.get("user-role", function(data) {
+		if (data === null) {
+			alert('You must be loginned for purchase!');
+			$(location).attr('href', 'login.jsp');
+		} else
+			$(location).attr('href', 'cabinet.jsp');
+	})
+}
+
+$('button.order').click(function() {
+	$.get("user-role", function(data) {
+		if (data === null) {
+			alert('You must be loginned for purchase!');
+
+			$(location).attr('href', 'login.jsp');
+		} else {
+			$.get('order').done(function(data) {
+				if (data === 'Success') {
+					alert(data);
+					
+					$(location).attr('href', 'cabinet.jsp');
+				}
+			})
+		}
+	})
+})

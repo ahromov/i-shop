@@ -49,12 +49,12 @@ $("button.buy-product").click(function() {
 							type : "click"
 						});
 						alert(data);
-						$(location).attr('href', 'cabinet.jsp');
+						$(location).attr('href', 'bucket.jsp');
 					}
 				});
 			} else {
 				alert("Invalid quantity of items");
-				$(location).attr('href', 'cabinet.jsp');
+				$(location).attr('href', 'bucket.jsp');
 			}
 		}
 	});
