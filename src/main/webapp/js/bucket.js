@@ -112,12 +112,15 @@ $('button.order').click(function() {
 
 			$(location).attr('href', 'login.jsp');
 		} else {
+			$('div.alert.alert-loading').show();
+
 			$.get('order').done(function(data) {
 				if (data === 'Success') {
 					alert(data);
-					
+
 					$(location).attr('href', 'cabinet.jsp');
-				}
+				} else
+					$(location).attr('href', 'cabinet.jsp');
 			})
 		}
 	})

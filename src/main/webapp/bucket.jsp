@@ -24,6 +24,12 @@
 		</table>
 		<button class="btn order" type="button" style="background: red">Order</button>
 		<button class="btn homePage" type="button" style="background: orange" onclick="goHomePage()">Continue purchases</button>
+		
+		<div
+			class="alert alert-loading fade show"
+			role="alert">
+			<div class="lds-dual-ring"></div>
+		</div>
 	</div>
 
 	<jsp:include page="includes/footer.html"></jsp:include>
