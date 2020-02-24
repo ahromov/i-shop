@@ -1,6 +1,7 @@
 package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +22,9 @@ public class BucketServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3449676006995456547L;
 
+	private static final UserService userService = UserService.getUserService();
 	private static final BucketService bucketService = BucketService.getBucketService();
 	private static final ProductService productService = ProductService.getProductService();
-	private static final UserService userService = UserService.getUserService();
 	private static final ProductQttyService productQttyService = ProductQttyService.getProductQttyService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -44,9 +45,8 @@ public class BucketServlet extends HttpServlet {
 			p = productService.getById(productId);
 			ProductQtty pq = new ProductQtty(buyCount);
 			pq.setProduct(p);
-			bucket.addProductQtty(pq);
 
-			p.addProductQtty(pq);
+			bucket.addProductQtty(pq);
 			bucket.addProduct(p);
 		}
 
@@ -63,16 +63,22 @@ public class BucketServlet extends HttpServlet {
 
 		Product product = bucket.findProductById(Integer.parseInt(request.getParameter("pId")));
 
-		if (bucket.isProductPresent(product)) {
-			ProductQtty pq = product.findQttyByProductId(request.getParameter("pId"));
-			product.removeProductQtty(pq);
+		for (Iterator<Product> pIter = bucket.getProducts().iterator(); pIter.hasNext();) {
+			Product p = pIter.next();
+			if (p.getId() == product.getId()) {
+				for (Iterator<ProductQtty> qttysIter = bucket.getProductQttys().iterator(); qttysIter.hasNext();) {
+					ProductQtty pqtty = qttysIter.next();
+					if (bucket.findQttyByProdId(product.getId()).getId() == pqtty.getId()) {
+						qttysIter.remove();
+						productQttyService.delete(pqtty);
+					}
+				}
 
-			bucket.removeProductQtty(pq);
-			bucket.removeProduct(product);
-
-			productQttyService.delete(pq);
-			bucketService.update(bucket);
+				pIter.remove();
+			}
 		}
+
+		bucketService.update(bucket);
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");

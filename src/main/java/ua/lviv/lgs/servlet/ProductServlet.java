@@ -2,7 +2,6 @@ package ua.lviv.lgs.servlet;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,7 +16,9 @@ import org.apache.commons.io.IOUtils;
 import ua.lviv.lgs.domain.Bucket;
 import ua.lviv.lgs.domain.Photo;
 import ua.lviv.lgs.domain.product.Product;
+import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.service.dao.BucketService;
+import ua.lviv.lgs.service.dao.ProductQttyService;
 import ua.lviv.lgs.service.dao.ProductService;
 
 @WebServlet("/product")
@@ -29,6 +30,7 @@ public class ProductServlet extends HttpServlet {
 
 	private static final ProductService productService = ProductService.getProductService();
 	private static final BucketService bucketService = BucketService.getBucketService();
+	private static final ProductQttyService productQttyService = ProductQttyService.getProductQttyService();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,17 +55,26 @@ public class ProductServlet extends HttpServlet {
 		Product product = productService.getById(productId);
 
 		if (!productId.equals("")) {
-			List<Bucket> bkts = product.getBuckets();
+			for (Iterator<Bucket> buketsIter = product.getBuckets().iterator(); buketsIter.hasNext();) {
+				Bucket bucket = buketsIter.next();
 
-			Iterator<Bucket> buketsIter = bkts.stream().iterator();
+				for (Iterator<Product> productsIter = bucket.getProducts().iterator(); productsIter.hasNext();) {
+					Product p = productsIter.next();
+					if (p.getId() == product.getId()) {
+						for (Iterator<ProductQtty> qttysIter = bucket.getProductQttys().iterator(); qttysIter
+								.hasNext();) {
+							ProductQtty pqtty = qttysIter.next();
+							if (bucket.findQttyByProdId(product.getId()).getId() == pqtty.getId()) {
+								qttysIter.remove();
+								productQttyService.delete(pqtty);
+							}
+						}
 
-			while (buketsIter.hasNext()) {
-				Bucket b = buketsIter.next();
+						productsIter.remove();
+					}
+				}
 
-				b.removeProductQtty(b.findQttyByProdId(product.getId()));
-				b.removeProduct(product);
-
-				bucketService.update(b);
+				bucketService.update(bucket);
 			}
 
 			productService.delete(product);
