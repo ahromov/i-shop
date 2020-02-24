@@ -69,6 +69,14 @@ public class Bucket {
 		this.products = products;
 	}
 
+	public List<ProductQtty> getProductQttys() {
+		return productQttys;
+	}
+
+	public void setProductQttys(List<ProductQtty> productQttys) {
+		this.productQttys = productQttys;
+	}
+
 	public void addProduct(Product product) {
 		products.add(product);
 		product.getBuckets().add(this);
