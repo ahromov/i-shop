@@ -121,5 +121,26 @@ public class UserDao implements AbstractCRUD<User> {
 
 		return user;
 	}
+	
+	public User getUserByRole(String role) {
+		User user = null;
+
+		try {
+			CriteriaBuilder builder = em.getCriteriaBuilder();
+
+			CriteriaQuery<User> query = builder.createQuery(User.class);
+
+			Root<User> from = query.from(User.class);
+
+			query.select(from);
+			query.where(builder.equal(from.get("role"), role));
+
+			user = em.createQuery(query).getSingleResult();
+		} catch (Exception e) {
+			log.error("Can`t find user with role " + role);
+		}
+
+		return user;
+	}
 
 }

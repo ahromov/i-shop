@@ -27,6 +27,7 @@ import ua.lviv.lgs.domain.Order;
 import ua.lviv.lgs.domain.product.Product;
 import ua.lviv.lgs.domain.product.ProductQtty;
 import ua.lviv.lgs.domain.user.User;
+import ua.lviv.lgs.domain.user.UserRole;
 import ua.lviv.lgs.dto.OrdersDto;
 import ua.lviv.lgs.service.SendMailService;
 import ua.lviv.lgs.service.dao.BucketService;
@@ -64,7 +65,7 @@ public class OrderServlet extends HttpServlet {
 
 			Double sum = 0.0;
 
-			sb.append("\n*** Your items: ***\n\n");
+			sb.append("\n*** Items: ***\n\n");
 
 			for (Iterator<Product> bucketProductsIter = bucket.getProducts().iterator(); bucketProductsIter
 					.hasNext();) {
@@ -102,7 +103,9 @@ public class OrderServlet extends HttpServlet {
 			bucketService.update(bucket);
 
 			try {
-				mailSender.sendMail(order.getUser().getEmail(), "Your order", sb.toString());
+				mailSender.sendMail(order.getUser().getEmail(), "Your order #" + order.getId(), sb.toString());
+				mailSender.sendMail(userService.getUserByRole(UserRole.ADMINISTRATOR.toString()).getEmail(),
+						"!!!NEW ORDER!!! #" + order.getId(), sb.toString());
 
 				log.info("New order for user " + order.getUser().getEmail() + " was created:" + sb.toString());
 

@@ -52,4 +52,7 @@ public class UserService implements AbstractCRUD<User> {
 		return userDao.getUserByEmail(email);
 	}
 
+	public User getUserByRole(String role) {
+		return userDao.getUserByRole(role);
+	}
 }
