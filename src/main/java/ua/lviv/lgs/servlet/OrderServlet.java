@@ -94,15 +94,15 @@ public class OrderServlet extends HttpServlet {
 					.append("DESCRIPTION:\t" + p.getDescription() + "\n").append("PRICE:\t\t" + p.getPrice() + "\n")
 					.append("QUANTITY:\t" + order.findQttyByProdId(p.getId()).getQtty() + "\n\n"));
 
-			sb.append("\n").append("TOTAL PRICE:\t" + order.getTotalPrice());
-			sb.append("\n").append("ORDER DATE:\t" + order.getOrderDate());
+			sb.append("\n").append("TOTAL PRICE:\t" + order.getTotalPrice())
+					.append("\nORDER DATE:\t" + order.getOrderDate());
+
+			orderService.create(order);
+
+			bucketService.update(bucket);
 
 			try {
 				mailSender.sendMail(order.getUser().getEmail(), "Your order", sb.toString());
-
-				bucketService.update(bucket);
-
-				orderService.create(order);
 
 				log.info("New order for user " + order.getUser().getEmail() + " was created:" + sb.toString());
 
@@ -118,27 +118,43 @@ public class OrderServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		User user = userService.getById(request.getSession().getAttribute("userId").toString());
 
-		if (user != null && user.getRole().equals("ADMINISTRATOR")) {
-			List<Order> orders = orderService.readAll();
+		if (user != null) {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 
-			List<OrdersDto> ordersDto = new ArrayList<>();
+			List<Order> orders = null;
+			List<OrdersDto> ordersDto = null;
 
-			for (Order order : orders) {
-				ordersDto.add(new OrdersDto(order));
+			if (user.getRole().equals("ADMINISTRATOR")) {
+				orders = orderService.readAll();
+
+				ordersDto = toOrdersDto(orders);
+			}
+
+			if (user.getRole().equals("USER")) {
+				orders = user.getOrders();
+
+				ordersDto = toOrdersDto(orders);
 			}
 
 			ObjectMapper objMapper = new ObjectMapper();
 			objMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 
-			String json = objMapper.writeValueAsString(ordersDto);
-
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json);
+			response.getWriter().write(objMapper.writeValueAsString(ordersDto));
 		}
+
+	}
+
+	private List<OrdersDto> toOrdersDto(List<Order> orders) {
+		List<OrdersDto> ordersDto = new ArrayList<>();
+
+		for (Order order : orders) {
+			ordersDto.add(new OrdersDto(order));
+		}
+
+		return ordersDto;
 	}
 
 }
