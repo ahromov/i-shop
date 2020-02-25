@@ -80,7 +80,7 @@ public class OrderServlet extends HttpServlet {
 			try {
 				mailSender.sendMail(user.getEmail(), "Your order", sb.toString());
 
-				log.info(sb.toString());
+				log.info("New order for user " + user.getEmail() + " was created:" + sb.toString());
 
 				response.getWriter().write("Success");
 			} catch (MessagingException e) {
