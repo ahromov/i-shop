@@ -12,9 +12,9 @@ import ua.lviv.lgs.domain.product.ProductQtty;
 public class OrdersDto {
 
 	public Long id;
-	String email;
-	String firstName;
-	String lastName;
+	public String email;
+	public String firstName;
+	public String lastName;
 	public Date orderDate;
 	public Double totalPrice;
 	public List<ProductDto> products = new ArrayList<>();
