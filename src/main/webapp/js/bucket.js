@@ -92,6 +92,7 @@ $
 												+ "')\">delete</button></td>"
 												+ "</tr>"
 									});
+					
 					$('#myTable').html(tableContent);
 				});
 
@@ -114,7 +115,7 @@ $('button.order').click(function() {
 		} else {
 			$('div.alert.alert-loading').show();
 
-			$.get('order').done(function(data) {
+			$.post('order').done(function(data) {
 				if (data === 'Success') {
 					alert(data);
 
