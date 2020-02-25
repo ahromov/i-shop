@@ -23,20 +23,20 @@ public class SendMailService {
 
 	private static SendMailService ms;
 
-	private SendMailService() {
-		try {
-			prop.load(getClass().getClassLoader().getResourceAsStream("mail.properties"));
-		} catch (IOException e) {
-			log.error("Cant load properties file: ", e);
-		}
-	}
-
 	public static SendMailService getMailSender() {
 		if (ms == null) {
 			ms = new SendMailService();
 		}
 
 		return ms;
+	}
+
+	private SendMailService() {
+		try {
+			prop.load(getClass().getClassLoader().getResourceAsStream("mail.properties"));
+		} catch (IOException e) {
+			log.error("Cant load properties file: ", e);
+		}
 	}
 
 	public void sendMail(String to, String subject, String text) throws AddressException, MessagingException {

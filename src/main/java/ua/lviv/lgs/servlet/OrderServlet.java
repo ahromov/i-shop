@@ -31,6 +31,7 @@ public class OrderServlet extends HttpServlet {
 	private static final UserService userService = UserService.getUserService();
 	private static final BucketService bucketService = BucketService.getBucketService();
 	private static final ProductQttyService productQttyService = ProductQttyService.getProductQttyService();
+	private static final SendMailService mailSender = SendMailService.getMailSender();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -77,7 +78,7 @@ public class OrderServlet extends HttpServlet {
 			bucketService.update(bucket);
 
 			try {
-				SendMailService.getMailSender().sendMail(user.getEmail(), "Your order", sb.toString());
+				mailSender.sendMail(user.getEmail(), "Your order", sb.toString());
 
 				log.info(sb.toString());
 
