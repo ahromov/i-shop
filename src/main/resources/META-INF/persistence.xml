@@ -9,9 +9,10 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>ua.lviv.lgs.domain.user.User</class>
 		<class>ua.lviv.lgs.domain.Bucket</class>
-		<class>ua.lviv.lgs.domain.product.Product</class>
 		<class>ua.lviv.lgs.domain.Photo</class>
+		<class>ua.lviv.lgs.domain.product.Product</class>
 		<class>ua.lviv.lgs.domain.product.ProductQtty</class>
+		<class>ua.lviv.lgs.domain.Order</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url"

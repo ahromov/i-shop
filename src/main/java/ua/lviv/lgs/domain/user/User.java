@@ -1,15 +1,19 @@
 package ua.lviv.lgs.domain.user;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ua.lviv.lgs.domain.Bucket;
+import ua.lviv.lgs.domain.Order;
 
 @Entity
 @Table(name = "users")
@@ -35,7 +39,9 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-//	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Order> orders;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bucket_id", nullable = false)
 	private Bucket bucket;
@@ -98,6 +104,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public Bucket getBucket() {

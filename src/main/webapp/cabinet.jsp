@@ -31,6 +31,8 @@
 						href="createProduct.jsp">Add product</a></li>
 					<li class="nav-item user-bucket-option"><a class="nav-link"
 						href="bucket.jsp">Bucket</a></li>
+					<li class="nav-item orders-option"><a class="nav-link"
+						href="orders.jsp">Orders</a></li>
 				</ul>
 				<ul class="navbar-nav ml-md-auto d-md-flex">
 					<li class="nav-item">
